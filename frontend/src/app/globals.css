@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --background: #090d16;
+  --foreground: #f1f5f9;
+  
+  --card-bg: rgba(15, 23, 42, 0.45);
+  --card-border: rgba(51, 65, 85, 0.35);
+  --card-glow-critical: rgba(239, 68, 68, 0.15);
+  --card-glow-high: rgba(249, 115, 22, 0.15);
+  --card-glow-medium: rgba(245, 158, 11, 0.15);
+  --card-glow-low: rgba(14, 165, 233, 0.15);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(20, 30, 60, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(10, 15, 30, 0.6) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(30, 41, 59, 0.3) 0px, transparent 50%);
+  background-attachment: fixed;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 0.7);
+}
+
+/* Micro-animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow-red {
+  animation: pulse-glow 2s infinite ease-in-out;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.pulse-glow-green {
+  animation: pulse-glow 3s infinite ease-in-out;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+}
+
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Threat row entry animation */
+@keyframes threat-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.threat-enter {
+  animation: threat-enter 180ms ease-out;
+}
+
+/* Thin scrollbar for internal scroll regions */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.4);
+  border-radius: 2px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 0.6);
+}

