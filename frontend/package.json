@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "git-upload": "python ../upload_repo.py"
+    "lint": "eslint"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
