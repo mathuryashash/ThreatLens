@@ -32,3 +32,5 @@ Thumbs.db
 .antigravitycli/
 .planning/
 docs/PRESENTATION_SCRIPT.md
+.playwright-mcp/
+.serena/
