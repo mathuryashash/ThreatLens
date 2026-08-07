@@ -63,6 +63,14 @@ class ExplainResponse(BaseModel):
     recommended_actions: List[str]
     cached: bool
 
+class DismissThreatRequest(BaseModel):
+    session_id: str
+
+class DismissThreatResponse(BaseModel):
+    threat_id: str
+    status: str
+    dismissed_at: Optional[str] = None
+
 class SessionQuotaResponse(BaseModel):
     max_logs: int
     used_logs: int

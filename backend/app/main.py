@@ -13,7 +13,7 @@ from app.config import settings
 from app.schemas import (
     SessionCreateResponse, IngestRequest, IngestResponse,
     JobStatusResponse, ThreatResponse, ExplainRequest, ExplainResponse,
-    SessionQuotaResponse
+    SessionQuotaResponse, DismissThreatRequest, DismissThreatResponse
 )
 from app.database import db
 from app.parser import parse_log_line
@@ -30,8 +30,32 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # Global Semaphore to limit concurrent LLM calls across all background tasks
 llm_semaphore = asyncio.Semaphore(5)
 
+# ============================================================
+# Render keepalive — pings /api/health every 5 min so the
+# free-tier instance never goes to sleep due to inactivity.
+# RENDER_EXTERNAL_URL is auto-injected by Render; on other
+# platforms the task simply exits without doing anything.
+# ============================================================
+async def _keepalive_loop():
+    render_url = os.environ.get("RENDER_EXTERNAL_URL", "").rstrip("/")
+    if not render_url:
+        print("[keepalive] RENDER_EXTERNAL_URL not set — keepalive disabled.")
+        return
+    import httpx
+    ping_url = f"{render_url}/api/health"
+    print(f"[keepalive] Started — will ping {ping_url} every 5 minutes.")
+    while True:
+        await asyncio.sleep(5 * 60)  # wait 5 minutes
+        try:
+            async with httpx.AsyncClient(timeout=10) as client:
+                resp = await client.get(ping_url)
+            print(f"[keepalive] Ping OK — {resp.status_code}")
+        except Exception as exc:
+            print(f"[keepalive] Ping failed — {exc}")
+
+
 @app.on_event("startup")
-def startup_event():
+async def startup_event():
     # Mark any "queued" or "processing" jobs from previous runs as "failed" on server startup
     try:
         if hasattr(db, "client") and hasattr(db, "get_session"):
@@ -46,6 +70,9 @@ def startup_event():
             db.cleanup_stale_jobs()
     except Exception as e:
         print(f"Failed to clean up stale jobs on startup: {e}")
+
+    # Launch the Render keepalive background task
+    asyncio.create_task(_keepalive_loop())
 
 # ============================================================
 # API Endpoints
@@ -603,4 +630,29 @@ async def explain_threat(request: Request, payload: ExplainRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail={"error": "classification_failed", "detail": "Explanation service unavailable"}
         )
+
+@app.post("/api/threats/{threat_id}/dismiss", response_model=DismissThreatResponse)
+@limiter.limit("60/minute")
+def dismiss_threat(request: Request, threat_id: str, payload: DismissThreatRequest):
+    get_valid_session(payload.session_id)
+
+    threat = db.get_threat(threat_id)
+    if not threat:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": "threat_not_found", "detail": "Threat not found"}
+        )
+
+    if threat["session_id"] != payload.session_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"error": "session_mismatch", "detail": "Forbidden: Threat belongs to another session"}
+        )
+
+    dismissed = db.dismiss_threat(threat_id)
+    return {
+        "threat_id": threat_id,
+        "status": "dismissed",
+        "dismissed_at": dismissed.get("dismissed_at") if dismissed else None
+    }
 

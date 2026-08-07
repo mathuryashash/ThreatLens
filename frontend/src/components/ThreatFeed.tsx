@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Terminal, Shield, ArrowRight, Activity, Cpu, ChevronDown, ChevronUp, Eye } from "lucide-react";
+import { Terminal, Shield, ArrowRight, Activity, Cpu, ChevronDown, ChevronUp, Eye, Search, SlidersHorizontal } from "lucide-react";
 
 export interface ThreatItem {
   id: string;
@@ -126,6 +126,9 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
   explainQuota,
 }) => {
   const [expandedThreats, setExpandedThreats] = useState<Record<string, boolean>>({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterSeverity, setFilterSeverity] = useState("ALL");
+  const [sortBy, setSortBy] = useState("TIME_DESC");
 
   const toggleExpand = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -160,8 +163,86 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
     );
   }
 
+  // Apply search query and severity filtering client-side
+  const filteredThreats = threats.filter((threat) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (query) {
+      const typeMatch = threat.threat_type.toLowerCase().includes(query);
+      const summaryMatch = threat.summary.toLowerCase().includes(query);
+      const ipMatch = threat.source_ip ? threat.source_ip.toLowerCase().includes(query) : false;
+      const patternMatch = threat.attack_pattern ? threat.attack_pattern.toLowerCase().includes(query) : false;
+      if (!typeMatch && !summaryMatch && !ipMatch && !patternMatch) {
+        return false;
+      }
+    }
+
+    if (filterSeverity === "ALL") return true;
+    if (filterSeverity === "LOW_INFO") return threat.severity === "LOW" || threat.severity === "INFO";
+    return threat.severity === filterSeverity;
+  });
+
+  // Apply sorting client-side
+  const sortedThreats = [...filteredThreats].sort((a, b) => {
+    if (sortBy === "TIME_DESC") {
+      return new Date(b.detected_at).getTime() - new Date(a.detected_at).getTime();
+    }
+    if (sortBy === "TIME_ASC") {
+      return new Date(a.detected_at).getTime() - new Date(b.detected_at).getTime();
+    }
+    if (sortBy === "SCORE_DESC") {
+      return b.severity_score - a.severity_score;
+    }
+    if (sortBy === "CONFIDENCE_DESC") {
+      return b.confidence - a.confidence;
+    }
+    return 0;
+  });
+
   return (
     <div className="rounded-sm border border-slate-800/80 bg-slate-950/20 overflow-hidden flex flex-col">
+      {/* Feed Controls (Search & Filters) */}
+      <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-slate-900/40 border-b border-slate-800/80">
+        <div className="relative w-full sm:w-auto flex-1">
+          <Search className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-slate-600" />
+          <input
+            type="text"
+            placeholder="Search IP, threat type, summary..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-8 pr-3 py-1.5 bg-slate-950/80 border border-slate-800/80 focus:border-sky-500/50 text-xs text-slate-300 placeholder-slate-700 rounded-sm focus:outline-none transition-colors"
+          />
+        </div>
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Severity</span>
+            <select
+              value={filterSeverity}
+              onChange={(e) => setFilterSeverity(e.target.value)}
+              className="bg-slate-950 border border-slate-800 text-[10px] text-slate-400 font-bold rounded-sm px-2 py-1.5 focus:outline-none focus:border-sky-500/50 cursor-pointer hover:text-slate-300"
+            >
+              <option value="ALL">ALL</option>
+              <option value="CRITICAL">CRITICAL</option>
+              <option value="HIGH">HIGH</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="LOW_INFO">LOW / INFO</option>
+            </select>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Sort</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-slate-950 border border-slate-800 text-[10px] text-slate-400 font-bold rounded-sm px-2 py-1.5 focus:outline-none focus:border-sky-500/50 cursor-pointer hover:text-slate-300"
+            >
+              <option value="TIME_DESC">TIME (NEWEST)</option>
+              <option value="TIME_ASC">TIME (OLDEST)</option>
+              <option value="SCORE_DESC">SEVERITY SCORE</option>
+              <option value="CONFIDENCE_DESC">CONFIDENCE</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       {/* Table Header */}
       <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 bg-slate-900/60 border-b border-slate-800 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
         <div className="col-span-2">Severity</div>
@@ -174,121 +255,135 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
 
       {/* Table Body / Rows */}
       <div className="flex flex-col divide-y divide-slate-800/60">
-        {threats.map((threat) => {
-          const isSelected = selectedThreatId === threat.id;
-          const isExpanded = !!expandedThreats[threat.id];
-          const badge = SEVERITY_BADGE[threat.severity] ?? SEVERITY_BADGE.INFO;
-          const leftBorder = SEVERITY_LEFT_BORDER[threat.severity] ?? "border-l-slate-700";
-          const confidencePct = Math.round(threat.confidence * 100);
+        {sortedThreats.length === 0 ? (
+          <div className="flex flex-col items-center justify-center gap-3 text-center py-10">
+            <div className="p-2.5 bg-slate-900/60 rounded-sm border border-slate-800 text-slate-500">
+              <SlidersHorizontal className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold text-slate-400">No matching threats</h3>
+              <p className="text-[11px] text-slate-600 mt-1 max-w-xs mx-auto">
+                No threats matched your active filters or search terms.
+              </p>
+            </div>
+          </div>
+        ) : (
+          sortedThreats.map((threat) => {
+            const isSelected = selectedThreatId === threat.id;
+            const isExpanded = !!expandedThreats[threat.id];
+            const badge = SEVERITY_BADGE[threat.severity] ?? SEVERITY_BADGE.INFO;
+            const leftBorder = SEVERITY_LEFT_BORDER[threat.severity] ?? "border-l-slate-700";
+            const confidencePct = Math.round(threat.confidence * 100);
 
-          return (
-            <div
-              key={threat.id}
-              onClick={() => onSelectThreat(threat.id)}
-              className={`flex flex-col transition-colors duration-150 border-l-2 cursor-pointer ${leftBorder} ${
-                isSelected ? "bg-slate-900/30" : "hover:bg-slate-900/10"
-              }`}
-            >
-              {/* Row Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-center px-4 py-2.5 min-w-0">
-                {/* Severity Badge */}
-                <div className="col-span-1 md:col-span-2 flex items-center gap-2">
-                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-sm font-mono flex-shrink-0 tracking-wider ${badge}`}>
-                    {threat.severity}
-                  </span>
-                  <span className="md:hidden text-[10px] text-slate-500">
-                    {formatRelativeTime(threat.detected_at)}
-                  </span>
-                </div>
-
-                {/* Threat Type */}
-                <div className="col-span-1 md:col-span-2 font-mono text-xs font-semibold text-slate-200 uppercase tracking-wide truncate">
-                  {formatThreatType(threat.threat_type)}
-                </div>
-
-                {/* Source IP */}
-                <div className="col-span-1 md:col-span-2 text-xs text-slate-300 font-mono flex items-center gap-1.5">
-                  <Terminal className="w-3.5 h-3.5 text-slate-600 flex-shrink-0" />
-                  {threat.source_ip || "Unknown"}
-                </div>
-
-                {/* Evidence Summary */}
-                <div className="col-span-1 md:col-span-3 text-xs text-slate-400 truncate pr-2 flex items-center gap-1.5">
-                  <button
-                    onClick={(e) => toggleExpand(e, threat.id)}
-                    className="p-1 rounded hover:bg-slate-800 text-slate-500 hover:text-slate-300 flex-shrink-0 transition-colors"
-                    title="Toggle raw logs view"
-                  >
-                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                  </button>
-                  <span className="truncate leading-tight font-sans">{threat.summary}</span>
-                </div>
-
-                {/* Detector & Confidence */}
-                <div className="col-span-1 md:col-span-2 flex items-center justify-between md:justify-center gap-3">
-                  <span className="md:hidden text-[10px] text-slate-500 font-bold uppercase">Detector:</span>
-                  <div className="flex items-center gap-2">
-                    {threat.classification_source === "rule" ? (
-                      <span className="flex items-center gap-1 text-[10px] font-bold text-sky-400 bg-sky-500/5 px-2 py-0.5 rounded-sm border border-sky-500/10">
-                        <Activity className="w-2.5 h-2.5" />
-                        RULE
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-1 text-[10px] font-bold text-indigo-400 bg-indigo-500/5 px-2 py-0.5 rounded-sm border border-indigo-500/10">
-                        <Cpu className="w-2.5 h-2.5" />
-                        AI
-                      </span>
-                    )}
-                    <span className="text-[10px] font-mono text-slate-500 font-bold">
-                      {confidencePct}%
+            return (
+              <div
+                key={threat.id}
+                onClick={() => onSelectThreat(threat.id)}
+                className={`flex flex-col transition-colors duration-150 border-l-2 cursor-pointer ${leftBorder} ${
+                  isSelected ? "bg-slate-900/30" : "hover:bg-slate-900/10"
+                }`}
+              >
+                {/* Row Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-center px-4 py-2.5 min-w-0">
+                  {/* Severity Badge */}
+                  <div className="col-span-1 md:col-span-2 flex items-center gap-2">
+                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-sm font-mono flex-shrink-0 tracking-wider ${badge}`}>
+                      {threat.severity}
+                    </span>
+                    <span className="md:hidden text-[10px] text-slate-500">
+                      {formatRelativeTime(threat.detected_at)}
                     </span>
                   </div>
+
+                  {/* Threat Type */}
+                  <div className="col-span-1 md:col-span-2 font-mono text-xs font-semibold text-slate-200 uppercase tracking-wide truncate">
+                    {formatThreatType(threat.threat_type)}
+                  </div>
+
+                  {/* Source IP */}
+                  <div className="col-span-1 md:col-span-2 text-xs text-slate-300 font-mono flex items-center gap-1.5">
+                    <Terminal className="w-3.5 h-3.5 text-slate-600 flex-shrink-0" />
+                    {threat.source_ip || "Unknown"}
+                  </div>
+
+                  {/* Evidence Summary */}
+                  <div className="col-span-1 md:col-span-3 text-xs text-slate-400 truncate pr-2 flex items-center gap-1.5">
+                    <button
+                      onClick={(e) => toggleExpand(e, threat.id)}
+                      className="p-1 rounded hover:bg-slate-800 text-slate-500 hover:text-slate-300 flex-shrink-0 transition-colors"
+                      title="Toggle raw logs view"
+                    >
+                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    </button>
+                    <span className="truncate leading-tight font-sans">{threat.summary}</span>
+                  </div>
+
+                  {/* Detector & Confidence */}
+                  <div className="col-span-1 md:col-span-2 flex items-center justify-between md:justify-center gap-3">
+                    <span className="md:hidden text-[10px] text-slate-500 font-bold uppercase">Detector:</span>
+                    <div className="flex items-center gap-2">
+                      {threat.classification_source === "rule" ? (
+                        <span className="flex items-center gap-1 text-[10px] font-bold text-sky-400 bg-sky-500/5 px-2 py-0.5 rounded-sm border border-sky-500/10">
+                          <Activity className="w-2.5 h-2.5" />
+                          RULE
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-1 text-[10px] font-bold text-indigo-400 bg-indigo-500/5 px-2 py-0.5 rounded-sm border border-indigo-500/10">
+                          <Cpu className="w-2.5 h-2.5" />
+                          AI
+                        </span>
+                      )}
+                      <span className="text-[10px] font-mono text-slate-500 font-bold">
+                        {confidencePct}%
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Explain Button / Actions */}
+                  <div className="col-span-1 md:col-span-1 flex items-center justify-between md:justify-end gap-2 mt-2 md:mt-0">
+                    <span className="md:hidden text-[10px] text-slate-500 font-bold uppercase">Actions:</span>
+                    <button
+                      aria-label={`Explain ${threat.threat_type}`}
+                      disabled={explainQuota <= 0}
+                      onClick={(e) => { e.stopPropagation(); onSelectThreat(threat.id); }}
+                      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-bold transition-all duration-150 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap border ${
+                        isSelected
+                          ? "bg-sky-500 border-sky-600 text-slate-950 font-black shadow-[0_0_10px_rgba(14,165,233,0.15)]"
+                          : "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300"
+                      }`}
+                    >
+                      Brief
+                      <ArrowRight className="w-2.5 h-2.5" />
+                    </button>
+                  </div>
                 </div>
 
-                {/* Explain Button / Actions */}
-                <div className="col-span-1 md:col-span-1 flex items-center justify-between md:justify-end gap-2 mt-2 md:mt-0">
-                  <span className="md:hidden text-[10px] text-slate-500 font-bold uppercase">Actions:</span>
-                  <button
-                    aria-label={`Explain ${threat.threat_type}`}
-                    disabled={explainQuota <= 0}
-                    onClick={(e) => { e.stopPropagation(); onSelectThreat(threat.id); }}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-bold transition-all duration-150 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap border ${
-                      isSelected
-                        ? "bg-sky-500 border-sky-600 text-slate-950 font-black shadow-[0_0_10px_rgba(14,165,233,0.15)]"
-                        : "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300"
-                    }`}
+                {/* Collapsible Evidence Sub-Row */}
+                {isExpanded && threat.evidence && threat.evidence.length > 0 && (
+                  <div
+                    className="px-4 py-3 bg-slate-950/40 border-t border-slate-900 flex flex-col gap-2 cursor-default"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    Brief
-                    <ArrowRight className="w-2.5 h-2.5" />
-                  </button>
-                </div>
+                    <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+                      <Eye className="w-3.5 h-3.5 text-rose-500/70" />
+                      Raw Event Evidence (Redacted)
+                    </div>
+                    <div className="flex flex-col gap-1 max-h-[150px] overflow-y-auto rounded-sm border border-slate-900 bg-slate-950 p-2 text-[11px] font-mono text-slate-400 leading-normal scrollbar-thin">
+                      {threat.evidence.map((line, idx) => (
+                        <div key={idx} className="flex gap-2 hover:bg-slate-900/50 py-0.5 px-1 rounded-sm">
+                          <span className="text-slate-600 select-none">{idx + 1}.</span>
+                          <pre className="whitespace-pre-wrap break-all select-text font-mono flex-1 text-slate-300">
+                            {highlightEvidenceSafe(line)}
+                          </pre>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {/* Collapsible Evidence Sub-Row */}
-              {isExpanded && threat.evidence && threat.evidence.length > 0 && (
-                <div
-                  className="px-4 py-3 bg-slate-950/40 border-t border-slate-900 flex flex-col gap-2 cursor-default"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
-                    <Eye className="w-3.5 h-3.5 text-rose-500/70" />
-                    Raw Event Evidence (Redacted)
-                  </div>
-                  <div className="flex flex-col gap-1 max-h-[150px] overflow-y-auto rounded-sm border border-slate-900 bg-slate-950 p-2 text-[11px] font-mono text-slate-400 leading-normal scrollbar-thin">
-                    {threat.evidence.map((line, idx) => (
-                      <div key={idx} className="flex gap-2 hover:bg-slate-900/50 py-0.5 px-1 rounded-sm">
-                        <span className="text-slate-600 select-none">{idx + 1}.</span>
-                        <pre className="whitespace-pre-wrap break-all select-text font-mono flex-1 text-slate-300">
-                          {highlightEvidenceSafe(line)}
-                        </pre>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

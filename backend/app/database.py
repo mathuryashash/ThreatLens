@@ -222,6 +222,13 @@ class MockDatabase:
     def get_threat(self, threat_id: str) -> Optional[Dict[str, Any]]:
         return self.threats.get(threat_id)
 
+    def dismiss_threat(self, threat_id: str) -> Optional[Dict[str, Any]]:
+        if threat_id not in self.threats:
+            return None
+        self.threats[threat_id]["false_positive"] = True
+        self.threats[threat_id]["dismissed_at"] = datetime.utcnow().isoformat()
+        return self.threats[threat_id]
+
     def get_threat_logs(self, threat_id: str) -> List[str]:
         event_ids = [row["event_id"] for row in self.threat_events if row["threat_id"] == threat_id]
         raw_log_ids = [self.parsed_events[ev_id]["raw_log_id"] for ev_id in event_ids if ev_id in self.parsed_events]
@@ -432,6 +439,12 @@ class SupabaseDatabase:
 
     def get_threat(self, threat_id: str) -> Optional[Dict[str, Any]]:
         res = self.client.table("threats").select("*").eq("id", threat_id).execute()
+        return res.data[0] if res.data else None
+
+    def dismiss_threat(self, threat_id: str) -> Optional[Dict[str, Any]]:
+        # The shipped Supabase schema has false_positive but no dismissed_at column.
+        # Keep the endpoint schema-compatible and derive dismissed_at only in mock mode.
+        res = self.client.table("threats").update({"false_positive": True}).eq("id", threat_id).execute()
         return res.data[0] if res.data else None
 
     def get_threat_logs(self, threat_id: str) -> List[str]:

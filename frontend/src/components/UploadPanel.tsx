@@ -340,7 +340,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
         {!apiConnected && (
           <div className="flex items-center gap-2 p-3 rounded-sm bg-rose-500/10 border border-rose-500/20 text-xs text-rose-400 font-mono">
             <AlertCircle className="w-4.5 h-4.5 shrink-0" />
-            <span>API Server offline. Triage and upload features are disabled. Verify that the FastAPI backend is running at http://127.0.0.1:8000.</span>
+            <span>API Server offline. Triage and upload features are disabled. Verify that the FastAPI backend is running at {process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}.</span>
           </div>
         )}
         {errorMsg && (

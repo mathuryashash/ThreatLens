@@ -18,6 +18,7 @@ class Config:
     LLM_PROMPT_VERSION = os.environ.get("LLM_PROMPT_VERSION", "v1.0")
     ALLOWED_LOG_SOURCES = ["nginx", "auth", "syslog", "custom"]
     DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
+    ALLOW_MOCK_DB = os.environ.get("ALLOW_MOCK_DB", "false").lower() == "true"
 
     @property
     def is_db_configured(self) -> bool:
