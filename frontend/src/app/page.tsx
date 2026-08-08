@@ -10,6 +10,12 @@ import { getDemoExplanation } from "@/utils/demoExplanations";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
+// True offline = fetch threw (network/CORS). An HTTP error response (500, 429...)
+// means the server IS reachable — different failure, not "offline".
+const isNetworkError = (err: unknown): boolean =>
+  err instanceof TypeError ||
+  (err instanceof Error && /Failed to fetch|NetworkError|Load failed|fetch failed/i.test(err.message));
+
 interface ThreatItem {
   id: string;
   threat_type: string;
@@ -92,7 +98,7 @@ export default function Dashboard() {
       }
     } catch (err) {
       console.warn("Failed to fetch session quota:", err instanceof Error ? err.message : String(err));
-      setApiConnected(false);
+      if (isNetworkError(err)) setApiConnected(false);
     }
   }, []);
 
@@ -119,7 +125,7 @@ export default function Dashboard() {
       await fetchQuota(sid);
     } catch (err) {
       console.warn("Failed to load threats:", err instanceof Error ? err.message : String(err));
-      setApiConnected(false);
+      if (isNetworkError(err)) setApiConnected(false);
     } finally {
       setIsThreatsLoading(false);
     }
@@ -163,7 +169,7 @@ export default function Dashboard() {
       await loadThreats(activeSid);
     } catch (err) {
       console.warn("API Connection error in initSession:", err instanceof Error ? err.message : String(err));
-      setApiConnected(false);
+      if (isNetworkError(err)) setApiConnected(false);
     } finally {
       setIsResetting(false);
     }
@@ -243,7 +249,7 @@ export default function Dashboard() {
       }
       console.warn("Log ingestion error:", errMsg);
       alert(errMsg);
-      setApiConnected(false);
+      if (isNetworkError(err)) setApiConnected(false);
       setIsProcessing(false);
       setJobProgress(null);
     }
@@ -281,7 +287,7 @@ export default function Dashboard() {
         }
       } catch (err) {
         console.warn("Job status poll error:", err instanceof Error ? err.message : String(err));
-        setApiConnected(false);
+        if (isNetworkError(err)) setApiConnected(false);
         if (jobIntervalRef.current) {
           clearInterval(jobIntervalRef.current);
           jobIntervalRef.current = null;
@@ -366,7 +372,7 @@ export default function Dashboard() {
       }
       console.warn("Failed to fetch explanation:", errMsg);
       setExplainError(errMsg);
-      setApiConnected(false);
+      if (isNetworkError(err)) setApiConnected(false);
     } finally {
       setExplainLoading(false);
     }
