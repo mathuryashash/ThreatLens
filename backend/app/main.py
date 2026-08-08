@@ -6,7 +6,6 @@ from typing import List, Dict, Any, Optional
 from fastapi import FastAPI, BackgroundTasks, HTTPException, Request, Depends, status, Query
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 from app.config import settings
@@ -22,7 +21,13 @@ from app.rules import process_rules
 from app.llm import get_llm_client
 
 # Initialize rate limiter
-limiter = Limiter(key_func=get_remote_address)
+def _client_ip(request: Request) -> str:
+    # Render's Cloudflare proxy makes request.client.host a shared edge IP for ALL
+    # users, so slowapi's default key would rate-limit everyone as one person.
+    # cf-connecting-ip (set by Cloudflare, cannot be spoofed through it) is the real IP.
+    return request.headers.get("cf-connecting-ip") or (request.client.host if request.client else "unknown")
+
+limiter = Limiter(key_func=_client_ip)
 app = FastAPI(title="ThreatLens API", version="1.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
@@ -83,7 +88,7 @@ def health_check():
     return {"status": "ok", "timestamp": datetime.utcnow().isoformat()}
 
 @app.post("/api/session", response_model=SessionCreateResponse)
-@limiter.limit("20/minute")
+@limiter.limit("60/minute")
 def create_session(request: Request):
     session = db.create_session()
     return {
