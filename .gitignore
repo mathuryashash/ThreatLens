@@ -34,3 +34,6 @@ Thumbs.db
 docs/PRESENTATION_SCRIPT.md
 .playwright-mcp/
 .serena/
+
+.vercel
+.env*
