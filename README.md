@@ -1,145 +1,144 @@
 # ThreatLens — Security Log Triage Dashboard
 
-> A session-scoped security log triage dashboard for nginx and Linux auth events. Developers paste logs, the backend runs deterministic rules for common attacks, sends unmatched lines to a Groq-hosted Llama model for advisory classification, and shows prioritized explanations in a session-scoped feed.
+> A session-scoped security log triage dashboard for nginx and Linux auth events. Paste logs, the backend runs deterministic rules for common attacks, sends unmatched lines to a Groq-hosted Llama model for advisory classification, and shows prioritized explanations in a session-scoped feed.
+
+**Live demo:** https://threatlenss.vercel.app — backend: https://threatlens-qd5e.onrender.com
 
 ---
 
 ## What it does
 
-Paste or upload nginx access logs or Linux auth logs. ThreatLens:
-
-1. Parses and normalizes each log line
-2. Runs deterministic rules to catch obvious attacks (SQLi, brute force, path traversal, SSRF, privilege escalation)
-3. Sends unmatched logs to a Groq-hosted Llama model for advisory classification
+1. Parses and normalizes nginx access logs / Linux auth logs
+2. Runs deterministic rules (SQLi, brute force, path traversal, SSRF, XSS, privilege escalation)
+3. Sends unmatched logs to the LLM for advisory classification
 4. Displays a live threat feed with severity badges
-5. Lets you click any threat for a plain-English AI analyst brief
+5. Click any threat for a plain-English Analyst Brief (MITRE tactic + explanation + recommended actions)
 
-**All output is advisory only. No automated blocking, agent installation, or account login required.**
+**All output is advisory only. No automated blocking, no agent, no login required.**
 
 ---
 
 ## Features
 
-- **No agent install or account login** — paste logs directly to run triage
-- **Log upload** — paste text or drag-and-drop a file (up to 3MB / 500 lines)
-- **Sample attack logs** — one-click preload of brute force, SQLi, XSS, SSRF, path traversal, privilege escalation, and benign traffic
-- **Deterministic rule engine** — fast, reliable detection for known attack patterns
-- **Groq LLM classifier** — catches edge cases rules miss; explains in plain English
-- **Near-realtime threat feed** — polling every 3 seconds
-- **Severity badges** — CRITICAL / HIGH / MEDIUM / LOW / INFO
-- **Analyst Brief** — click any threat for MITRE tactic, explanation, and recommended actions
-- **Stats cards** — threat counts by status and rules/AI hits
-- **Demo reset** — one click to start a fresh session
-- **Prompt injection defense** — logs are wrapped in `<untrusted_logs>` XML tags in system prompts and explicitly labeled untrusted data
-
----
-
-## Architecture
-
-```
-User uploads logs
-      ↓
-Next.js Frontend (Vercel)
-      ↓
-FastAPI Backend (Railway)
-      ↓
-Parser + Redactor → Rule Engine → Threats table
-                 ↘ Groq LLM ↗
-      ↓
-Supabase PostgreSQL
-      ↑
-Frontend polls /api/threats every 3s
-```
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full diagram.
+- **No signup** — paste logs directly for triage
+- **Log upload** — paste / drag-and-drop file (3MB / 500 lines / 8KB per line)
+- **Sample log file** — `sample_attack_logs.log` at repo root (see [docs/SAMPLE_LOGS.md](docs/SAMPLE_LOGS.md))
+- **One-click incident scenarios** — SSH Brute Force, SSRF Probe, SQL Injection, Priv Esc, Mixed Scan
+- **Deterministic rule engine first** — cheap, fast, reliable (ADR-0001)
+- **Groq LLM classifier** — catches edge cases rules miss; 20 lines/batch, 5 concurrent
+- **3-second polling feed**, severity badges, stats cards, demo reset
+- **Prompt injection defense** — logs wrapped in `<logs>` XML tags, labeled untrusted
+- **LLM hallucination check** — `source_ip` validated against parsed events before storage
 
 ---
 
 ## Tech Stack
 
 | Layer | Tool |
-|-------|------|
-| Frontend | Next.js 16 App Router |
-| Backend | FastAPI (Python) |
-| Database | Supabase (PostgreSQL) |
-| AI Primary | Groq — llama-3.1-8b-instant (classify) + llama-3.3-70b-versatile (explain) |
-| AI Backup | Experimental Gemini Flash (Optional swap) |
-| Hosting | Vercel (frontend) + Railway (backend) |
+|---|---|
+| Frontend | Next.js 16 App Router, React 19, Tailwind 4 — **Vercel** |
+| Backend | FastAPI (Python, slowapi rate limits) — **Render** |
+| Database | Supabase PostgreSQL (in-memory mock fallback) |
+| AI | Groq llama-3.1-8b-instant (classify), llama-3.3-70b-versatile (explain); optional Gemini swap |
 
 ---
 
 ## Quickstart (Local)
 
-### Prerequisites
-- Node.js 18+
-- Python 3.11+
-- Supabase project with schema applied (optional: falls back to in-memory mock DB)
-
-### Backend
-
 ```bash
+# Backend — http://localhost:8000
 cd backend
-cp .env.example .env   # fill in keys
+cp .env.example .env        # fill keys; ALLOW_MOCK_DB=true for keyless demo
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
-```
 
-### Frontend
-
-```bash
+# Frontend — http://localhost:3000
 cd frontend
-cp .env.example .env.local   # set NEXT_PUBLIC_API_URL
+cp .env.example .env.local  # NEXT_PUBLIC_API_URL=http://localhost:8000
 npm install
 npm run dev
 ```
 
-### Database
-
-Run the SQL in `docs/optional/DATABASE_SCHEMA.md` against your Supabase project.
+Supabase optional: apply `docs/optional/DATABASE_SCHEMA.md` SQL, else run with `ALLOW_MOCK_DB=true`.
 
 ---
 
-## Scope & Honest Limitations
+## Deployment & Connection Settings
 
-**ThreatLens is:**
-- A demo-grade log triage dashboard
-- Focused on nginx access logs and Linux auth/sshd/sudo logs
-- Rules-first, AI-assisted
-- Session-scoped (no authentication or accounts)
-- Advisory only
+### Vercel (frontend)
 
-**ThreatLens is NOT:**
-- A production monitoring dashboard or SIEM/WAF/IDS/EDR
-- A continuous log ingestion pipeline
-- A system that alerts, blocks, or automatically responds to threats
-- A production log retention solution
-- A guarantee that all security threats are detected
+| Setting | Value |
+|---|---|
+| Root Directory | `frontend` |
+| Framework | Next.js |
+| `NEXT_PUBLIC_API_URL` | `https://threatlens-qd5e.onrender.com` (no trailing `/`) |
 
-### Real-World Design Tradeoffs
-- **Session IDs** are namespace tokens to scope demo data, not credentials. No RLS is enabled in the demo (application-level isolation only).
-- **Redaction** is best-effort and runs client/server-side; never upload production secrets.
-- **AI Classification** produces false positives; deterministic rules run first to save cost and increase speed.
-- **In-Memory Fallback**: If Supabase credentials are missing, the system falls back to a mock database (if enabled via `THREATLENS_ALLOW_MOCK_DB=true`).
+### Render (backend)
+
+| Setting | Value |
+|---|---|
+| Start command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+| `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` | Supabase project |
+| `GROQ_API_KEY`, `LLM_PROVIDER=groq` | LLM |
+| `FRONTEND_ORIGIN` | `https://threatlenss.vercel.app` — must byte-match; **no trailing slash** |
+| `ALLOW_MOCK_DB` | `false` |
+
+Render free tier sleeps idle — keep the `/api/health` endpoint pinged externally (e.g. UptimeRobot, 5-min interval) and the in-app keepalive loop stays warm.
+
+### Known connection gotchas (all handled in code)
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| "API Server offline" in browser | CSP `connect-src` missing backend domain (Next.js headers) | whitelist `https://*.onrender.com` in `next.config.ts` |
+| Requests refused silently | CORS — `FRONTEND_ORIGIN` mismatch (byte-exact) | set exact Vercel URL |
+| Stuck "offline" while server healthy | rate limit keyed on shared Cloudflare edge IP | `cf-connecting-ip` key in `main.py` |
+| Slow first load | Render free-tier spin-down | external monitor ping |
+
+---
+
+## Architecture
+
+```
+Browser (Next.js) ── polls /api/threats every 3s ──┐
+      │  POST /api/ingest (async job)              │
+      ▼                                            ▼
+   FastAPI (main.py)                        Supabase/Postgres
+   parser → redactor → rules → LLM            sessions, raw_logs,
+      (unmatched → Groq, 20/batch)            parsed_events, threats,
+                                               threat_events, ingestion_jobs
+```
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+---
+
+## Scope & Limitations
+
+**Is:** demo-grade triage · nginx/auth logs · rules-first, AI-assisted · session-scoped, no accounts · advisory only
+
+**Is NOT:** a SIEM/WAF/IDS · continuous ingestion · automated response · retention system · guaranteed detection
+
+- Session IDs are demo namespace tokens, not credentials (ADR-0004)
+- Redaction is best-effort — never upload production secrets
+- LLM output is advisory and can misclassify; rules run first (ADR-0001)
 
 ---
 
 ## Documentation
 
-| Document | Purpose |
-|----------|---------|
-| [PRD.md](docs/PRD.md) | Product requirements |
-| [TECHNICAL_DESIGN.md](docs/TECHNICAL_DESIGN.md) | Architecture and implementation |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System diagrams |
-| [ERD.md](docs/ERD.md) | Database schema diagram |
+| Doc | Purpose |
+|---|---|
+| [SAMPLE_LOGS.md](docs/SAMPLE_LOGS.md) | Sample attack log file — contents & how to demo |
+| [DEPLOYMENT.md](docs/DEPLOYMENT.md) | Full deploy guide (Vercel + Render + Supabase) |
 | [API_SPEC.md](docs/API_SPEC.md) | API reference |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System diagrams |
+| [PRD.md](docs/PRD.md) / [TECHNICAL_DESIGN.md](docs/TECHNICAL_DESIGN.md) | Requirements & design |
 | [SECURITY.md](docs/SECURITY.md) | Security design |
-| [TEST_PLAN.md](docs/TEST_PLAN.md) | Test cases |
-| [DEPLOYMENT.md](docs/DEPLOYMENT.md) | Deployment guide |
+| [ERD.md](docs/ERD.md) / [TEST_PLAN.md](docs/TEST_PLAN.md) | Schema & tests |
 | [DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Demo script |
-| [IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) | Build timeline |
 
 ---
 
-## Author
+## License
 
-Yashash Mathur — Hackathon submission
+Hackathon project — Yashash Mathur
