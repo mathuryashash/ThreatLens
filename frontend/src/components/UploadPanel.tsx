@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import {
   UploadCloud, Play, Code, AlertCircle, FileText,
   CheckCircle, XCircle, Activity, Cpu, Zap, Shield,
-  Server, Eye, Lock, Globe, X, ArrowRight
+  Server, Eye, Lock, Globe, X, ArrowRight, Download
 } from "lucide-react";
 
 interface ParseSummary {
@@ -132,6 +132,8 @@ const PIPELINE_STEPS = [
   { key: "store", label: "Store", desc: "Commit findings" },
 ];
 
+export const SAMPLE_LOG_DOWNLOAD_URL = "https://raw.githubusercontent.com/mathuryashash/ThreatLens/main/sample_attack_logs.log";
+
 export const UploadPanel: React.FC<UploadPanelProps> = ({
   onAnalyze,
   isProcessing,
@@ -191,6 +193,21 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
     setFileName(null);
     setSourceType(source);
     setInputText(SAMPLE_LOGS[key].join("\n"));
+  };
+
+  const loadRemoteSample = async () => {
+    setErrorMsg("");
+    if (!apiConnected) { setErrorMsg("Backend offline — start the server, then try again."); return; }
+    try {
+      const res = await fetch(SAMPLE_LOG_DOWNLOAD_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      setInputText(text);
+      setFileName("sample_attack_logs.log (GitHub)");
+      setSourceType(text.includes("sshd") || text.includes("sudo:") ? "auth" : "nginx");
+    } catch {
+      setErrorMsg("Could not fetch sample from GitHub. Download it manually and upload the file.");
+    }
   };
 
   const clearInput = () => { setInputText(""); setFileName(null); setErrorMsg(""); };
@@ -391,6 +408,32 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
             </div>
           </div>
         )}
+
+        {/* ── GitHub sample download ── */}
+        <div className="flex flex-col gap-2.5 border-t border-slate-900 pt-4">
+          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Test with the full sample file</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={loadRemoteSample}
+              disabled={isProcessing || !apiConnected}
+              className="flex-1 flex items-center justify-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-sm bg-slate-900 border border-slate-800 text-slate-300 hover:border-sky-500/40 hover:text-sky-300 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Load sample file (GitHub)
+            </button>
+            <a
+              href={SAMPLE_LOG_DOWNLOAD_URL}
+              download="sample_attack_logs.log"
+              className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-2 rounded-sm bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-600 hover:text-slate-200 transition-colors whitespace-nowrap"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download .log
+            </a>
+          </div>
+          <p className="text-[10px] text-slate-600 leading-relaxed">
+            Mix of SQLi, SSRF, XSS, path traversal, SSH brute force, privilege escalation, recon, credential stuffing and benign traffic — sourced from <span className="text-slate-500 font-mono">sample_attack_logs.log</span> in the repo.
+          </p>
+        </div>
 
         {/* ── Technical Scenario Cards ── */}
         <div className="flex flex-col gap-2.5 border-t border-slate-900 pt-4">

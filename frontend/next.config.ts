@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline'",
-              "connect-src 'self' http://localhost:8000 http://127.0.0.1:8000 https://*.railway.app https://*.onrender.com",
+              "connect-src 'self' http://localhost:8000 http://127.0.0.1:8000 https://*.railway.app https://*.onrender.com https://raw.githubusercontent.com",
               "img-src 'self' data:",
               "frame-ancestors 'none'",
             ].join("; "),

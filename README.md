@@ -4,6 +4,29 @@
 
 **Live demo:** https://threatlenss.vercel.app — backend: https://threatlens-qd5e.onrender.com
 
+![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
+![React 19](https://img.shields.io/badge/React-19-61dafb)
+![FastAPI](https://img.shields.io/badge/FastAPI-Python-blue)
+![Supabase](https://img.shields.io/badge/DB-Supabase-green)
+![Groq](https://img.shields.io/badge/AI-Groq%20Llama-orange)
+![GitHub last commit](https://img.shields.io/github/last-commit/mathuryashash/ThreatLens)
+
+---
+
+## Try it live — 60 seconds
+
+1. Open the [demo](https://threatlenss.vercel.app)
+2. Click **"Load sample file (GitHub)"** in the upload panel — a mixed attack/benign log set is fetched straight from this repo (or download it below)
+3. Click **Analyze Logs** and watch the pipeline strip: Parse → Redact → Rules → LLM → Store
+4. Click any flagged threat for an analyst brief (MITRE tactic + explanation + recommended actions)
+
+| Asset | Link |
+|---|---|
+| Sample file (full) | [Download `sample_attack_logs.log`](https://raw.githubusercontent.com/mathuryashash/ThreatLens/main/sample_attack_logs.log) |
+| Sample contents & demo walkthrough | [docs/SAMPLE_LOGS.md](docs/SAMPLE_LOGS.md) |
+
+The sample contains SQLi, SSRF, XSS, path traversal, SSH brute force (auth format), privilege escalation, recon, credential stuffing and benign traffic — in **both** nginx and Linux auth log formats.
+
 ---
 
 ## What it does
@@ -22,7 +45,7 @@
 
 - **No signup** — paste logs directly for triage
 - **Log upload** — paste / drag-and-drop file (3MB / 500 lines / 8KB per line)
-- **Sample log file** — `sample_attack_logs.log` at repo root (see [docs/SAMPLE_LOGS.md](docs/SAMPLE_LOGS.md))
+- **Sample log file** — `sample_attack_logs.log` at repo root, downloadable in-app or via [raw GitHub](https://raw.githubusercontent.com/mathuryashash/ThreatLens/main/sample_attack_logs.log) (see [docs/SAMPLE_LOGS.md](docs/SAMPLE_LOGS.md))
 - **One-click incident scenarios** — SSH Brute Force, SSRF Probe, SQL Injection, Priv Esc, Mixed Scan
 - **Deterministic rule engine first** — cheap, fast, reliable (ADR-0001)
 - **Groq LLM classifier** — catches edge cases rules miss; 20 lines/batch, 5 concurrent
@@ -98,14 +121,25 @@ Render free tier sleeps idle — keep the `/api/health` endpoint pinged external
 
 ## Architecture
 
-```
-Browser (Next.js) ── polls /api/threats every 3s ──┐
-      │  POST /api/ingest (async job)              │
-      ▼                                            ▼
-   FastAPI (main.py)                        Supabase/Postgres
-   parser → redactor → rules → LLM            sessions, raw_logs,
-      (unmatched → Groq, 20/batch)            parsed_events, threats,
-                                               threat_events, ingestion_jobs
+```mermaid
+flowchart LR
+    U["Browser (Next.js, polls /api/threats every 3s)"]
+    A["Analyst brief on threat click"]
+
+    U -->|"POST /api/ingest"| API["FastAPI"]
+    API --> P["Parser"]
+    P --> R["Redactor"]
+    R --> X["Rules engine"]
+    X -->|"unmatched, ≤20/batch"| L["Groq llama-3.1-8b-instant"]
+    X -->|"matched"| T[("Supabase / MockDB")]
+    L -->|"classifications"| T
+    T -->|"session-scoped feed"| U
+    U -->|"POST /api/explain"| E["Groq llama-3.3-70b-versatile"]
+    E -->|"cached briefs"| T
+
+    style L fill:#3b0764,stroke:#a855f7
+    style E fill:#3b0764,stroke:#a855f7
+    style T fill:#052e16,stroke:#22c55e
 ```
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
