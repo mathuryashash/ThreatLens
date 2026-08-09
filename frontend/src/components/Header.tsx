@@ -1,16 +1,20 @@
 "use client";
 
 import React from "react";
-import { ShieldAlert, RefreshCw, Wifi, WifiOff } from "lucide-react";
+import { ShieldAlert, RefreshCw, Wifi, WifiOff, Loader2 } from "lucide-react";
 
 interface HeaderProps {
-  apiConnected: boolean;
+  connState: "online" | "retrying" | "offline";
+  connAttempts: number;
+  lastError: string | null;
   onReset: () => void;
   isResetting: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  apiConnected,
+  connState,
+  connAttempts,
+  lastError,
   onReset,
   isResetting,
 }) => {
@@ -33,13 +37,18 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right: status + action */}
         <div className="flex items-center gap-3">
-          {/* API status — compact dot + label */}
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
-            apiConnected
-              ? "bg-emerald-500/5 border-emerald-500/20 text-emerald-400"
-              : "bg-rose-500/5 border-rose-500/20 text-rose-400"
-          }`}>
-            {apiConnected ? (
+          {/* API status — dot + label; hover to see the exact failure */}
+          <div
+            title={lastError ?? (connState === "online" ? "Backend reachable" : "Backend unreachable")}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+              connState === "online"
+                ? "bg-emerald-500/5 border-emerald-500/20 text-emerald-400"
+                : connState === "retrying"
+                  ? "bg-amber-500/5 border-amber-500/30 text-amber-400"
+                  : "bg-rose-500/5 border-rose-500/20 text-rose-400"
+            }`}
+          >
+            {connState === "online" && (
               <>
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50" />
@@ -48,7 +57,14 @@ export const Header: React.FC<HeaderProps> = ({
                 <Wifi className="w-3 h-3" />
                 <span className="hidden sm:inline">Live</span>
               </>
-            ) : (
+            )}
+            {connState === "retrying" && (
+              <>
+                <Loader2 className="w-3 h-3 animate-spin" />
+                <span>Reconnecting… {connAttempts}/3</span>
+              </>
+            )}
+            {connState === "offline" && (
               <>
                 <WifiOff className="w-3 h-3 animate-pulse" />
                 <span>Offline</span>

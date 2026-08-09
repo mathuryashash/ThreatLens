@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import asyncio
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
@@ -34,6 +35,13 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Global Semaphore to limit concurrent LLM calls across all background tasks
 llm_semaphore = asyncio.Semaphore(5)
+
+# Idempotency guard for retried ingest POSTs: client_request_id -> (job_id, timestamp).
+# ponytail: in-process dict; lost on instance restart, TTL 1h. A retry after a full
+# instance restart could still double-submit — acceptable for demo; move to a DB
+# unique constraint if this ever matters.
+_ingest_dedupe: Dict[str, tuple[str, float]] = {}
+DEDUPE_TTL_SECONDS = 3600
 
 # ============================================================
 # Render keepalive — pings /api/health every 5 min so the
@@ -389,6 +397,22 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
                 detail={"error": "line_too_long", "detail": "Log line exceeds maximum limit of 8KB"}
             )
         
+    # Idempotent retry guard — return the existing job if this request was already seen
+    client_req_id = payload.client_request_id
+    if client_req_id:
+        now = time.time()
+        for rid, (_, ts) in list(_ingest_dedupe.items()):
+            if now - ts > DEDUPE_TTL_SECONDS:
+                del _ingest_dedupe[rid]
+        if client_req_id in _ingest_dedupe:
+            session = get_valid_session(payload.session_id)
+            return {
+                "status": "queued",
+                "job_id": _ingest_dedupe[client_req_id][0],
+                "ingested_count": len(payload.logs),
+                "remaining_quota": max(0, (session.get("max_logs") or 500) - (session.get("used_logs") or 0)),
+            }
+
     # Increment logs quota atomically
     new_used = db.increment_session_logs(payload.session_id, len(payload.logs))
     if new_used == -1:
@@ -399,6 +423,8 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
     
     # Create job
     job = db.create_job(payload.session_id, len(payload.logs))
+    if client_req_id:
+        _ingest_dedupe[client_req_id] = (job["id"], time.time())
     
     # Dispatch background worker task
     bg_tasks.add_task(

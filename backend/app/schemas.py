@@ -12,6 +12,7 @@ class IngestRequest(BaseModel):
     session_id: str
     source_type: str = Field(..., description="Must be one of: 'nginx', 'auth', 'syslog', 'custom'")
     logs: List[str]
+    client_request_id: Optional[str] = None
 
 class IngestResponse(BaseModel):
     status: str

@@ -28,6 +28,7 @@ interface UploadPanelProps {
   logsRemaining: number;
   parseSummary: ParseSummary | null;
   apiConnected: boolean;
+  lastError?: string | null;
 }
 
 const SAMPLE_SCENARIOS = [
@@ -141,6 +142,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
   logsRemaining,
   parseSummary,
   apiConnected,
+  lastError,
 }) => {
   const [inputText, setInputText] = useState("");
   const [sourceType, setSourceType] = useState("nginx");
@@ -355,9 +357,12 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
 
         {/* ── Error / Offline Warnings ── */}
         {!apiConnected && (
-          <div className="flex items-center gap-2 p-3 rounded-sm bg-rose-500/10 border border-rose-500/20 text-xs text-rose-400 font-mono">
-            <AlertCircle className="w-4.5 h-4.5 shrink-0" />
-            <span>API Server offline. Triage and upload features are disabled. Verify that the FastAPI backend is running at {process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}.</span>
+          <div className="flex items-start gap-2 p-3 rounded-sm bg-rose-500/10 border border-rose-500/20 text-xs text-rose-400 font-mono">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+            <div className="flex flex-col gap-1">
+              <span>API Server offline. Triage and upload features are disabled. Verify that the FastAPI backend is running at {process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}.</span>
+              {lastError && <span className="text-[10px] text-rose-500/80">{lastError}</span>}
+            </div>
           </div>
         )}
         {errorMsg && (

@@ -16,6 +16,47 @@ const isNetworkError = (err: unknown): boolean =>
   err instanceof TypeError ||
   (err instanceof Error && /Failed to fetch|NetworkError|Load failed|fetch failed/i.test(err.message));
 
+const RETRY_ATTEMPTS = 3;
+const RETRY_TIMEOUT_MS = 45_000;
+const RETRY_BACKOFF_MS = 10_000;
+
+// Categorize a fetch failure so the user sees WHAT failed, not a generic message.
+const classifyFetchError = (err: unknown): string => {
+  if (err instanceof Error && err.name === "AbortError") {
+    return `Request timed out after ${RETRY_TIMEOUT_MS / 1000}s — the backend may be waking from sleep (cold start).`;
+  }
+  if (isNetworkError(err)) {
+    return "Network failure — backend unreachable (CORS, DNS, or connection reset). Full error in the browser console.";
+  }
+  return err instanceof Error ? err.message : String(err);
+};
+
+// Fetch with timeout + bounded retries. Only used for ingest (the one call where
+// a transient cold-start failure matters most and where a popup misleads).
+const fetchWithRetry = async (
+  url: string,
+  options: RequestInit,
+  onAttempt: (attempt: number) => void
+): Promise<Response> => {
+  let lastErr: unknown = null;
+  for (let attempt = 1; attempt <= RETRY_ATTEMPTS; attempt++) {
+    onAttempt(attempt);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), RETRY_TIMEOUT_MS);
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      return res;
+    } catch (err) {
+      lastErr = err;
+      console.warn(`Ingest attempt ${attempt}/${RETRY_ATTEMPTS} failed:`, err instanceof Error ? err.message : String(err));
+      if (attempt < RETRY_ATTEMPTS) await new Promise((r) => setTimeout(r, RETRY_BACKOFF_MS));
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  throw new Error(classifyFetchError(lastErr));
+};
+
 interface ThreatItem {
   id: string;
   threat_type: string;
@@ -58,7 +99,17 @@ export default function Dashboard() {
   
   // Connection states
   const [apiConnected, setApiConnected] = useState<boolean>(true);
+  const [connAttempts, setConnAttempts] = useState<number>(0);
+  const [lastError, setLastError] = useState<string | null>(null);
   const [isResetting, setIsResetting] = useState<boolean>(false);
+
+  // retrying = retries in flight (or between them); offline = retries exhausted
+  const connState: "online" | "retrying" | "offline" =
+    connAttempts > 0 && connAttempts < RETRY_ATTEMPTS
+      ? "retrying"
+      : apiConnected && connAttempts === 0
+        ? "online"
+        : "offline";
   
   // Threat Feed & Stats
   const [threats, setThreats] = useState<ThreatItem[]>([]);
@@ -211,15 +262,21 @@ export default function Dashboard() {
     });
 
     try {
-      const res = await fetch(`${API_BASE}/api/ingest`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          session_id: sessionId,
-          source_type: sourceType,
-          logs: logs,
-        }),
-      });
+      const res = await fetchWithRetry(
+        `${API_BASE}/api/ingest`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_id: sessionId,
+            source_type: sourceType,
+            logs: logs,
+            client_request_id: crypto.randomUUID(),
+          }),
+        },
+        (attempt) => setConnAttempts(attempt)
+      );
+      setConnAttempts(0);
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
@@ -241,15 +298,17 @@ export default function Dashboard() {
     } catch (err: unknown) {
       let errMsg = "Log ingestion failed. Please try again.";
       if (err instanceof Error) {
-        if (err.message.includes("Failed to fetch")) {
-          errMsg = `API server offline. Log analysis is unavailable. Verify that the API backend is running at ${API_BASE}.`;
+        if (isNetworkError(err) || err.message.startsWith("Network failure") || err.message.startsWith("Request timed out")) {
+          const category = classifyFetchError(err);
+          setLastError(category);
+          setApiConnected(false);
+          errMsg = `API server offline after ${RETRY_ATTEMPTS} attempts. ${category}`;
         } else {
           errMsg = err.message;
         }
       }
       console.warn("Log ingestion error:", errMsg);
       alert(errMsg);
-      if (isNetworkError(err)) setApiConnected(false);
       setIsProcessing(false);
       setJobProgress(null);
     }
@@ -431,7 +490,9 @@ export default function Dashboard() {
     <div className="flex flex-col h-screen overflow-hidden">
       {/* Header Bar */}
       <Header
-        apiConnected={apiConnected}
+        connState={connState}
+        connAttempts={connAttempts}
+        lastError={lastError}
         onReset={handleReset}
         isResetting={isResetting}
       />
@@ -467,6 +528,7 @@ export default function Dashboard() {
                 aiMatches: threats.filter(t => t.classification_source === "ai").length,
               } : null}
               apiConnected={apiConnected}
+              lastError={lastError}
             />
           </div>
 
