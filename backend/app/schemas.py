@@ -13,7 +13,7 @@ class IngestRequest(BaseModel):
     source_type: str = Field(..., description="Must be one of: 'nginx', 'auth', 'syslog', 'custom'")
     logs: List[str]
     client_request_id: Optional[str] = None
-    logs_b64: bool = False  # set when logs[] are base64-encoded (WAF-safe transport)
+    logs_xor_hex: bool = False  # set when logs[] are XOR+hex-encoded (WAF-safe transport)
 
 class IngestResponse(BaseModel):
     status: str

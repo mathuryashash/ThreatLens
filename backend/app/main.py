@@ -1,4 +1,4 @@
-﻿import os
+import os
 import json
 import time
 import asyncio
@@ -374,20 +374,24 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
     # Validate session
     session = get_valid_session(payload.session_id)
     
-    # Decode base64 logs if the client sent them encoded (Render's Cloudflare edge
-    # WAF drops POST bodies containing attack-pattern strings â€” the thing this
-    # product is built to ingest â€” so the frontend encodes lines in transit)
-    import base64
+    # Decode XOR+hex logs if the client sent them encoded (Render's Cloudflare edge
+    # Render's Cloudflare edge WAF drops POST bodies containing attack-pattern
+    # strings (the very content this app ingests) and decodes base64 before
+    # scanning, so the frontend sends lines XOR'd (key 0x5A) and hex-encoded.
+    XOR_KEY = 0x5A
     logs = payload.logs
-    if payload.logs_b64:
+    if payload.logs_xor_hex:
         try:
-            logs = [base64.b64decode(l).decode("utf-8", errors="replace") for l in payload.logs]
-        except Exception:
+            logs = [
+                bytes(b ^ XOR_KEY for b in bytes.fromhex(line)).decode("utf-8", errors="replace")
+                for line in payload.logs
+            ]
+        except (ValueError, TypeError):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"error": "bad_base64", "detail": "logs_b64=true but a line was not valid base64"}
+                detail={"error": "bad_xor_hex", "detail": "logs_xor_hex=true but a line was not valid hex"}
             )
-    
+
     # Validate source_type
     allowed_sources = ["nginx", "auth", "syslog", "custom"]
     if payload.source_type not in allowed_sources:
@@ -700,4 +704,5 @@ def dismiss_threat(request: Request, threat_id: str, payload: DismissThreatReque
         "status": "dismissed",
         "dismissed_at": dismissed.get("dismissed_at") if dismissed else None
     }
+
 

@@ -85,7 +85,7 @@ CREATE TABLE threats (
   id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   session_id            UUID NOT NULL REFERENCES sessions(id) ON DELETE CASCADE,
   threat_type           TEXT NOT NULL CHECK (threat_type IN (
-                          'BRUTE_FORCE','PORT_SCAN','SQLI','XSS',
+                          'BRUTE_FORCE','PORT_SCAN','SQLI','XSS','CMD_INJECTION','LOG4SHELL',
                           'PRIV_ESC','DATA_EXFIL','SSRF','RECON',
                           'PATH_TRAVERSAL','MALWARE','SUSPICIOUS'
                         )),

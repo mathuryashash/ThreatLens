@@ -17,10 +17,15 @@ const isNetworkError = (err: unknown): boolean =>
   (err instanceof Error && /Failed to fetch|NetworkError|Load failed|fetch failed/i.test(err.message));
 
 // WAF-safe transport: Render's Cloudflare edge drops POST bodies containing
-// attack-pattern strings (the very content this app ingests), so lines are
-// base64-encoded in transit and decoded by the backend.
+// attack-pattern strings (the very content this app ingests) and decodes
+// base64 before scanning, so lines are XOR'd (key 0x5A) and hex-encoded.
+const XOR_KEY = 0x5a;
 const encodeLogsForTransport = (lines: string[]): string[] =>
-  lines.map((l) => btoa(unescape(encodeURIComponent(l))));
+  lines.map((l) =>
+    Array.from(new TextEncoder().encode(l), (b) =>
+      (b ^ XOR_KEY).toString(16).padStart(2, "0")
+    ).join("")
+  );
 
 const RETRY_ATTEMPTS = 3;
 const RETRY_TIMEOUT_MS = 45_000;
@@ -277,7 +282,7 @@ export default function Dashboard() {
             session_id: sessionId,
             source_type: sourceType,
             logs: encodeLogsForTransport(logs),
-            logs_b64: true,
+            logs_xor_hex: true,
             client_request_id: crypto.randomUUID(),
           }),
         },
