@@ -16,6 +16,15 @@ def clean_ip(ip: Optional[str]) -> Optional[str]:
     except ValueError:
         return None
 
+def _is_valid_uuid(s: Optional[str]) -> bool:
+    if not s:
+        return False
+    try:
+        uuid.UUID(s)
+        return True
+    except (ValueError, AttributeError, TypeError):
+        return False
+
 # In-memory Mock Database for Offline fallback
 class MockDatabase:
     def __init__(self):
@@ -290,6 +299,8 @@ class SupabaseDatabase:
         return res.data[0]
 
     def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
+        if not _is_valid_uuid(session_id):
+            return None
         res = self.client.table("sessions").select("*").eq("id", session_id).execute()
         return res.data[0] if res.data else None
 
@@ -362,6 +373,8 @@ class SupabaseDatabase:
         self.client.table("ingestion_jobs").update(update_data).eq("id", job_id).execute()
 
     def get_job(self, job_id: str) -> Optional[Dict[str, Any]]:
+        if not _is_valid_uuid(job_id):
+            return None
         res = self.client.table("ingestion_jobs").select("*").eq("id", job_id).execute()
         return res.data[0] if res.data else None
 
@@ -438,6 +451,8 @@ class SupabaseDatabase:
         return res.data
 
     def get_threat(self, threat_id: str) -> Optional[Dict[str, Any]]:
+        if not _is_valid_uuid(threat_id):
+            return None
         res = self.client.table("threats").select("*").eq("id", threat_id).execute()
         return res.data[0] if res.data else None
 

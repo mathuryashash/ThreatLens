@@ -45,7 +45,7 @@ def parse_auth_time(time_str: str) -> Optional[datetime]:
 # Regex patterns for Nginx
 # Example: 203.0.113.42 - - [23/May/2025:14:33:01 +0000] "GET /api/users?id=1 HTTP/1.1" 400 512
 NGINX_PATTERN = re.compile(
-    r'^(?P<ip>\S+)\s+\S+\s+(?P<user>\S+)\s+\[(?P<time>[^\]]+)\]\s+"(?P<method>\S+)\s+(?P<path>\S+)\s+[^"]*"\s+(?P<status>\d+)\s+(?P<bytes>\d+)'
+    r'^(?P<ip>\S+)\s+\S+\s+(?P<user>\S+)\s+\[(?P<time>[^\]]+)\]\s+"(?P<method>\S+)\s+(?P<path>.+?)\s+(?P<proto>HTTP/\S+)"\s+(?P<status>\d+)\s+(?P<bytes>\d+)'
 )
 
 # Regex patterns for Linux Auth Logs
