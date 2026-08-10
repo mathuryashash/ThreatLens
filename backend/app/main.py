@@ -1,4 +1,4 @@
-import os
+﻿import os
 import json
 import time
 import asyncio
@@ -38,13 +38,13 @@ llm_semaphore = asyncio.Semaphore(5)
 
 # Idempotency guard for retried ingest POSTs: client_request_id -> (job_id, timestamp).
 # ponytail: in-process dict; lost on instance restart, TTL 1h. A retry after a full
-# instance restart could still double-submit — acceptable for demo; move to a DB
+# instance restart could still double-submit â€” acceptable for demo; move to a DB
 # unique constraint if this ever matters.
 _ingest_dedupe: Dict[str, tuple[str, float]] = {}
 DEDUPE_TTL_SECONDS = 3600
 
 # ============================================================
-# Render keepalive — pings /api/health every 5 min so the
+# Render keepalive â€” pings /api/health every 5 min so the
 # free-tier instance never goes to sleep due to inactivity.
 # RENDER_EXTERNAL_URL is auto-injected by Render; on other
 # platforms the task simply exits without doing anything.
@@ -52,19 +52,19 @@ DEDUPE_TTL_SECONDS = 3600
 async def _keepalive_loop():
     render_url = os.environ.get("RENDER_EXTERNAL_URL", "").rstrip("/")
     if not render_url:
-        print("[keepalive] RENDER_EXTERNAL_URL not set — keepalive disabled.")
+        print("[keepalive] RENDER_EXTERNAL_URL not set â€” keepalive disabled.")
         return
     import httpx
     ping_url = f"{render_url}/api/health"
-    print(f"[keepalive] Started — will ping {ping_url} every 5 minutes.")
+    print(f"[keepalive] Started â€” will ping {ping_url} every 5 minutes.")
     while True:
         await asyncio.sleep(5 * 60)  # wait 5 minutes
         try:
             async with httpx.AsyncClient(timeout=10) as client:
                 resp = await client.get(ping_url)
-            print(f"[keepalive] Ping OK — {resp.status_code}")
+            print(f"[keepalive] Ping OK â€” {resp.status_code}")
         except Exception as exc:
-            print(f"[keepalive] Ping failed — {exc}")
+            print(f"[keepalive] Ping failed â€” {exc}")
 
 
 @app.on_event("startup")
@@ -374,6 +374,20 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
     # Validate session
     session = get_valid_session(payload.session_id)
     
+    # Decode base64 logs if the client sent them encoded (Render's Cloudflare edge
+    # WAF drops POST bodies containing attack-pattern strings â€” the thing this
+    # product is built to ingest â€” so the frontend encodes lines in transit)
+    import base64
+    logs = payload.logs
+    if payload.logs_b64:
+        try:
+            logs = [base64.b64decode(l).decode("utf-8", errors="replace") for l in payload.logs]
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"error": "bad_base64", "detail": "logs_b64=true but a line was not valid base64"}
+            )
+    
     # Validate source_type
     allowed_sources = ["nginx", "auth", "syslog", "custom"]
     if payload.source_type not in allowed_sources:
@@ -383,21 +397,21 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
         )
         
     # Validate line counts (cap 500 lines)
-    if len(payload.logs) > 500:
+    if len(logs) > 500:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"error": "too_many_lines", "detail": "Cannot ingest more than 500 lines per batch"}
         )
 
     # Validate individual line lengths defensively (cap 8KB per line)
-    for line in payload.logs:
+    for line in logs:
         if len(line) > 8192:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail={"error": "line_too_long", "detail": "Log line exceeds maximum limit of 8KB"}
             )
         
-    # Idempotent retry guard — return the existing job if this request was already seen
+    # Idempotent retry guard â€” return the existing job if this request was already seen
     client_req_id = payload.client_request_id
     if client_req_id:
         now = time.time()
@@ -409,12 +423,12 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
             return {
                 "status": "queued",
                 "job_id": _ingest_dedupe[client_req_id][0],
-                "ingested_count": len(payload.logs),
+                "ingested_count": len(logs),
                 "remaining_quota": max(0, (session.get("max_logs") or 500) - (session.get("used_logs") or 0)),
             }
 
     # Increment logs quota atomically
-    new_used = db.increment_session_logs(payload.session_id, len(payload.logs))
+    new_used = db.increment_session_logs(payload.session_id, len(logs))
     if new_used == -1:
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
@@ -422,7 +436,7 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
         )
     
     # Create job
-    job = db.create_job(payload.session_id, len(payload.logs))
+    job = db.create_job(payload.session_id, len(logs))
     if client_req_id:
         _ingest_dedupe[client_req_id] = (job["id"], time.time())
     
@@ -432,7 +446,7 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
         job_id=job["id"],
         session_id=payload.session_id,
         source_type=payload.source_type,
-        logs=payload.logs
+        logs=logs
     )
     
     remaining_quota = session["max_logs"] - new_used
@@ -440,7 +454,7 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
     return {
         "status": "queued",
         "job_id": job["id"],
-        "ingested_count": len(payload.logs),
+        "ingested_count": len(logs),
         "remaining_quota": max(0, remaining_quota)
     }
 
