@@ -279,6 +279,12 @@ export default function Dashboard() {
       setConnAttempts(0);
 
       if (!res.ok) {
+        if (res.status === 401 || res.status === 404) {
+          // Stale/expired localStorage session — drop it and let the 3s poll create a fresh one
+          localStorage.removeItem("threatlens_session");
+          setSessionId("");
+          throw new Error("SESSION_EXPIRED");
+        }
         const errData = await res.json().catch(() => ({}));
         const detail = errData.detail?.detail || errData.detail || "Ingest request failed";
         throw new Error(detail);
@@ -298,7 +304,10 @@ export default function Dashboard() {
     } catch (err: unknown) {
       let errMsg = "Log ingestion failed. Please try again.";
       if (err instanceof Error) {
-        if (isNetworkError(err) || err.message.startsWith("Network failure") || err.message.startsWith("Request timed out")) {
+        if (err.message === "SESSION_EXPIRED") {
+          setLastError("Session expired after 24h — a fresh session was created. Click Analyze again.");
+          errMsg = "Your demo session expired. A new session was started — click Analyze Logs again.";
+        } else if (isNetworkError(err) || err.message.startsWith("Network failure") || err.message.startsWith("Request timed out")) {
           const category = classifyFetchError(err);
           setLastError(category);
           setApiConnected(false);
