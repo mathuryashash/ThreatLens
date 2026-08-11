@@ -1,0 +1,18 @@
+name: Render Keepalive
+
+on:
+  schedule:
+    # Every 5 min — under Render free tier's 15-min idle limit, so the
+    # instance never spins down and the dashboard never hits a cold start.
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render health endpoint
+        run: |
+          curl -sS -o /dev/null -w "ping %{http_code} in %{time_total}s\n" \
+            --max-time 30 \
+            https://threatlens-qd5e.onrender.com/api/health
