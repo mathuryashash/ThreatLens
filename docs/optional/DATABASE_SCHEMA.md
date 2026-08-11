@@ -16,7 +16,7 @@ CREATE TABLE sessions (
   expires_at          TIMESTAMPTZ DEFAULT now() + INTERVAL '24 hours',
   max_logs            INTEGER DEFAULT 500,
   used_logs           INTEGER DEFAULT 0,
-  max_explain_calls   INTEGER DEFAULT 10,
+  max_explain_calls   INTEGER DEFAULT 25,
   used_explain_calls  INTEGER DEFAULT 0,
   last_seen_at        TIMESTAMPTZ DEFAULT now()
 );

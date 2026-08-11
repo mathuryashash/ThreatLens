@@ -113,7 +113,7 @@ def get_session_quota(request: Request, session_id: str):
     return {
         "max_logs": session.get("max_logs") or 500,
         "used_logs": session.get("used_logs") or 0,
-        "max_explain_calls": session.get("max_explain_calls") or 10,
+        "max_explain_calls": session.get("max_explain_calls") or 25,
         "used_explain_calls": session.get("used_explain_calls") or 0
     }
 
@@ -609,7 +609,7 @@ async def explain_threat(request: Request, payload: ExplainRequest):
             
     # Check explanation quota
     used_explain = session.get("used_explain_calls") or 0
-    max_explain = session.get("max_explain_calls") or 10
+    max_explain = session.get("max_explain_calls") or 25
     if used_explain >= max_explain:
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,

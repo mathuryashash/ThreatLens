@@ -143,6 +143,7 @@ export default function Dashboard() {
   const sessionIdRef = useRef<string>("");
   const explainAbortRef = useRef<AbortController | null>(null);
   const hasLoadedThreatsRef = useRef(false);
+  const threatsSeqRef = useRef(0);
 
   // Fetch session quota
   const fetchQuota = useCallback(async (sid: string) => {
@@ -171,6 +172,7 @@ export default function Dashboard() {
     // Only show the full spinner on the very first load; background polls
     // must not blank out the feed every 3 seconds.
     setIsThreatsLoading(!hasLoadedThreatsRef.current);
+    const seq = ++threatsSeqRef.current;
     try {
       const res = await fetch(`${API_BASE}/api/threats?session_id=${sid}&limit=100`);
       if (!res.ok) {
@@ -183,6 +185,9 @@ export default function Dashboard() {
       }
       
       const data = await res.json();
+      // Drop stale responses from overlapping polls (slow polls must not
+      // overwrite newer ones — that made rows jump around).
+      if (seq !== threatsSeqRef.current) return;
       setThreats(data.threats);
       hasLoadedThreatsRef.current = true;
       setApiConnected(true);
