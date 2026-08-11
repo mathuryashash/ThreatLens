@@ -142,6 +142,7 @@ export default function Dashboard() {
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const sessionIdRef = useRef<string>("");
   const explainAbortRef = useRef<AbortController | null>(null);
+  const hasLoadedThreatsRef = useRef(false);
 
   // Fetch session quota
   const fetchQuota = useCallback(async (sid: string) => {
@@ -167,7 +168,9 @@ export default function Dashboard() {
   // 1. Load threats list
   const loadThreats = useCallback(async (sid: string) => {
     if (!sid) return;
-    setIsThreatsLoading(true);
+    // Only show the full spinner on the very first load; background polls
+    // must not blank out the feed every 3 seconds.
+    setIsThreatsLoading(!hasLoadedThreatsRef.current);
     try {
       const res = await fetch(`${API_BASE}/api/threats?session_id=${sid}&limit=100`);
       if (!res.ok) {
@@ -181,6 +184,7 @@ export default function Dashboard() {
       
       const data = await res.json();
       setThreats(data.threats);
+      hasLoadedThreatsRef.current = true;
       setApiConnected(true);
       
       // Fetch session quota to sync display
@@ -240,6 +244,7 @@ export default function Dashboard() {
   // 3. Reset Demo Handler
   const handleReset = async () => {
     localStorage.removeItem("threatlens_session");
+    hasLoadedThreatsRef.current = false;
     setThreats([]);
     setSelectedThreatId(null);
     setExplanation(null);

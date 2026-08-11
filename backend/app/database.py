@@ -470,7 +470,7 @@ class SupabaseDatabase:
                 since_str += "Z"
             query = query.gt("detected_at", since_str)
         
-        res = query.order("detected_at", desc=True).limit(limit).execute()
+        res = query.order("detected_at", desc=True).order("id", desc=True).limit(limit).execute()
         for row in res.data:
             row["attack_pattern"] = _db_xor_hex_decode(row.get("attack_pattern"))
         return res.data
