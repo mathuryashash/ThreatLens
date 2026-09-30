@@ -128,8 +128,26 @@ def check_brute_force_correlation(session_id: str, current_events: List[Dict[str
     Queries the database for LOGIN_FAILED and PRIV_ESC_FAILED actions in the last 5 minutes.
     Groups them by IP, and raises BRUTE_FORCE threats if above threshold.
     """
-    # 1. Gather all LOGIN_FAILED and PRIV_ESC_FAILED events in session from last 5 minutes
-    cutoff_time = datetime.utcnow() - timedelta(minutes=window_minutes)
+    # 1. Gather all LOGIN_FAILED and PRIV_ESC_FAILED events in session within the window.
+    # The cutoff is anchored on the OLDEST failed-event timestamp in this batch, not
+    # wall-clock time: uploaded logs are historical, so a utcnow() anchor silently
+    # dropped every failed login older than 5 minutes and brute force fell through
+    # to the LLM. The per-IP sliding window below still enforces the 5-minute span.
+    reference_time = datetime.utcnow()
+    batch_times = []
+    for event in current_events:
+        if event.get("action") in ["LOGIN_FAILED", "PRIV_ESC_FAILED"]:
+            ts = event.get("timestamp")
+            try:
+                if isinstance(ts, str):
+                    batch_times.append(datetime.fromisoformat(ts.replace("Z", "+00:00")).replace(tzinfo=None))
+                elif isinstance(ts, datetime):
+                    batch_times.append(ts.replace(tzinfo=None))
+            except ValueError:
+                pass
+    if batch_times:
+        reference_time = min(batch_times)
+    cutoff_time = reference_time - timedelta(minutes=window_minutes)
     
     # Query database
     try:

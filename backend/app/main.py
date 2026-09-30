@@ -349,6 +349,9 @@ async def process_log_ingest_job(job_id: str, session_id: str, source_type: str,
                         
                 except Exception as e:
                     print(f"LLM Classification batch failed: {e}")
+                    # These lines were already counted as processed during parsing;
+                    # move them to failed so processed + failed never exceeds total.
+                    processed_count -= len(batch)
                     failed_count += len(batch)
                     # Mark all raw logs in this batch as failed
                     for _, raw_log in batch:
@@ -362,7 +365,8 @@ async def process_log_ingest_job(job_id: str, session_id: str, source_type: str,
             await asyncio.gather(*(process_llm_batch(batch) for batch in unmatched_batches))
             
         # 5. Complete job
-        final_status = "completed" if failed_count < len(logs) else "failed"
+        # An empty batch has nothing to fail; only mark failed when every line failed.
+        final_status = "failed" if logs and failed_count >= len(logs) else "completed"
         db.update_job(job_id, processed_logs=processed_count, failed_logs=failed_count, status=final_status)
         
     except Exception as e:

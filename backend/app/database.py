@@ -61,8 +61,13 @@ class MockDatabase:
     def increment_session_logs(self, session_id: str, count: int) -> int:
         with self.lock:
             if session_id in self.sessions:
-                self.sessions[session_id]["used_logs"] = max(0, self.sessions[session_id]["used_logs"] + count)
-                return self.sessions[session_id]["used_logs"]
+                session = self.sessions[session_id]
+                new_used = max(0, (session.get("used_logs") or 0) + count)
+                # -1 signals quota exceeded to the caller (main.ingest_logs -> 429)
+                if new_used > (session.get("max_logs") or 500):
+                    return -1
+                session["used_logs"] = new_used
+                return new_used
             return 0
 
     def increment_session_explain(self, session_id: str) -> int:
@@ -135,6 +140,14 @@ class MockDatabase:
 
     def get_job(self, job_id: str) -> Optional[Dict[str, Any]]:
         return self.jobs.get(job_id)
+
+    def cleanup_stale_jobs(self) -> None:
+        # Called from main.startup_event; mirrors the Supabase branch there.
+        with self.lock:
+            for job in self.jobs.values():
+                if job["status"] in ("queued", "processing"):
+                    job["status"] = "failed"
+                    job["error"] = "Server restarted during job execution"
 
     def create_parsed_event(self, raw_log_id: str, session_id: str, timestamp: Optional[datetime], source_ip: Optional[str], destination_ip: Optional[str], username: Optional[str], action: Optional[str], payload: Dict[str, Any], parser_confidence: float) -> Dict[str, Any]:
         event_id = str(uuid.uuid4())
@@ -331,6 +344,9 @@ class SupabaseDatabase:
                 return 0
             current = session.get("used_logs") or 0
             new_used = max(0, current + count)
+            # -1 signals quota exceeded to the caller (main.ingest_logs -> 429)
+            if new_used > (session.get("max_logs") or 500):
+                return -1
             res = self.client.table("sessions").update({"used_logs": new_used}).eq("id", session_id).eq("used_logs", current).execute()
             if res.data:
                 return res.data[0].get("used_logs", new_used)
