@@ -26,9 +26,12 @@ RULE_METADATA = {
             re.compile(r'169\.254\.169\.254'),
             re.compile(r'metadata\.google\.internal'),
             re.compile(r'metadata\.azure\.internal'),
-            re.compile(r'(?:^|[^.\d])127\.0\.0\.1'),
+            # Loopback/any-addr only count inside a URL or parameter value (preceded by
+            # / = @). A bare line-start or " from 127.0.0.1" is the *client* address of
+            # benign local traffic, not an SSRF target.
+            re.compile(r'[/=@]127\.0\.0\.1'),
             re.compile(r'(?:^|[/=@])localhost(?:[:/]|$)', re.IGNORECASE),
-            re.compile(r'(?<![.\d])0\.0\.0\.0'),
+            re.compile(r'[/=@]0\.0\.0\.0'),
             re.compile(r'\[::1\]'),
             re.compile(r'0x7f[0-9a-f]{6}', re.IGNORECASE),
             re.compile(r'0177\.0\.'),

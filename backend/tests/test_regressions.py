@@ -91,6 +91,17 @@ class TestBruteForceOnHistoricalLogs:
 
 
 class TestLLMRouting:
+    def test_loopback_client_ip_is_not_ssrf(self):
+        from app.rules import check_pattern_rules
+        benign = '127.0.0.1 - - [23/May/2026:08:00:01 +0000] "GET /index.html HTTP/1.1" 200 4524 "-" "Mozilla/5.0"'
+        ssh = "May 23 08:25:20 h sshd[1]: Accepted password for bob from 127.0.0.1 port 1 ssh2"
+        assert check_pattern_rules(benign) is None
+        assert check_pattern_rules(ssh) is None
+        for attack in ('1.2.3.4 - - [x] "GET /fetch?url=http://127.0.0.1:8080/admin HTTP/1.1" 200 1',
+                       '1.2.3.4 - - [x] "GET /fetch?url=0.0.0.0 HTTP/1.1" 200 1',
+                       '1.2.3.4 - - [x] "GET /fetch?url=http%3A%2F%2F127.0.0.1%2F HTTP/1.1" 200 1'):
+            assert check_pattern_rules(attack)[0] == "SSRF"
+
     def test_only_unmatched_lines_are_batched_to_llm(self):
         rule_line = '1.2.3.4 - - [23/May/2026:08:05:10 +0000] "GET /a?id=1%20UNION%20SELECT%201 HTTP/1.1" 400 1'
         benign = [
