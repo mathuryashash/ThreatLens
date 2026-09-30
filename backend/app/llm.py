@@ -148,6 +148,67 @@ def _sanitize_log_line(line: str) -> str:
     return line.replace("<", "&lt;").replace(">", "&gt;")
 
 
+_RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+
+
+def _is_json_validate_failure(response: httpx.Response) -> bool:
+    # Groq returns 400 json_validate_failed when a model (notably gpt-oss) emits an
+    # empty/invalid body under response_format=json_object. It's sporadic, so a retry
+    # usually succeeds; without it a whole 20-line batch was marked failed.
+    if response.status_code != 400:
+        return False
+    try:
+        return "json_validate_failed" in (response.text or "")
+    except Exception:
+        return False
+
+
+async def _post_with_retry(client: httpx.AsyncClient, url: str, *, max_attempts: int = None, **kwargs) -> httpx.Response:
+    """POST with bounded retry on rate limits / transient 5xx.
+
+    Groq's free tier allows ~8k tokens/minute, so a single upload that fans out into
+    several concurrent 20-line batches routinely gets 429 for most of them. Without a
+    retry those lines were marked failed and never classified. Honors Retry-After
+    (capped) and otherwise backs off exponentially.
+    """
+    import asyncio
+    attempts = max_attempts or settings.LLM_MAX_RETRIES + 1
+    delay = 2.0
+    response = None
+    for attempt in range(attempts):
+        try:
+            response = await client.post(url, **kwargs)
+        except (httpx.TimeoutException, httpx.TransportError):
+            if attempt == attempts - 1:
+                raise
+            await asyncio.sleep(delay)
+            delay = min(delay * 2, settings.LLM_RETRY_MAX_WAIT)
+            continue
+        retryable = response.status_code in _RETRYABLE_STATUS or _is_json_validate_failure(response)
+        if not retryable or attempt == attempts - 1:
+            return response
+        wait = delay
+        retry_after = response.headers.get("retry-after")
+        if retry_after:
+            try:
+                wait = float(retry_after)
+            except ValueError:
+                pass
+        wait = max(0.5, min(wait, settings.LLM_RETRY_MAX_WAIT))
+        print(f"LLM HTTP {response.status_code}; retry {attempt + 1}/{attempts - 1} in {wait:.1f}s")
+        await asyncio.sleep(wait)
+        delay = min(delay * 2, settings.LLM_RETRY_MAX_WAIT)
+    return response
+
+
+def _groq_reasoning_opts(model: str) -> Dict[str, Any]:
+    # gpt-oss models spend hidden reasoning tokens that count against Groq's per-minute
+    # token budget; "low" keeps classification cheap enough for the free tier.
+    if model and model.startswith("openai/gpt-oss") and settings.GROQ_REASONING_EFFORT:
+        return {"reasoning_effort": settings.GROQ_REASONING_EFFORT}
+    return {}
+
+
 class GroqClient(LLMClient):
     _shared_client: Optional[httpx.AsyncClient] = None
 
@@ -202,14 +263,15 @@ class GroqClient(LLMClient):
         )
 
         try:
-            response = await self.client.post("/chat/completions", json={
+            response = await _post_with_retry(self.client, "/chat/completions", json={
                 "model": self.model,
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
                 "temperature": 0.1,
-                "response_format": {"type": "json_object"}
+                "response_format": {"type": "json_object"},
+            **_groq_reasoning_opts(self.model),
             })
             if not response.is_success:
                 print(f"Groq classification error status: {response.status_code}")
@@ -251,14 +313,15 @@ class GroqClient(LLMClient):
         )
 
         try:
-            response = await self.client.post("/chat/completions", json={
+            response = await _post_with_retry(self.client, "/chat/completions", json={
                 "model": self.explain_model,
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
                 "temperature": 0.1,
-                "response_format": {"type": "json_object"}
+                "response_format": {"type": "json_object"},
+            **_groq_reasoning_opts(self.explain_model),
             })
             if not response.is_success:
                 print(f"Groq explain status code: {response.status_code}")
@@ -279,10 +342,20 @@ class GeminiClient(LLMClient):
             if GeminiClient._shared_client is None:
                 GeminiClient._shared_client = httpx.AsyncClient(timeout=30.0)
         self.client = GeminiClient._shared_client
+        # gemini-1.5-flash (the old hardcoded id) now 404s; model is env-configurable.
+        self.model = settings.GEMINI_MODEL
+        self.explain_model = settings.GEMINI_MODEL
+        # Key goes in a header, not ?key=: httpx error strings include the URL, and
+        # those errors are printed, which leaked the API key into server logs.
+        self._headers = {"x-goog-api-key": self.api_key or ""}
+
+    @property
+    def _url(self) -> str:
+        return f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent"
 
     async def classify_logs(self, log_batch: List[str]) -> List[Dict[str, Any]]:
         # Map Gemini Flash completions API
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}"
+        url = self._url
         
         system_prompt = (
             "You are a cybersecurity log analysis engine.\n"
@@ -318,7 +391,7 @@ class GeminiClient(LLMClient):
         }
 
         try:
-            response = await self.client.post(url, json=payload)
+            response = await _post_with_retry(self.client, url, json=payload, headers=self._headers)
             response.raise_for_status()
             data = response.json()
             text_response = data["candidates"][0]["content"]["parts"][0]["text"]
@@ -329,7 +402,7 @@ class GeminiClient(LLMClient):
             raise
 
     async def explain_threat(self, threat_data: Dict[str, Any], related_logs: List[str]) -> Dict[str, Any]:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}"
+        url = self._url
 
         logs_block = "\n".join(_sanitize_log_line(line) for line in related_logs)
         user_prompt = (
@@ -363,7 +436,7 @@ class GeminiClient(LLMClient):
         }
 
         try:
-            response = await self.client.post(url, json=payload)
+            response = await _post_with_retry(self.client, url, json=payload, headers=self._headers)
             response.raise_for_status()
             data = response.json()
             text_response = data["candidates"][0]["content"]["parts"][0]["text"]

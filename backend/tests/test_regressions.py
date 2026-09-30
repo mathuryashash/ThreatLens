@@ -153,3 +153,71 @@ class TestIngestEdgeCases:
         r = client.post("/api/ingest", json={"session_id": sid, "source_type": "custom", "logs": ["one more"]})
         assert r.status_code == 429
         assert r.json()["detail"]["error"] == "quota_exceeded"
+
+
+class TestLLMRateLimitAndGemini:
+    """Live run: Groq free tier (8k TPM) 429'd most batches of a 158-line upload and
+    those lines were marked failed; Gemini used a retired model and put the key in the URL."""
+
+    def _resp(self, status, headers=None, body=None):
+        from unittest.mock import MagicMock
+        r = MagicMock(status_code=status, headers=headers or {}, is_success=200 <= status < 300)
+        r.json.return_value = body or {"choices": [{"message": {"content": '{"findings": []}'}}]}
+        if status >= 400:
+            import httpx
+            r.raise_for_status.side_effect = httpx.HTTPStatusError("err", request=MagicMock(), response=r)
+        return r
+
+    def test_groq_classify_retries_429_then_succeeds(self):
+        from app.llm import GroqClient
+        g = GroqClient()
+        seq = [self._resp(429, {"retry-after": "0"}), self._resp(429), self._resp(200)]
+        with patch.object(g, "client") as http, patch("asyncio.sleep", new=AsyncMock()) as slept:
+            http.post = AsyncMock(side_effect=seq)
+            assert asyncio.run(g.classify_logs(["x"])) == []
+            assert http.post.call_count == 3
+            assert slept.await_count == 2
+
+    def test_retry_is_bounded(self):
+        from app.llm import _post_with_retry
+        http = AsyncMock()
+        http.post = AsyncMock(return_value=self._resp(429))
+        with patch("asyncio.sleep", new=AsyncMock()):
+            r = asyncio.run(_post_with_retry(http, "/x", max_attempts=3, json={}))
+        assert r.status_code == 429 and http.post.call_count == 3
+
+    def test_non_retryable_status_not_retried(self):
+        from app.llm import _post_with_retry
+        http = AsyncMock()
+        http.post = AsyncMock(return_value=self._resp(400))
+        r = asyncio.run(_post_with_retry(http, "/x", max_attempts=3, json={}))
+        assert r.status_code == 400 and http.post.call_count == 1
+
+    def test_gemini_key_not_in_url_and_model_configurable(self):
+        from app.llm import GeminiClient
+        g = GeminiClient()
+        assert g.model == settings.GEMINI_MODEL
+        assert "gemini-1.5-flash" != g.model
+        body = {"candidates": [{"content": {"parts": [{"text": '{"findings": []}'}]}}]}
+        with patch.object(g, "client") as http:
+            http.post = AsyncMock(return_value=self._resp(200, body=body))
+            asyncio.run(g.classify_logs(["x"]))
+            url = http.post.call_args.args[0]
+            assert "key=" not in url and g.model in url
+            assert "x-goog-api-key" in http.post.call_args.kwargs["headers"]
+
+    def test_groq_json_validate_failed_is_retried(self):
+        from unittest.mock import MagicMock
+        from app.llm import _post_with_retry
+        bad = self._resp(400)
+        bad.text = '{"error":{"code":"json_validate_failed"}}'
+        http = AsyncMock()
+        http.post = AsyncMock(side_effect=[bad, self._resp(200)])
+        with patch("asyncio.sleep", new=AsyncMock()):
+            r = asyncio.run(_post_with_retry(http, "/x", max_attempts=3, json={}))
+        assert r.status_code == 200 and http.post.call_count == 2
+
+    def test_gpt_oss_gets_low_reasoning_effort(self):
+        from app.llm import _groq_reasoning_opts
+        assert _groq_reasoning_opts("openai/gpt-oss-20b") == {"reasoning_effort": settings.GROQ_REASONING_EFFORT}
+        assert _groq_reasoning_opts("llama-3.1-8b") == {}

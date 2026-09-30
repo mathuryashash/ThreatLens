@@ -34,7 +34,7 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Global Semaphore to limit concurrent LLM calls across all background tasks
-llm_semaphore = asyncio.Semaphore(5)
+llm_semaphore = asyncio.Semaphore(settings.LLM_CONCURRENCY)
 
 # Idempotency guard for retried ingest POSTs: client_request_id -> (job_id, timestamp).
 # ponytail: in-process dict; lost on instance restart, TTL 1h. A retry after a full
@@ -348,7 +348,7 @@ async def process_log_ingest_job(job_id: str, session_id: str, source_type: str,
                         db.update_raw_log(raw_log["id"], raw_log["redacted_content"], raw_log["redaction_applied"], "processed")
                         
                 except Exception as e:
-                    print(f"LLM Classification batch failed: {e}")
+                    print(f"LLM Classification batch failed: {type(e).__name__}: {e}")
                     # These lines were already counted as processed during parsing;
                     # move them to failed so processed + failed never exceeds total.
                     processed_count -= len(batch)

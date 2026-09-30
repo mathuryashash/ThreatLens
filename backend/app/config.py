@@ -14,6 +14,12 @@ class Config:
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
     GROQ_CLASSIFY_MODEL = os.environ.get("GROQ_CLASSIFY_MODEL") or "openai/gpt-oss-20b"
     GROQ_EXPLAIN_MODEL = os.environ.get("GROQ_EXPLAIN_MODEL") or "openai/gpt-oss-120b"
+    GEMINI_MODEL = os.environ.get("GEMINI_MODEL") or "gemini-flash-latest"
+    # Retry budget for LLM 429/5xx (Groq free tier is ~8k tokens/min).
+    LLM_MAX_RETRIES = int(os.environ.get("LLM_MAX_RETRIES", 6))
+    LLM_RETRY_MAX_WAIT = float(os.environ.get("LLM_RETRY_MAX_WAIT", 30))
+    GROQ_REASONING_EFFORT = os.environ.get("GROQ_REASONING_EFFORT", "low")
+    LLM_CONCURRENCY = max(1, int(os.environ.get("LLM_CONCURRENCY", 5)))
 
     PORT = int(os.environ.get("PORT", 8000))
     FRONTEND_ORIGIN = os.environ.get("FRONTEND_ORIGIN", "http://localhost:3000")
