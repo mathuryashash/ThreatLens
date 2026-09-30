@@ -161,6 +161,11 @@ class GroqClient(LLMClient):
                     timeout=30.0
                 )
         self.client = GroqClient._shared_client
+        # Model ids are env-configurable: Groq decommissions models (the original
+        # llama-3.1-8b-instant / llama-3.3-70b-versatile now 404), which silently
+        # failed every LLM batch. `model` is also what main.py stores on AI threats.
+        self.model = settings.GROQ_CLASSIFY_MODEL
+        self.explain_model = settings.GROQ_EXPLAIN_MODEL
 
     async def classify_logs(self, log_batch: List[str]) -> List[Dict[str, Any]]:
         system_prompt = (
@@ -198,7 +203,7 @@ class GroqClient(LLMClient):
 
         try:
             response = await self.client.post("/chat/completions", json={
-                "model": "llama-3.1-8b-instant",
+                "model": self.model,
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
@@ -247,7 +252,7 @@ class GroqClient(LLMClient):
 
         try:
             response = await self.client.post("/chat/completions", json={
-                "model": "llama-3.3-70b-versatile",
+                "model": self.explain_model,
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}

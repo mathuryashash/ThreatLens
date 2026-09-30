@@ -12,6 +12,8 @@ class Config:
     LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "groq").lower()
     GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+    GROQ_CLASSIFY_MODEL = os.environ.get("GROQ_CLASSIFY_MODEL") or "openai/gpt-oss-20b"
+    GROQ_EXPLAIN_MODEL = os.environ.get("GROQ_EXPLAIN_MODEL") or "openai/gpt-oss-120b"
 
     PORT = int(os.environ.get("PORT", 8000))
     FRONTEND_ORIGIN = os.environ.get("FRONTEND_ORIGIN", "http://localhost:3000")
