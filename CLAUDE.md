@@ -55,7 +55,7 @@ Processing pipeline (per ingest job):
   3. rules.py    — deterministic regex rules (SSRF, PRIV_ESC, SQLI, BRUTE_FORCE, PATH_TRAVERSAL, XSS)
   4. llm.py      — unmatched logs batched (20/batch, LLM_CONCURRENCY=5 concurrent) → Groq openai/gpt-oss-20b classify
                    explain calls use openai/gpt-oss-120b (env: GROQ_CLASSIFY_MODEL / GROQ_EXPLAIN_MODEL;
-                   Gemini: GEMINI_MODEL, default gemini-flash-latest). 429/5xx and Groq json_validate_failed
+                   Gemini: GEMINI_MODEL, default gemini-flash-lite-latest). 429/5xx and Groq json_validate_failed
                    are retried with backoff (LLM_MAX_RETRIES / LLM_RETRY_MAX_WAIT)
 
 Database (Supabase PostgreSQL):
@@ -82,7 +82,7 @@ See `backend/.env.example`. Key vars:
 | `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` | Supabase API access |
 | `LLM_PROVIDER` | `groq` (default) or `gemini` |
 | `GROQ_API_KEY` / `GEMINI_API_KEY` | LLM credentials |
-| `GROQ_CLASSIFY_MODEL` / `GROQ_EXPLAIN_MODEL` / `GEMINI_MODEL` | Model ids (defaults `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, `gemini-flash-latest`); the old llama-3.x / gemini-1.5-flash ids are retired and 404 |
+| `GROQ_CLASSIFY_MODEL` / `GROQ_EXPLAIN_MODEL` / `GEMINI_MODEL` | Model ids (defaults `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, `gemini-flash-lite-latest`); the old llama-3.x / gemini-1.5-flash ids are retired and 404 |
 | `FRONTEND_ORIGIN` | CORS allowed origin |
 
 Frontend: `NEXT_PUBLIC_API_URL` — defaults to `http://localhost:8000`.

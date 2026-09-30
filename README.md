@@ -62,7 +62,7 @@ The sample contains SQLi, SSRF, XSS, path traversal, SSH brute force (auth forma
 | Frontend | Next.js 16 App Router, React 19, Tailwind 4 — **Vercel** |
 | Backend | FastAPI (Python, slowapi rate limits) — **Render** |
 | Database | Supabase PostgreSQL (in-memory mock fallback) |
-| AI | Groq `openai/gpt-oss-20b` (classify), `openai/gpt-oss-120b` (explain), overridable via `GROQ_CLASSIFY_MODEL` / `GROQ_EXPLAIN_MODEL`; optional Gemini swap (`LLM_PROVIDER=gemini`, `GEMINI_MODEL`, default `gemini-flash-latest`) |
+| AI | Groq `openai/gpt-oss-20b` (classify), `openai/gpt-oss-120b` (explain), overridable via `GROQ_CLASSIFY_MODEL` / `GROQ_EXPLAIN_MODEL`; optional Gemini swap (`LLM_PROVIDER=gemini`, `GEMINI_MODEL`, default `gemini-flash-lite-latest`) |
 
 ---
 
@@ -103,7 +103,7 @@ Supabase optional: apply `docs/optional/DATABASE_SCHEMA.md` SQL, else run with `
 | Start command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
 | `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` | Supabase project |
 | `GROQ_API_KEY`, `LLM_PROVIDER=groq` | LLM |
-| `GROQ_CLASSIFY_MODEL`, `GROQ_EXPLAIN_MODEL`, `GEMINI_MODEL` | Model ids (defaults: `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, `gemini-flash-latest`) |
+| `GROQ_CLASSIFY_MODEL`, `GROQ_EXPLAIN_MODEL`, `GEMINI_MODEL` | Model ids (defaults: `openai/gpt-oss-20b`, `openai/gpt-oss-120b`, `gemini-flash-lite-latest`) |
 | `LLM_CONCURRENCY`, `LLM_MAX_RETRIES`, `LLM_RETRY_MAX_WAIT`, `GROQ_REASONING_EFFORT` | LLM throughput tuning (defaults 5 / 6 / 30s / low). Groq free tier is ~8k tokens/min, so 429s are retried with backoff |
 | `FRONTEND_ORIGIN` | `https://threatlenss.vercel.app` — must byte-match; **no trailing slash** |
 | `ALLOW_MOCK_DB` | `false` |
