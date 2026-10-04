@@ -1,0 +1,14 @@
+{
+ "threshold": 0.8,
+ "method": "normalised token Jaccard (IPs/timestamps/pids/ports masked) vs every test-split line",
+ "test_lines": 203,
+ "generated_llm_lines_kept": 8072,
+ "dropped": {
+  "rule_matched": 132,
+  "near_dup_test": 595,
+  "dup_train": 1
+ },
+ "exact_overlap_after_filter": 0,
+ "max_jaccard_kept": 0.8,
+ "over_threshold_after_filter": 0
+}

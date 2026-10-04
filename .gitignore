@@ -39,3 +39,7 @@ docs/PRESENTATION_SCRIPT.md
 .env*
 evals/_*.log
 evals/cache_off/
+# fine-tune: weights + large generated data (regenerate with evals/finetune/gen_data.py)
+evals/finetune/runs/*/adapter/
+evals/finetune/runs/*/ckpt/
+evals/finetune/merged/

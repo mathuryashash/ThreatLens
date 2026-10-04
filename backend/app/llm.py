@@ -602,6 +602,12 @@ class MockLLMClient(LLMClient):
 
 # Export LLM client factory
 def get_llm_client() -> LLMClient:
+    if settings.LLM_PROVIDER == "local":
+        # On-prem fine-tuned model (app/local_llm.py); falls back to Mock if weights/torch are missing.
+        from app.local_llm import try_local_client
+        client = try_local_client()
+        if client is not None:
+            return client
     if settings.is_llm_configured:
         if settings.LLM_PROVIDER == "groq" and settings.GROQ_API_KEY:
             return GroqClient()

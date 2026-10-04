@@ -173,6 +173,9 @@ def make_client(provider):
         return llm_mod.GroqClient()
     if provider == "nim":
         return NimClient()
+    if provider == "local":
+        from app.local_llm import LocalLLMClient  # lazy: needs torch/transformers + model weights
+        return LocalLLMClient()
     raise ValueError(provider)
 
 

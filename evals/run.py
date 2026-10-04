@@ -48,7 +48,7 @@ ACCEPT = {
     "PROMPT_INJECTION": {"SUSPICIOUS", "RECON", "MALWARE", "SQLI", "XSS"},
 }
 # USD per 1M tokens (input, output) - public list prices as of 2026-06; estimates only.
-PRICES = {"gemini": (0.10, 0.40), "groq": (0.15, 0.60), "nim": (0.0, 0.0), "rules": (0.0, 0.0)}
+PRICES = {"gemini": (0.10, 0.40), "groq": (0.15, 0.60), "nim": (0.0, 0.0), "rules": (0.0, 0.0), "local": (0.0, 0.0)}
 
 
 def load_golden(split):
@@ -146,7 +146,7 @@ def write_leaderboard():
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", required=True, choices=["rules", "gemini", "groq", "nim"])
+    ap.add_argument("--provider", required=True, choices=["rules", "gemini", "groq", "nim", "local"])
     ap.add_argument("--split", default="dev", choices=["dev", "test", "all"])
     ap.add_argument("--cache", default="readwrite", choices=["readwrite", "readonly"])
     ap.add_argument("--env-file", default=DEFAULT_ENV)
@@ -156,7 +156,9 @@ def main(argv=None):
     ap.add_argument("--min-recall", type=float, default=None)
     a = ap.parse_args(argv)
 
-    if a.provider != "rules" and a.cache != "readonly":
+    if a.provider == "local":
+        pass  # on-prem model: no keys, no HTTP, no disk cache (every batch is generated live)
+    elif a.provider != "rules" and a.cache != "readonly":
         P.load_keys(a.env_file)
     elif a.provider != "rules":
         # readonly replay: dummy keys so clients construct; every call must hit the cache
@@ -185,6 +187,12 @@ def main(argv=None):
     res = score(rows, preds)
     tin, tout = log.tokens()
     lat = [c["latency_s"] for c in log.calls if c["status"] == 200]
+    local_stats = getattr(rec.inner, "stats", None)
+    if local_stats is not None:  # local provider: per-batch generate() timings instead of HTTP calls
+        lat = [s["latency_s"] for s in local_stats]
+        tin, tout = sum(s["in_tok"] for s in local_stats), sum(s["out_tok"] for s in local_stats)
+        log.calls = [dict(cached=False, latency_s=s["latency_s"], in_tok=s["in_tok"], out_tok=s["out_tok"], status=200)
+                     for s in local_stats]
     pin, pout = PRICES[a.provider]
     run = a.provider + (f"+{a.tag}" if a.tag else "")
     res.update(
@@ -197,6 +205,14 @@ def main(argv=None):
                   usd_estimate=round(tin / 1e6 * pin + tout / 1e6 * pout, 6),
                   latency_p50_s=pct(lat, 0.5), latency_p95_s=pct(lat, 0.95)),
         total_wall_s=round(time.perf_counter() - t0, 2),
+        local=None if local_stats is None else dict(
+            batches=len(local_stats),
+            json_valid_first_try=sum(s["json_valid_first"] for s in local_stats),
+            json_valid_after_retry=sum(s["json_valid"] for s in local_stats),
+            json_validity_rate=round(sum(s["json_valid_first"] for s in local_stats) / len(local_stats), 4) if local_stats else None,
+            retries=sum(s["attempts"] - 1 for s in local_stats),
+            base_model=os.environ.get("LOCAL_BASE_MODEL", "unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit"),
+            adapter=os.path.relpath(os.environ["LOCAL_ADAPTER_PATH"], os.path.dirname(HERE)) if os.environ.get("LOCAL_ADAPTER_PATH") else None),
         predictions=preds,
     )
     os.makedirs(RESULTS, exist_ok=True)
@@ -208,6 +224,8 @@ def main(argv=None):
           f"cat_acc={o['category_accuracy_on_attacks']} tp={o['tp']} fp={o['fp']} fn={o['fn']} "
           f"calls={res['cost']['llm_calls']} (cached {res['cost']['cached_calls']}) tok={tin}/{tout} "
           f"p50={res['cost']['latency_p50_s']} p95={res['cost']['latency_p95_s']} failed={res['llm_failed_lines']} -> results/{name}")
+    if res.get("local"):
+        print("local:", json.dumps(res["local"]))
     ok = True
     for name_, thr, val in (("f1", a.min_f1, o["f1"]), ("precision", a.min_precision, o["precision"]),
                             ("recall", a.min_recall, o["recall"])):
