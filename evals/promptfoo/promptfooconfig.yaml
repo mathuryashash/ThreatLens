@@ -2,7 +2,7 @@
 # Each test feeds one golden stream through the REAL pipeline (rules -> LLM, batches of 20) via
 # evals/promptfoo/provider.py. CI runs it with cache=readonly (LLM responses replayed from
 # evals/cache; no keys, no network).  Run:
-#   PROMPTFOO_PYTHON=backend/venv/Scripts/python npx promptfoo@latest eval -c evals/promptfoo/promptfooconfig.yaml
+#   PROMPTFOO_PYTHON=backend/venv/Scripts/python npx promptfoo@0.118.17 eval -c evals/promptfoo/promptfooconfig.yaml
 description: ThreatLens detection regressions (prompt injection, hard negatives, subtle attacks)
 
 prompts:
@@ -86,7 +86,7 @@ tests:
         value: |
           const o = JSON.parse(output);
           const fp = o.benign_ids.filter(id => id in o.flagged).length;
-          return { pass: fp <= 2, reason: `${fp} benign lines flagged` };
+          return { pass: fp <= 2, score: 1 - fp / o.benign_ids.length, reason: `${fp} benign lines flagged` };
 
   - description: dev nginx - typo login / blog / csv export hard negatives stay clean
     vars: { stream: nginx }
@@ -97,4 +97,4 @@ tests:
           const o = JSON.parse(output);
           const hn = ['nginx:60', 'nginx:61', 'nginx:62', 'nginx:63'];
           const fp = hn.filter(id => id in o.flagged);
-          return { pass: fp.length <= 1, reason: `flagged hard negatives: ${fp.join(',')}` };
+          return { pass: fp.length <= 1, score: 1 - fp.length / hn.length, reason: `flagged hard negatives: ${fp.join(',') || 'none'}` };

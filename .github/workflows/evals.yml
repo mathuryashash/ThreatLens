@@ -50,7 +50,7 @@ jobs:
         env:
           PROMPTFOO_PYTHON: python
           PROMPTFOO_DISABLE_TELEMETRY: "1"
-        run: npx -y promptfoo@latest eval -c promptfooconfig.yaml --no-cache --max-concurrency 1
+        run: npx -y promptfoo@0.118.17 eval -c promptfooconfig.yaml --no-cache --max-concurrency 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:

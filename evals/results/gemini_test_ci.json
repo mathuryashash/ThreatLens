@@ -289,7 +289,7 @@
   "sample_nginx": 0.01,
   "sample_auth": 0.0,
   "nginx2": 0.01,
-  "auth2": 0.01,
+  "auth2": 0.0,
   "inject_test": 0.0
  },
  "job_status": {
@@ -308,7 +308,7 @@
   "latency_p50_s": 1.77,
   "latency_p95_s": 2.327
  },
- "total_wall_s": 0.04,
+ "total_wall_s": 0.03,
  "predictions": [
   {
    "id": "sample_nginx:0",
