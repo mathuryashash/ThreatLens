@@ -1,5 +1,26 @@
 # ThreatLens — Security Log Triage Dashboard
 
+## Evals, LLM judge and fine-tune (new)
+
+ThreatLens now ships a full evaluation setup on top of the detector. Details and the exact commands are in [VERIFY.md](VERIFY.md).
+
+| What | Result (held-out test split, 203 lines) |
+|---|---|
+| Rules only | F1 0.740 |
+| Rules + Gemini flash-lite | F1 0.991 (P 0.991, R 0.991) |
+| Rules + Groq gpt-oss-20b | F1 0.963 |
+| Rules + QLoRA Qwen2.5-0.5B (local, 8 GB GPU) | F1 0.748, $0 per call, offline |
+| LLM-as-judge agreement with labelled explanations | Cohen's kappa 0.29 -> 0.75 |
+
+- `evals/golden/` 371-line labelled golden set (dev/test split, 47 hard negatives, 18 categories); see LABELING.md.
+- `evals/run.py --provider rules|gemini|groq|local --split test` runs the real pipeline and reports per-category P/R/F1, tokens, cost, p50/p95.
+- `evals/judge/` LLM-as-judge calibrated against hand labels; `promptfooconfig.yaml` regression suite; env-gated Langfuse tracing.
+- `evals/finetune/` QLoRA training with a train/test overlap filter (0 overlap), model card and [head-to-head](evals/finetune/HEAD_TO_HEAD.md). The fine-tune loses to the API models on F1; it is reported as measured.
+- `.github/workflows/evals.yml` fails the build if recall/F1 drop below thresholds.
+
+Caveats: the logs are synthetic, labels come from one annotator, and each LLM configuration was run once.
+
+
 > A session-scoped security log triage dashboard for nginx and Linux auth events. Paste logs, the backend runs deterministic rules for common attacks, sends unmatched lines to a Groq-hosted LLM (gpt-oss) for advisory classification, and shows prioritized explanations in a session-scoped feed.
 
 **Live demo:** https://threatlenss.vercel.app — backend: https://threatlens-qd5e.onrender.com
