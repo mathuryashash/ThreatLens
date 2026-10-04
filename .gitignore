@@ -43,3 +43,4 @@ evals/cache_off/
 evals/finetune/runs/*/adapter/
 evals/finetune/runs/*/ckpt/
 evals/finetune/merged/
+evals/finetune/__pycache__/

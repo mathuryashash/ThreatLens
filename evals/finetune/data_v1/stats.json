@@ -1,0 +1,34 @@
+{
+ "seed": 7,
+ "windows_train": 472,
+ "windows_val": 42,
+ "lines": 8072,
+ "labels": {
+  "attack": 1706,
+  "benign": 6366
+ },
+ "hard_negatives": 1299,
+ "categories": {
+  "CRED_STUFFING": 524,
+  "BRUTE_FORCE": 312,
+  "RECON": 183,
+  "B64_PAYLOAD": 125,
+  "PROMPT_INJECTION": 120,
+  "PASSWORD_SPRAY": 110,
+  "ANOMALOUS_LOGIN": 99,
+  "DATA_EXFIL": 90,
+  "DEFENSE_EVASION": 31,
+  "PERSISTENCE": 30,
+  "PRIV_ESC": 22,
+  "SQLI": 19,
+  "SSRF": 19,
+  "WEBSHELL": 11,
+  "XSS": 9,
+  "PATH_TRAVERSAL": 1,
+  "CMD_INJECTION": 1
+ },
+ "origin": {
+  "dev_seed": 836,
+  "synthetic": 7236
+ }
+}

@@ -1,4 +1,86 @@
-# VERIFY - ThreatLens-Evals
+# VERIFY - ThreatLens-Finetune (QLoRA on a local 0.5B model)
+
+Branch `hermes/threatlens-finetune` (based on `hermes/threatlens-evals`), worktree `D:/ai-build/threatlens-finetune`.
+Env: `HF_HOME=D:/hf-cache HF_HUB_OFFLINE=1 PYTHONIOENCODING=utf-8 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`,
+venv `D:/ai-build/ft-venv` (torch 2.12.0+cu130, transformers 4.57.6, peft 0.19.1, trl 0.24.0, bitsandbytes 0.49.2).
+GPU: RTX 4060 Laptop 8 GB. No API keys are used by the local runs. API rows are the saved results from the evals branch.
+Model card: `evals/finetune/MODEL_CARD.md`. Full table: `evals/finetune/HEAD_TO_HEAD.md`.
+
+## F1. Data + leakage check
+```
+python evals/finetune/gen_data.py            # seed 7, --benign-frac 0.4 (v2)
+data/stats.json: windows_train 609, windows_val 55, windows_with_no_finding 305, lines 10339 (attack 1695 / benign 8644), hard_negatives 1656
+data/overlap_report.json: test_lines 203, dropped near_dup_test 853, rule_matched 198,
+  exact_overlap_after_filter 0, over_threshold_after_filter 0, max_jaccard_kept 0.8 (threshold 0.8)
+```
+Only DEV-split lines seed the generator. The TEST split is used only by the overlap filter (to drop near-duplicates) and for the final eval.
+
+## F2. Training (v2)
+```
+../ft-venv/Scripts/python evals/finetune/train.py --run v2_r16_lr2e-4 --r 16 --lr 2e-4 --epochs 1 --max-len 2600 --grad-accum 8
+dropped over-length windows: {'train': 131, 'val': 13}
+runs/v2_r16_lr2e-4/summary.json: train_examples 478, val_examples 42, steps 60, train_seconds 752.8,
+  first_train_loss 0.8823, last_train_loss 0.1287, final_eval_loss 0.11, peak_vram_allocated_gb 5.15 (reserved 14.35)
+```
+v1 (`runs/r16_lr2e-4`, data without all-benign windows): 381 examples, 48 steps, 754.7 s, eval loss 0.1268.
+A first v1 attempt (max-len 3200 with mid-run eval) spilled VRAM into shared memory (steps went from about 13 s to 145 s). It was killed and re-run.
+
+## F3. End-to-end eval through the real pipeline (parser -> redactor -> rules -> local LLM)
+```
+LOCAL_ADAPTER_PATH=  ../ft-venv/Scripts/python evals/run.py --provider local --split test --tag base
+local+base test: P=0.985 R=0.593 F1=0.740 tp=64 fp=1 fn=44 calls=9 p50=11.406 p95=15.028 json 9/9
+LOCAL_ADAPTER_PATH=  ../ft-venv/Scripts/python evals/run.py --provider local --split dev --tag base
+local+base dev: n=168 P=1.000 R=0.500 F1=0.667 tp=32 fp=0 fn=32 calls=8 p50=23.945 p95=26.194 json 8/8
+LOCAL_ADAPTER_PATH=evals/finetune/runs/r16_lr2e-4/adapter ... --split dev --tag ft     (renamed _ft_v1)
+local+ft dev: P=0.564 R=0.688 F1=0.620 tp=44 fp=34 fn=20 p50=13.656 p95=88.205 json first-try 6/8
+LOCAL_ADAPTER_PATH=.../r16_lr2e-4/adapter ... --split test --tag ft     (renamed _ft_v1)
+local+ft_v1 test: P=0.674 R=0.861 F1=0.756 tp=93 fp=45 fn=15 p50=13.808 p95=104.132 json first-try 8/9 (9/9 after 1 retry)
+LOCAL_ADAPTER_PATH=.../v2_r16_lr2e-4/adapter ... --split dev --tag ft_v2
+local+ft_v2 dev: n=168 P=0.692 R=0.703 F1=0.698 tp=45 fp=20 fn=19 calls=8 p50=15.567 p95=54.018 failed=0 json 8/8
+LOCAL_ADAPTER_PATH=.../v2_r16_lr2e-4/adapter ../ft-venv/Scripts/python evals/run.py --provider local --split test --tag ft_v2
+local+ft_v2 test: n=203 P=0.822 R=0.685 F1=0.748 cat_acc=0.6667 tp=74 fp=16 fn=34 calls=9 (cached 0) tok=16036/1413 p50=26.714 p95=61.244 failed=0
+local: {"batches": 9, "json_valid_first_try": 9, "json_validity_rate": 1.0, "retries": 0}
+real 6m53.986s (includes model load; pipeline wall 304.76 s)
+```
+v2 was selected on DEV (0.698 vs v1 0.620). TEST was run once per model, and nothing was tuned on TEST.
+
+## F4. Head-to-head, TEST split (203 lines, 108 attacks): `python evals/finetune/compare.py`
+| run | P | R | F1 | hard-neg FP | JSON valid | p50 / p95 s per batch | est. $ / run |
+|---|---|---|---|---|---|---|---|
+| rules only | 0.985 | 0.593 | 0.740 | 1/31 | n/a | n/a | 0 |
+| rules + Qwen2.5-0.5B base | 0.985 | 0.593 | 0.740 | 1/31 | 9/9 | 11.4 / 15.0 | 0 |
+| rules + QLoRA v1 | 0.674 | 0.861 | 0.756 | 19/31 | 8/9 first try | 13.8 / 104.1 | 0 |
+| rules + QLoRA v2 | 0.822 | 0.685 | 0.748 | 6/31 | 9/9 | 26.7 / 61.2 | 0 |
+| rules + Groq gpt-oss-20b | 0.955 | 0.972 | 0.963 | 5/31 | 0 failed lines | 1.13 / 27.1 | 0.0033 |
+| rules + Gemini flash-lite | 0.991 | 0.991 | 0.991 | 1/31 | 0 failed lines | 1.77 / 2.33 | 0.0023 |
+
+**Conclusion:** the fine-tune loses clearly to both API models on F1. v2 is +0.008 F1 over rules-only and the
+no-LoRA base model, which added zero findings. Fine-tuning made the small model contribute findings and kept
+JSON output 100% valid (17/17 v2 batches across dev+test). Its strengths are $0 API cost, offline and on-device inference
+(private logs), and fitting an 8 GB laptop GPU. It is slower per batch than the APIs on this hardware.
+
+## F5. Tests
+```
+cd backend && ALLOW_MOCK_DB=true SUPABASE_URL= SUPABASE_SERVICE_ROLE_KEY= DATABASE_URL= D:/ai-build/threatlens-evals/backend/venv/Scripts/python -m pytest -q
+117 passed, 2914 warnings in 12.77s
+cd backend && ../../ft-venv/Scripts/python -m pytest -q tests/test_local_llm.py
+16 passed, 1 warning in 17.76s
+```
+117 = 101 existing + 16 fine-tune tests (`tests/test_local_llm.py`). The full suite run with the ft-venv
+gives 116 passed and 1 failed (`test_real_langfuse_sdk_with_fake_keys_produces_span`). That failure is an environment
+mismatch: ft-venv has langfuse 2.60.8, while the project venv pins 4.16.0. It is not a code failure.
+
+## Not done / limitations
+- Single run per configuration, no confidence intervals. Small test set (203 lines, 108 attacks). Synthetic
+  logs with single-annotator labels.
+- Adapter weights (~35 MB) are gitignored. Reproduce them with F1+F2.
+- Local latency uses HF `generate` on a laptop GPU (no vLLM/llama.cpp/merged weights). Base-model p50 differed between
+  dev (23.9 s) and test (11.4 s) runs, so the latency numbers are noisy.
+- No hyperparameter sweep (2 runs, both r=16, lr 2e-4, 1 epoch).
+
+---
+
+# (earlier) VERIFY - ThreatLens-Evals
 
 Branch `hermes/threatlens-evals` (from `hermes/qa-loop`), worktree `D:/ai-build/threatlens-evals`.
 All commands run from the worktree root on Windows/git-bash; `PY=backend/venv/Scripts/python`.

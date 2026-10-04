@@ -1,0 +1,25 @@
+{
+ "run": "v2_r16_lr2e-4",
+ "model": "unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit",
+ "lora_r": 16,
+ "lora_alpha": 32,
+ "lr": 0.0002,
+ "epochs": 1.0,
+ "effective_batch": 8,
+ "max_len": 2600,
+ "train_examples": 478,
+ "val_examples": 42,
+ "dropped_over_length": {
+  "train": 131,
+  "val": 13
+ },
+ "steps": 60,
+ "train_seconds": 752.8,
+ "final_eval_loss": 0.11,
+ "first_train_loss": 0.8823,
+ "last_train_loss": 0.1287,
+ "peak_vram_allocated_gb": 5.15,
+ "peak_vram_reserved_gb": 14.35,
+ "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "torch": "2.12.0+cu130"
+}

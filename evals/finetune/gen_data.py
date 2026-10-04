@@ -460,7 +460,24 @@ def dev_seed_stream(rng, dev_rows):
 
 
 # ------------------------------------------------------------------ stream assembly
-def synth_stream(rng):
+def benign_stream(rng):
+    """Whole window of ordinary traffic (+ hard negatives): the most common case in production.
+    v2: added after DEV error analysis showed v1 hallucinated findings on all-benign windows."""
+    c = Clock(rng)
+    if rng.random() < 0.65:
+        clients = [(rip(rng, rng.random() < 0.5), rng.choice(UAS)) for _ in range(rng.randint(3, 6))]
+        rows = benign_nginx(rng, c, rng.randint(14, 24), clients)
+        for _ in range(rng.randint(0, 3)):
+            rows += hard_neg_nginx(rng, c, clients)
+        return "nginx", rows
+    host = rng.choice(HOSTS)
+    users = rng.sample(USERS, rng.randint(3, 6))
+    return "auth", benign_auth(rng, c, host, [(u, rip(rng, True)) for u in users], rng.randint(8, 14))
+
+
+def synth_stream(rng, benign_frac=0.0):
+    if rng.random() < benign_frac:
+        return benign_stream(rng)
     c = Clock(rng)
     if rng.random() < 0.62:
         clients = [(rip(rng, rng.random() < 0.4), rng.choice(UAS)) for _ in range(rng.randint(3, 7))]
@@ -564,6 +581,7 @@ def main(argv=None):
     ap.add_argument("--streams", type=int, default=300)
     ap.add_argument("--dev-streams", type=int, default=40)
     ap.add_argument("--threshold", type=float, default=0.8)
+    ap.add_argument("--benign-frac", type=float, default=0.4, help="share of synthetic streams with no attack (v1 = 0)")
     a = ap.parse_args(argv)
     rng = random.Random(a.seed)
     gold = [json.loads(l) for l in open(GOLDEN, encoding="utf-8")]
@@ -573,7 +591,7 @@ def main(argv=None):
     test_tok = [norm_tokens(t) for t in test_lines]
 
     streams = [("dev_seed",) + dev_seed_stream(rng, dev) for _ in range(a.dev_streams)]
-    streams += [("synthetic",) + synth_stream(rng) for _ in range(a.streams)]
+    streams += [("synthetic",) + synth_stream(rng, a.benign_frac) for _ in range(a.streams)]
 
     seen, examples, lines_out = set(), [], []
     drop = Counter()
@@ -620,7 +638,8 @@ def main(argv=None):
                   exact_overlap_after_filter=sum(r["line"] in test_exact or r["raw"] in test_exact for r in lines_out),
                   max_jaccard_kept=round(max_sim_kept, 4),
                   over_threshold_after_filter=sum(r["max_test_jaccard"] > a.threshold for r in lines_out))
-    stats = dict(seed=a.seed, windows_train=len(train), windows_val=len(val), lines=len(lines_out), labels=dict(lab),
+    stats = dict(seed=a.seed, benign_frac=a.benign_frac, windows_train=len(train), windows_val=len(val),
+                 windows_with_no_finding=sum(e["meta"]["n_attack"] == 0 for e in examples), lines=len(lines_out), labels=dict(lab),
                  hard_negatives=sum(r["hard_negative"] for r in lines_out), categories=dict(cats.most_common()),
                  origin=dict(Counter(r["origin"] for r in lines_out)))
     json.dump(report, open(os.path.join(OUT, "overlap_report.json"), "w"), indent=1)

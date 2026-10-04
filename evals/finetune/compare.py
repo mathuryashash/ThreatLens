@@ -9,7 +9,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(os.path.dirname(HERE), "results")
 RUNS = [("rules only", "rules_test.json"),
         ("rules + Qwen2.5-0.5B base (local, no LoRA)", "local_test_base.json"),
-        ("rules + Qwen2.5-0.5B QLoRA (local)", "local_test_ft.json"),
+        ("rules + Qwen2.5-0.5B QLoRA v1 data (local)", "local_test_ft_v1.json"),
+        ("rules + Qwen2.5-0.5B QLoRA v2 data (local)", "local_test_ft_v2.json"),
         ("rules + Groq gpt-oss-20b (API)", "groq_test.json"),
         ("rules + Gemini flash-lite (API)", "gemini_test.json")]
 

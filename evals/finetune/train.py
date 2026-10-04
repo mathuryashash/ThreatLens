@@ -51,6 +51,11 @@ def main():
         ds["train"] = ds["train"].select(range(min(a.limit, len(ds["train"]))))
 
     tok = AutoTokenizer.from_pretrained(a.model)
+    # Drop (never truncate) windows longer than max_len: truncation would cut the target JSON off.
+    n_before = {k: len(ds[k]) for k in ds}
+    ds = ds.filter(lambda ex: len(tok.apply_chat_template(ex["prompt"] + ex["completion"], tokenize=True)) <= a.max_len)
+    dropped_long = {k: n_before[k] - len(ds[k]) for k in ds}
+    print("dropped over-length windows:", dropped_long)
     bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True,
                              bnb_4bit_compute_dtype=torch.bfloat16)
     from transformers import AutoConfig
@@ -63,7 +68,7 @@ def main():
     cfg = SFTConfig(
         output_dir=os.path.join(out, "ckpt"), num_train_epochs=a.epochs, per_device_train_batch_size=a.batch,
         per_device_eval_batch_size=1, gradient_accumulation_steps=a.grad_accum, learning_rate=a.lr,
-        lr_scheduler_type="cosine", warmup_ratio=0.05, logging_steps=5, eval_strategy="steps", eval_steps=20,
+        lr_scheduler_type="cosine", warmup_ratio=0.05, logging_steps=5, eval_strategy="no",  # eval once at the end: mid-run eval spilled VRAM to shared memory on 8 GB
         save_strategy="no", bf16=True, gradient_checkpointing=True, max_length=a.max_len,
         completion_only_loss=True, report_to=[], seed=42, optim="paged_adamw_8bit",
     )
@@ -90,7 +95,7 @@ def main():
         w.writerows(rows)
     summary = dict(run=a.run, model=a.model, lora_r=a.r, lora_alpha=a.alpha or 2 * a.r, lr=a.lr, epochs=a.epochs,
                    effective_batch=a.batch * a.grad_accum, max_len=a.max_len, train_examples=len(ds["train"]),
-                   val_examples=len(ds["val"]), steps=trainer.state.global_step, train_seconds=round(train_s, 1),
+                   val_examples=len(ds["val"]), dropped_over_length=dropped_long, steps=trainer.state.global_step, train_seconds=round(train_s, 1),
                    final_eval_loss=round(ev["eval_loss"], 4),
                    first_train_loss=next((r["loss"] for r in rows if r["loss"] is not None), None),
                    last_train_loss=next((r["loss"] for r in reversed(rows) if r["loss"] is not None), None),
