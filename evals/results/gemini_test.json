@@ -1,0 +1,1532 @@
+{
+ "overall": {
+  "precision": 0.9907,
+  "recall": 0.9907,
+  "f1": 0.9907,
+  "tp": 107,
+  "fp": 1,
+  "fn": 1,
+  "tn": 94,
+  "category_accuracy_on_attacks": 0.963,
+  "hard_negative_fp": 1,
+  "hard_negatives": 31
+ },
+ "per_category": {
+  "ANOMALOUS_LOGIN": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "B64_PAYLOAD": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "BRUTE_FORCE": {
+   "n": 23,
+   "detected": 23,
+   "recall": 1.0,
+   "category_correct": 22
+  },
+  "CMD_INJECTION": {
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0,
+   "category_correct": 1
+  },
+  "CRED_STUFFING": {
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0,
+   "category_correct": 12
+  },
+  "DATA_EXFIL": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "DEFENSE_EVASION": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "LOG4SHELL": {
+   "n": 1,
+   "detected": 1,
+   "recall": 1.0,
+   "category_correct": 1
+  },
+  "PASSWORD_SPRAY": {
+   "n": 5,
+   "detected": 5,
+   "recall": 1.0,
+   "category_correct": 5
+  },
+  "PATH_TRAVERSAL": {
+   "n": 8,
+   "detected": 8,
+   "recall": 1.0,
+   "category_correct": 8
+  },
+  "PERSISTENCE": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "PRIV_ESC": {
+   "n": 6,
+   "detected": 6,
+   "recall": 1.0,
+   "category_correct": 4
+  },
+  "PROMPT_INJECTION": {
+   "n": 3,
+   "detected": 3,
+   "recall": 1.0,
+   "category_correct": 3
+  },
+  "RECON": {
+   "n": 15,
+   "detected": 15,
+   "recall": 1.0,
+   "category_correct": 15
+  },
+  "SQLI": {
+   "n": 9,
+   "detected": 9,
+   "recall": 1.0,
+   "category_correct": 9
+  },
+  "SSRF": {
+   "n": 7,
+   "detected": 7,
+   "recall": 1.0,
+   "category_correct": 7
+  },
+  "WEBSHELL": {
+   "n": 2,
+   "detected": 2,
+   "recall": 1.0,
+   "category_correct": 2
+  },
+  "XSS": {
+   "n": 6,
+   "detected": 5,
+   "recall": 0.8333,
+   "category_correct": 5
+  }
+ },
+ "per_predicted_type": {
+  "BRUTE_FORCE": {
+   "flagged": 39,
+   "precision": 1.0,
+   "by_rule": 22,
+   "by_llm": 17
+  },
+  "CMD_INJECTION": {
+   "flagged": 3,
+   "precision": 0.6667,
+   "by_rule": 3,
+   "by_llm": 0
+  },
+  "DATA_EXFIL": {
+   "flagged": 2,
+   "precision": 1.0,
+   "by_rule": 0,
+   "by_llm": 2
+  },
+  "LOG4SHELL": {
+   "flagged": 1,
+   "precision": 1.0,
+   "by_rule": 1,
+   "by_llm": 0
+  },
+  "MALWARE": {
+   "flagged": 8,
+   "precision": 1.0,
+   "by_rule": 0,
+   "by_llm": 8
+  },
+  "PATH_TRAVERSAL": {
+   "flagged": 8,
+   "precision": 1.0,
+   "by_rule": 8,
+   "by_llm": 0
+  },
+  "PRIV_ESC": {
+   "flagged": 4,
+   "precision": 1.0,
+   "by_rule": 4,
+   "by_llm": 0
+  },
+  "RECON": {
+   "flagged": 16,
+   "precision": 1.0,
+   "by_rule": 6,
+   "by_llm": 10
+  },
+  "SQLI": {
+   "flagged": 9,
+   "precision": 1.0,
+   "by_rule": 9,
+   "by_llm": 0
+  },
+  "SSRF": {
+   "flagged": 7,
+   "precision": 1.0,
+   "by_rule": 7,
+   "by_llm": 0
+  },
+  "SUSPICIOUS": {
+   "flagged": 6,
+   "precision": 1.0,
+   "by_rule": 0,
+   "by_llm": 6
+  },
+  "XSS": {
+   "flagged": 5,
+   "precision": 1.0,
+   "by_rule": 5,
+   "by_llm": 0
+  }
+ },
+ "confusion": {
+  "ANOMALOUS_LOGIN": {
+   "MALWARE": 2
+  },
+  "B64_PAYLOAD": {
+   "SUSPICIOUS": 2
+  },
+  "BENIGN": {
+   "-": 94,
+   "CMD_INJECTION": 1
+  },
+  "BRUTE_FORCE": {
+   "BRUTE_FORCE": 22,
+   "SUSPICIOUS": 1
+  },
+  "CMD_INJECTION": {
+   "CMD_INJECTION": 1
+  },
+  "CRED_STUFFING": {
+   "BRUTE_FORCE": 12
+  },
+  "DATA_EXFIL": {
+   "DATA_EXFIL": 2
+  },
+  "DEFENSE_EVASION": {
+   "MALWARE": 2
+  },
+  "LOG4SHELL": {
+   "LOG4SHELL": 1
+  },
+  "PASSWORD_SPRAY": {
+   "BRUTE_FORCE": 5
+  },
+  "PATH_TRAVERSAL": {
+   "PATH_TRAVERSAL": 8
+  },
+  "PERSISTENCE": {
+   "MALWARE": 2
+  },
+  "PRIV_ESC": {
+   "PRIV_ESC": 4,
+   "CMD_INJECTION": 1,
+   "SUSPICIOUS": 1
+  },
+  "PROMPT_INJECTION": {
+   "SUSPICIOUS": 2,
+   "RECON": 1
+  },
+  "RECON": {
+   "RECON": 15
+  },
+  "SQLI": {
+   "SQLI": 9
+  },
+  "SSRF": {
+   "SSRF": 7
+  },
+  "WEBSHELL": {
+   "MALWARE": 2
+  },
+  "XSS": {
+   "XSS": 5,
+   "-": 1
+  }
+ },
+ "errors": [
+  {
+   "kind": "FN",
+   "id": "sample_nginx:14",
+   "category": "XSS",
+   "subtle": false,
+   "line": "45.33.32.156 - - [23/May/2026:08:15:08 +0000] \"POST /comment HTTP/1.1\" 400 128 \"-\" \"Mozilla/5.0\"",
+   "llm_failed": false
+  },
+  {
+   "kind": "FP",
+   "id": "auth2:15",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "hard_negative": true,
+   "line": "Jun  2 09:53:30 app-02 sudo:   ops : TTY=pts/1 ; PWD=/home/ops ; USER=root ; COMMAND=/usr/sbin/useradd -m -s /bin/bash -G developers kiran"
+  }
+ ],
+ "run": "gemini",
+ "provider": "gemini",
+ "model": "gemini-flash-lite-latest",
+ "split": "test",
+ "n_lines": 203,
+ "n_attacks": 108,
+ "llm_failed_lines": 0,
+ "stream_wall_s": {
+  "sample_nginx": 2.19,
+  "sample_auth": 1.41,
+  "nginx2": 2.41,
+  "auth2": 2.25,
+  "inject_test": 1.64
+ },
+ "job_status": {
+  "sample_nginx": "completed",
+  "sample_auth": "completed",
+  "nginx2": "completed",
+  "auth2": "completed",
+  "inject_test": "completed"
+ },
+ "cost": {
+  "llm_calls": 9,
+  "cached_calls": 0,
+  "tokens_in": 16368,
+  "tokens_out": 1712,
+  "usd_estimate": 0.002322,
+  "latency_p50_s": 1.77,
+  "latency_p95_s": 2.327
+ },
+ "total_wall_s": 9.92,
+ "predictions": [
+  {
+   "id": "sample_nginx:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:1",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:2",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:3",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:4",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:5",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:6",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:7",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:8",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:9",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:10",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:11",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:12",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:13",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:14",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:15",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:16",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:17",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:18",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:19",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:20",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:21",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:22",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:23",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:24",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:25",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:26",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:27",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:28",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:29",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:30",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:31",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:32",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:33",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:34",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:35",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:36",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_nginx:37",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:0",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:1",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:2",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:3",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:4",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:5",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:6",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:7",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:8",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:9",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:10",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:11",
+   "pred": "SUSPICIOUS",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:12",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:13",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:14",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "sample_auth:15",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:1",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:2",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:3",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:4",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:5",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:6",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:7",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:8",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:9",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:10",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:11",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:12",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:13",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:14",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:15",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:16",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:17",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:18",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:19",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:20",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:21",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:22",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:23",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:24",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:25",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:26",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:27",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:28",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:29",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:30",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:31",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:32",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:33",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:34",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:35",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:36",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:37",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:38",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:39",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:40",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:41",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:42",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:43",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:44",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:45",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:46",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:47",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:48",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:49",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:50",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:51",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:52",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:53",
+   "pred": "XSS",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:54",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:55",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:56",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:57",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:58",
+   "pred": "LOG4SHELL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:59",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:60",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:61",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:62",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:63",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:64",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:65",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:66",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:67",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:68",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:69",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:70",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:71",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:72",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:73",
+   "pred": "RECON",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:74",
+   "pred": "SUSPICIOUS",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:75",
+   "pred": "SUSPICIOUS",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:76",
+   "pred": "DATA_EXFIL",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:77",
+   "pred": "DATA_EXFIL",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:78",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:79",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:80",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:81",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:82",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:83",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:84",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:85",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:86",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "nginx2:87",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:1",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:2",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:3",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:4",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:5",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:6",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:7",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:8",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:9",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:10",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:11",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:12",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:13",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:14",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:15",
+   "pred": "CMD_INJECTION",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:16",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:17",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:18",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:19",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:20",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:21",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:22",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:23",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:24",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:25",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:26",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:27",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:28",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:29",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:30",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:31",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:32",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:33",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:34",
+   "pred": "BRUTE_FORCE",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:35",
+   "pred": "PRIV_ESC",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:36",
+   "pred": "SUSPICIOUS",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:37",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:38",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:39",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:40",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:41",
+   "pred": "BRUTE_FORCE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:42",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:43",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:44",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:45",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:46",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:47",
+   "pred": "MALWARE",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:48",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:49",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "auth2:50",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:0",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:1",
+   "pred": "SUSPICIOUS",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:2",
+   "pred": "SQLI",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:3",
+   "pred": "RECON",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:4",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:5",
+   "pred": "PATH_TRAVERSAL",
+   "src": "rule",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:6",
+   "pred": "SUSPICIOUS",
+   "src": "llm",
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:7",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:8",
+   "pred": null,
+   "src": null,
+   "llm_failed": false
+  },
+  {
+   "id": "inject_test:9",
+   "pred": "SSRF",
+   "src": "rule",
+   "llm_failed": false
+  }
+ ]
+}

@@ -1,0 +1,375 @@
+{
+ "prompt": "v1",
+ "part": "dev",
+ "provider": "gemini",
+ "judge_model": "gemini-flash-lite-latest",
+ "agreement": {
+  "n": 32,
+  "parsed": 32,
+  "accuracy": 0.6875,
+  "kappa": 0.3962,
+  "exact_score": 0.5,
+  "score_mae": 1.0,
+  "confusion": {
+   "tp": 15,
+   "tn": 7,
+   "judge_pass_human_fail": 10,
+   "judge_fail_human_pass": 0
+  },
+  "human_fail_rate": 0.5312
+ },
+ "by_source": {
+  "gemini": {
+   "n": 16,
+   "parsed": 16,
+   "accuracy": 0.9375,
+   "kappa": 0.0,
+   "exact_score": 0.875,
+   "score_mae": 0.1875,
+   "confusion": {
+    "tp": 15,
+    "tn": 0,
+    "judge_pass_human_fail": 1,
+    "judge_fail_human_pass": 0
+   },
+   "human_fail_rate": 0.0625
+  },
+  "mock": {
+   "n": 16,
+   "parsed": 16,
+   "accuracy": 0.4375,
+   "kappa": 0.0,
+   "exact_score": 0.125,
+   "score_mae": 1.8125,
+   "confusion": {
+    "tp": 0,
+    "tn": 7,
+    "judge_pass_human_fail": 9,
+    "judge_fail_human_pass": 0
+   },
+   "human_fail_rate": 1.0
+  }
+ },
+ "rows": [
+  {
+   "id": "auth:ANOMALOUS_LOGIN:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the attack chain, maps it to MITRE persistence, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:ANOMALOUS_LOGIN:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "The explanation incorrectly labels actual privilege escalation and persistence activities as reconnaissance and provides generic, low-quality recommendations.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth:BRUTE_FORCE:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the brute-force attack, maps it to the correct MITRE tactic, and provides actionable and effective remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:BRUTE_FORCE:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the brute force attack, maps it to the correct MITRE tactic, and provides actionable remediation steps.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "auth:PASSWORD_SPRAY:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the slow brute-force/password-spray attack, maps it correctly to MITRE, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:PASSWORD_SPRAY:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the password-spraying attack pattern, correlates the logs, correctly maps the MITRE tactic, and provides actionable remediation steps.",
+   "human_rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "auth:PERSISTENCE:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the privilege escalation and persistence technique from the log, correctly maps it to MITRE, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:PERSISTENCE:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "The explanation fails to identify the critical risk of privilege escalation and persistence via SSH keys, misclassifies the MITRE tactic, and suggests irrelevant network-based remediation steps.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth:PRIV_ESC:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately interprets the log, correctly identifies the tactic, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:PRIV_ESC:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the privilege escalation attempt from the provided sudo authentication failure log and offers relevant mitigation steps.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_dev:PATH_TRAVERSAL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the path traversal attack, notes the failed attempt (HTTP 403), correctly categorizes the MITRE tactic, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_dev:PATH_TRAVERSAL:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the path traversal attempt, maps it to MITRE, and provides appropriate remediation steps.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_dev:PROMPT_INJECTION:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies prompt injection targeting LLM-based log analyzers and configuration file probing, providing precise analysis and relevant mitigation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_dev:PROMPT_INJECTION:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "The explanation is overly generic and completely misses the prompt injection attempt embedded within the logs.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "inject_dev:SQLI:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the SQL injection attack vector, correctly evaluates the HTTP status code, and appropriately dismisses the user-agent injection bypass attempt.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_dev:SQLI:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "The explanation contains factual errors regarding the logs, specifically misidentifying the HTTP status code as 400 when it was actually 500.",
+   "human_rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "nginx:B64_PAYLOAD:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately decodes the malicious payloads, identifies the attack types, assesses the impact based on HTTP 200 responses, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:B64_PAYLOAD:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "The explanation is overly generic and completely misidentifies critical attacks like remote code execution and SQL injection as mere reconnaissance.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:CRED_STUFFING:gemini",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the brute-force attack, references the correct logs and MITRE tactic, and provides actionable mitigation steps.",
+   "human_rationale": "Calls it 'high frequency' but the attempts are 1.5-4 min apart (low-and-slow stuffing across rotating IPs); mischaracterises the key evidence."
+  },
+  {
+   "id": "nginx:CRED_STUFFING:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the brute force threat pattern from the logs, correctly maps it to MITRE Credential Access, and provides actionable remediation steps.",
+   "human_rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "nginx:DATA_EXFIL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the data exfiltration activity, references the specific tools and data involved, maps to the correct MITRE tactic, and provides actionable remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:DATA_EXFIL:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "The explanation misidentifies the MITRE tactic as reconnaissance instead of exfiltration and provides generic recommendations.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:LOG4SHELL:gemini",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the Log4Shell vulnerability, analyzes the obfuscated JNDI payloads, maps to the correct MITRE tactic, and provides actionable remediation steps.",
+   "human_rationale": "Correct CVE, payload types and obfuscation; the status-code sentence is vague (both 200s not interpreted). Actions specific."
+  },
+  {
+   "id": "nginx:LOG4SHELL:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the Log4Shell attack pattern from the logs, correctly maps it, and provides actionable remediation steps.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:PATH_TRAVERSAL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the path traversal attempts, maps them to the logs, correctly notes the blocked status, and provides appropriate recommendations.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:PATH_TRAVERSAL:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the path traversal attempts, maps them to the correct context, and provides appropriate remediation actions.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx:RECON:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the attack type, tool used, target files, and provides appropriate mitigation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:RECON:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the recon activity, maps it to the correct MITRE tactic, and provides actionable remediation steps.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:SQLI:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the tool, attack vectors, and impact from the logs, and provides correct remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:SQLI:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 4,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the SQL injection attack and tool used, though it incorrectly states the HTTP status code was 400 instead of 500.",
+   "human_rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "nginx:XSS:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "The explanation accurately identifies the XSS attempts, analyzes the log payloads and status codes correctly, and provides appropriate mitigation recommendations.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:XSS:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "The explanation correctly identifies the XSS payloads, but the MITRE tactic is incorrect (Initial Access instead of Execution) and the logs show HTTP 400 errors indicating the requests likely failed or were blocked.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  }
+ ]
+}

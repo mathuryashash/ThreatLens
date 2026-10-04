@@ -37,3 +37,5 @@ docs/PRESENTATION_SCRIPT.md
 
 .vercel
 .env*
+evals/_*.log
+evals/cache_off/

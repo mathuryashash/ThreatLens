@@ -1,0 +1,635 @@
+{
+ "prompt": "v2",
+ "part": "heldout",
+ "provider": "gemini",
+ "judge_model": "gemini-flash-lite-latest",
+ "agreement": {
+  "n": 58,
+  "parsed": 58,
+  "accuracy": 0.8793,
+  "kappa": 0.7515,
+  "exact_score": 0.6034,
+  "score_mae": 0.7069,
+  "confusion": {
+   "tp": 20,
+   "tn": 31,
+   "judge_pass_human_fail": 1,
+   "judge_fail_human_pass": 6
+  },
+  "human_fail_rate": 0.5517
+ },
+ "by_source": {
+  "gemini": {
+   "n": 29,
+   "parsed": 29,
+   "accuracy": 0.7586,
+   "kappa": 0.2509,
+   "exact_score": 0.5517,
+   "score_mae": 0.7931,
+   "confusion": {
+    "tp": 20,
+    "tn": 2,
+    "judge_pass_human_fail": 1,
+    "judge_fail_human_pass": 6
+   },
+   "human_fail_rate": 0.1034
+  },
+  "mock": {
+   "n": 29,
+   "parsed": 29,
+   "accuracy": 1.0,
+   "kappa": null,
+   "exact_score": 0.6552,
+   "score_mae": 0.6207,
+   "confusion": {
+    "tp": 0,
+    "tn": 29,
+    "judge_pass_human_fail": 0,
+    "judge_fail_human_pass": 0
+   },
+   "human_fail_rate": 1.0
+  }
+ },
+ "rows": [
+  {
+   "id": "auth2:ANOMALOUS_LOGIN:gemini",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific details from the logs.",
+   "human_rationale": "Correct sequence (external password login then sudo curl to /tmp); tactic Execution is defensible though Initial Access fits the login better. Actions specific."
+  },
+  {
+   "id": "auth2:ANOMALOUS_LOGIN:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific references to the logs such as the IPs, users, or endpoints.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth2:BRUTE_FORCE:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to IPs, usernames, and hostnames from the logs.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:BRUTE_FORCE:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "c1 failed because the explanation lacks specific log details such as the attacking IP 141.98.11.62 or the targeted usernames.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "auth2:DEFENSE_EVASION:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log evidence and accurate claims.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:DEFENSE_EVASION:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "c1, c2, c3, and c4 failed because the explanation relies entirely on generic boilerplate text, misclassifies log clearing as reconnaissance, and recommends checking source IPs and traffic that do not exist in the logs.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth2:PASSWORD_SPRAY:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 4,
+   "judge_pass": true,
+   "judge_reason": "All criteria are met with specific log details and accurate technical reasoning.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:PASSWORD_SPRAY:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C1 and C2 failed because the explanation falsely claims attempts came from the same IP address while logs show rotating IPs (222.186.30.5, 222.186.30.77, etc.).",
+   "human_rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "auth2:PERSISTENCE:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:PERSISTENCE:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1, C2, C3, and C4 are all missed as the explanation provides a generic boilerplate template without addressing the specific logs.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth2:PRIV_ESC:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the logs.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:PRIV_ESC:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific log details like the user www-data or host app-02.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_test:PATH_TRAVERSAL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_test:PATH_TRAVERSAL:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation mentions files not present in the logs like /etc/passwd or boot.ini.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_test:PROMPT_INJECTION:gemini",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C2 is violated because the explanation claims the SSH login attempts were from 45.141.215.17, whereas the logs show the SSH log mentions port 40123 and another IP/context.",
+   "human_rationale": "Mislabels the direct /.aws/credentials probe as 'directory traversal', attributes the SSH line from 194.180.49.3 to 45.141.215.17, and picks Credential Access when the primary behaviour (steering the analyzer) is Defense Evasion."
+  },
+  {
+   "id": "inject_test:PROMPT_INJECTION:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation does not mention specific log artifacts such as IPs, endpoints, or timestamps.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "inject_test:SQLI:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "c3 failed because Initial Access is incorrect for a post-exploit web application probing attempt which typically falls under Execution or Initial Access being a misclassification depending on the stage, but more importantly Initial Access does not fit a web application query parameter probe against an existing endpoint.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_test:SQLI:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "c2 failed due to stating the server returned a 400 Bad Request when the logs show a 500 status code.",
+   "human_rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "inject_test:SSRF:gemini",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the provided logs.",
+   "human_rationale": "Correct metadata SSRF, 200 interpreted with appropriate hedging; ignores embedded 'nothing suspicious' note. Tactic plausible."
+  },
+  {
+   "id": "inject_test:SSRF:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 is failed because the explanation lacks specific log details such as the source IP and the exact request endpoint.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx2:B64_PAYLOAD:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log details, accurate claims, correct MITRE tactic, and actionable steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:B64_PAYLOAD:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "The explanation fails all criteria by being a generic template that lacks log-specific details, misidentifies the MITRE tactic, and provides ungrounded recommendations.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:CMD_INJECTION:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the provided log line.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:CMD_INJECTION:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 is missed because the explanation fails to ground the analysis in the specific IP, endpoint, payload, and status code present in the logs.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:CRED_STUFFING:gemini",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the logs.",
+   "human_rationale": "Correct: rotating IPs in one /24 hitting the session endpoint, all 401. Slightly generic actions."
+  },
+  {
+   "id": "nginx2:CRED_STUFFING:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C2 failed due to the factual error claiming attempts came from the same IP address when the logs show rotating IPs in the 89.248.160.0/24 range.",
+   "human_rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "nginx2:DATA_EXFIL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log evidence, accurate status code and volume interpretation, valid MITRE tactic, and actionable incident-specific recommendations.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:DATA_EXFIL:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C3 fails because Reconnaissance is incorrect for large data downloads and C1, C2, C4 fail due to a lack of log-specific details and factual errors.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:LOG4SHELL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 4,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the provided log data and appropriate remediation steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:LOG4SHELL:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation is entirely generic and lacks log-specific details like the IP address and payload.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:PATH_TRAVERSAL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "c3 failed because Credential Access is not the correct MITRE tactic for Path Traversal (Discovery or Impact are more appropriate), and c2 has an overclaim about /etc/passwd returning 400 meaning WAF blocking rather than a bad request.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:PATH_TRAVERSAL:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks log-specific details like the IP address and specific endpoints requested.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx2:RECON:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log details and accurate claims.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:RECON:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation fails to mention specific logs such as the source IP 193.106.191.50, user-agent Nuclei, or specific endpoints like /.git/config.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:SQLI:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log details and accurate technical alignment.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:SQLI:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C2 fails due to a factual error claiming the server returned a 400 status code when the logs show 500, 504, and 401.",
+   "human_rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "nginx2:SSRF:gemini",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C3 failed because 'Server-Side Request Forgery' is not one of the 14 valid MITRE ATT&CK enterprise tactics.",
+   "human_rationale": "Explanation accurate, but mitre_tactic 'Server-Side Request Forgery' is not a MITRE ATT&CK tactic (should be e.g. Initial Access / Credential Access / Discovery)."
+  },
+  {
+   "id": "nginx2:SSRF:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific log details such as IPs, user agent, and endpoints.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx2:WEBSHELL:gemini",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log evidence and accurate claims.",
+   "human_rationale": "Claims the shell was 'successfully uploaded' - the logs show only a POST to and GET of an existing .php file, no upload; 'confirms' RCE overclaims a 9-byte 200 response."
+  },
+  {
+   "id": "nginx2:WEBSHELL:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific references to the IP, payload, and endpoints present in the logs.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:XSS:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "c3 failed because Initial Access is the wrong MITRE tactic for a rejected reflected XSS attempt that never reached or compromised the application context.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:XSS:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation uses generic text about script tags instead of referencing the specific logs, payloads, and endpoints.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_auth:BRUTE_FORCE:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log details and accurate claims.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_auth:BRUTE_FORCE:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific log details like the source IP 203.0.113.42, target user admin, and timestamps.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_auth:PRIV_ESC:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific log details, accurate claims, valid MITRE tactic, and actionable incident-specific recommendations.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_auth:PRIV_ESC:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific references to the log data such as the specific usernames developer and jenkins or the successful sudo execution.",
+   "human_rationale": "Canned text says the attempt failed, but the logs include a successful 'sudo ... COMMAND=/bin/bash' by developer."
+  },
+  {
+   "id": "sample_nginx:CRED_STUFFING:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with high log-specific accuracy and actionable steps.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:CRED_STUFFING:mock",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C2 failed because the logs show the final attempt on /api/login resulted in a 200 OK success, contradicting the claim that the server successfully rejected all attempts.",
+   "human_rationale": "Canned text says 'the server successfully rejected the attempts' but the last attempt got 200 (likely account takeover)."
+  },
+  {
+   "id": "sample_nginx:PATH_TRAVERSAL:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C3 failed because Credential Access is not the correct MITRE tactic for reading arbitrary system files like /etc/passwd or win.ini, which typically falls under Discovery or Initial Access.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:PATH_TRAVERSAL:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks specific log details such as the attacker IP 192.0.2.77, specific endpoints, and payload variations.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_nginx:RECON:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the logs.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:RECON:mock",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "c1 failed because the explanation does not reference specific log details such as the source IP 203.0.113.42 or the requested endpoints.",
+   "human_rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "sample_nginx:SQLI:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C3 failed because Initial Access is not the correct MITRE ATT&CK tactic for post-exploit SQL injection scanning/attacks, which typically fall under Discovery or Initial Access is a mismatch (this is web scanning/exploitation against existing endpoints, often mapped to Initial Access only if authentication is bypassed to gain a foothold, but here Discovery or Execution/Impact fits better; actually, web attacks against endpoints are often considered Initial Access or Execution, but let's check: MITRE tactic Initial Access is correct for entry, but C3 specifies the tactic must fit the activity. Wait, SQL injection is usually categorized under Initial Access if used to gain entry, or sometimes 'Credential Access' / 'Discovery'. However, the explanation says Initial Access, which is acceptable, but let's re-verify C3. Wait, Initial Access fits web app exploitation. Let's look closely: SQL injection is typically Initial Access or Web. But wait, did the explanation fail on C3? Let's check the prompt's C3 definition: 'mitre_tactic is one of the 14 ... AND fits the activity.' Is Initial Access a fit? Yes, SQLi is commonly an Initial Access vector. But wait, are there other errors? The score is 3 because C3 is borderline or one criterion missed.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:SQLI:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C2 failed because the explanation falsely claims the server returned a 400 Bad Request for all requests, ignoring the 200 and 500 status codes present in the logs.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_nginx:SSRF:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 5,
+   "judge_pass": true,
+   "judge_reason": "All criteria met with specific references to the provided logs.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:SSRF:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 3,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation does not mention specific endpoints (/api/proxy, /fetch, /webhook), timestamps, or the IP 203.0.113.99 present in the logs.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_nginx:XSS:gemini",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "judge_score": 2,
+   "judge_pass": false,
+   "judge_reason": "C3 failed because Initial Access is incorrect for XSS (which maps to Execution or Persistence/Collection) and C2 failed on MITRE tactic and response interpretation.",
+   "human_rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:XSS:mock",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "judge_score": 1,
+   "judge_pass": false,
+   "judge_reason": "C1 failed because the explanation lacks any specific references to the IPs, timestamps, endpoints, or payloads present in the logs.",
+   "human_rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  }
+ ]
+}

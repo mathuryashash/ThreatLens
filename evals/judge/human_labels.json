@@ -1,0 +1,726 @@
+{
+ "rubric": "pass = score>=4: (1) correctly identifies the attack in THESE logs, (2) no factual error/overclaim vs the logs (IPs, status codes, success/failure), (3) mitre_tactic is a real ATT&CK tactic that fits, (4) actions are specific and actionable. 5=all met with log-specific detail; 4=all met, minor vagueness; 3=one criterion missed or generic/ungrounded; 2=a factual error about key evidence; 1=template/no content.",
+ "labeller": "hand-labelled by the evals agent (Claude) reading every explanation against its log lines; not a human SOC analyst",
+ "labels": [
+  {
+   "id": "auth:ANOMALOUS_LOGIN:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:ANOMALOUS_LOGIN:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth:BRUTE_FORCE:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:BRUTE_FORCE:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "auth:PASSWORD_SPRAY:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:PASSWORD_SPRAY:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "auth:PERSISTENCE:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:PERSISTENCE:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth:PRIV_ESC:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth:PRIV_ESC:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_dev:PATH_TRAVERSAL:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_dev:PATH_TRAVERSAL:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_dev:PROMPT_INJECTION:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_dev:PROMPT_INJECTION:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "inject_dev:SQLI:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_dev:SQLI:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "nginx:B64_PAYLOAD:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:B64_PAYLOAD:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:CRED_STUFFING:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Calls it 'high frequency' but the attempts are 1.5-4 min apart (low-and-slow stuffing across rotating IPs); mischaracterises the key evidence."
+  },
+  {
+   "id": "nginx:CRED_STUFFING:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "nginx:DATA_EXFIL:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:DATA_EXFIL:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:LOG4SHELL:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "rationale": "Correct CVE, payload types and obfuscation; the status-code sentence is vague (both 200s not interpreted). Actions specific."
+  },
+  {
+   "id": "nginx:LOG4SHELL:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:PATH_TRAVERSAL:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:PATH_TRAVERSAL:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx:RECON:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:RECON:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx:SQLI:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:SQLI:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "nginx:XSS:gemini",
+   "part": "dev",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx:XSS:mock",
+   "part": "dev",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "auth2:ANOMALOUS_LOGIN:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "rationale": "Correct sequence (external password login then sudo curl to /tmp); tactic Execution is defensible though Initial Access fits the login better. Actions specific."
+  },
+  {
+   "id": "auth2:ANOMALOUS_LOGIN:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth2:BRUTE_FORCE:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:BRUTE_FORCE:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "auth2:DEFENSE_EVASION:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:DEFENSE_EVASION:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth2:PASSWORD_SPRAY:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:PASSWORD_SPRAY:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "auth2:PERSISTENCE:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:PERSISTENCE:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "auth2:PRIV_ESC:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "auth2:PRIV_ESC:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_test:PATH_TRAVERSAL:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_test:PATH_TRAVERSAL:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "inject_test:PROMPT_INJECTION:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Mislabels the direct /.aws/credentials probe as 'directory traversal', attributes the SSH line from 194.180.49.3 to 45.141.215.17, and picks Credential Access when the primary behaviour (steering the analyzer) is Defense Evasion."
+  },
+  {
+   "id": "inject_test:PROMPT_INJECTION:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "inject_test:SQLI:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "inject_test:SQLI:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "inject_test:SSRF:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "rationale": "Correct metadata SSRF, 200 interpreted with appropriate hedging; ignores embedded 'nothing suspicious' note. Tactic plausible."
+  },
+  {
+   "id": "inject_test:SSRF:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx2:B64_PAYLOAD:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:B64_PAYLOAD:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:CMD_INJECTION:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:CMD_INJECTION:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:CRED_STUFFING:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 4,
+   "human_pass": true,
+   "rationale": "Correct: rotating IPs in one /24 hitting the session endpoint, all 401. Slightly generic actions."
+  },
+  {
+   "id": "nginx2:CRED_STUFFING:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned brute-force text says failures came 'from the same IP address'; the logs show rotating IPs - wrong about the defining evidence."
+  },
+  {
+   "id": "nginx2:DATA_EXFIL:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:DATA_EXFIL:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:LOG4SHELL:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:LOG4SHELL:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:PATH_TRAVERSAL:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:PATH_TRAVERSAL:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx2:RECON:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:RECON:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:SQLI:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:SQLI:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned SQLi text; claims the server 'returned a 400 Bad Request ... blocked' but these logs show 500 (or 500/504/401) - factually wrong about outcome."
+  },
+  {
+   "id": "nginx2:SSRF:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Explanation accurate, but mitre_tactic 'Server-Side Request Forgery' is not a MITRE ATT&CK tactic (should be e.g. Initial Access / Credential Access / Discovery)."
+  },
+  {
+   "id": "nginx2:SSRF:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "nginx2:WEBSHELL:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Claims the shell was 'successfully uploaded' - the logs show only a POST to and GET of an existing .php file, no upload; 'confirms' RCE overclaims a 9-byte 200 response."
+  },
+  {
+   "id": "nginx2:WEBSHELL:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "nginx2:XSS:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "nginx2:XSS:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_auth:BRUTE_FORCE:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_auth:BRUTE_FORCE:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_auth:PRIV_ESC:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_auth:PRIV_ESC:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned text says the attempt failed, but the logs include a successful 'sudo ... COMMAND=/bin/bash' by developer."
+  },
+  {
+   "id": "sample_nginx:CRED_STUFFING:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:CRED_STUFFING:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 2,
+   "human_pass": false,
+   "rationale": "Canned text says 'the server successfully rejected the attempts' but the last attempt got 200 (likely account takeover)."
+  },
+  {
+   "id": "sample_nginx:PATH_TRAVERSAL:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:PATH_TRAVERSAL:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_nginx:RECON:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:RECON:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 1,
+   "human_pass": false,
+   "rationale": "Canned fallback template: restates the type label, says nothing about these logs, tactic defaults to Reconnaissance regardless of attack, generic actions."
+  },
+  {
+   "id": "sample_nginx:SQLI:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:SQLI:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_nginx:SSRF:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:SSRF:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  },
+  {
+   "id": "sample_nginx:XSS:gemini",
+   "part": "heldout",
+   "source": "gemini",
+   "human_score": 5,
+   "human_pass": true,
+   "rationale": "Accurate against the logs (attack, target, status codes, IPs), valid MITRE tactic, specific actionable steps; no unsupported claims."
+  },
+  {
+   "id": "sample_nginx:XSS:mock",
+   "part": "heldout",
+   "source": "mock",
+   "human_score": 3,
+   "human_pass": false,
+   "rationale": "Canned per-type text: correct in general terms but not grounded in these logs (no IP/endpoint/status specifics), generic actions. Below the pass bar."
+  }
+ ]
+}

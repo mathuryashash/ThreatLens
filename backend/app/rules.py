@@ -105,6 +105,18 @@ RULE_METADATA = {
             re.compile(r'boot\.ini')
         ],
         "match_on_normalized": True
+    },
+    # Added from eval error analysis (DEV split): scanners probing for secrets / VCS / ops
+    # endpoints carried no attack keyword, so rules missed them. Anchored to the *request
+    # path* so blog slugs like /blog/how-to-use-dotenv-files don't match.
+    "RECON": {
+        "severity": "MEDIUM",
+        "score": 45,
+        "confidence": 0.85,
+        "patterns": [
+            re.compile(r'"[a-z]+ /(?:(?:\.env(?:\.[a-z]+)?|server-status)(?=[\s?]|$)|(?:\.git|\.aws|actuator)/)'),
+        ],
+        "match_on_normalized": True
     }
 }
 
