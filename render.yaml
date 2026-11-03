@@ -1,0 +1,35 @@
+# Render Blueprint — ThreatLens backend (FastAPI). Frontend is on Vercel.
+# Measured footprint: ~60 MB RSS (no ML deps) — fits the free 512 MB plan.
+services:
+  - type: web
+    name: threatlens-backend
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: render-deploy
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Non-secret config
+      - key: LLM_PROVIDER
+        value: groq
+      - key: ALLOW_MOCK_DB
+        value: "false"
+      - key: FRONTEND_ORIGIN
+        value: https://threatlenss.vercel.app
+      - key: LLM_PROMPT_VERSION
+        value: v1.0
+      # Secrets — set in the Render dashboard
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
