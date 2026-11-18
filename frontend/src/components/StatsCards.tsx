@@ -27,49 +27,49 @@ export const StatsCards: React.FC<StatsCardsProps> = ({
       icon: Server,
       iconColor: "text-slate-400",
       bgClass: "bg-slate-900/40",
-      topColor: "#64748b", // slate
-      glowColor: "rgba(0,0,0,0)",
+      // Neutral — count has no alert semantics
+      topColor: "rgba(40,50,70,0.5)",
     },
     {
       title: "Rule Detections",
       value: ruleHits,
       icon: Cpu,
-      iconColor: "text-emerald-400",
+      iconColor: ruleHits > 0 ? "text-emerald-400" : "text-slate-500",
       bgClass: ruleHits > 0 ? "bg-emerald-950/10" : "bg-slate-900/40",
-      topColor: "#10b981", // emerald
-      glowColor: ruleHits > 0 ? "rgba(16,185,129,0.06)" : "rgba(0,0,0,0)",
+      // Green only when rules actually fired — means something
+      topColor: ruleHits > 0 ? "#10b981" : "rgba(40,50,70,0.5)",
     },
     {
       title: "AI Detections",
       value: aiHits,
       icon: Brain,
-      iconColor: "text-sky-400",
+      iconColor: aiHits > 0 ? "text-sky-400" : "text-slate-500",
       bgClass: aiHits > 0 ? "bg-sky-950/10" : "bg-slate-900/40",
-      topColor: "#0ea5e9", // sky
-      glowColor: aiHits > 0 ? "rgba(14,165,233,0.06)" : "rgba(0,0,0,0)",
+      // Sky only when AI actually flagged something — means something
+      topColor: aiHits > 0 ? "#0ea5e9" : "rgba(40,50,70,0.5)",
     },
     {
       title: "Critical Threats",
       value: criticalThreats,
       icon: ShieldAlert,
-      iconColor: criticalThreats > 0 ? "text-rose-400" : "text-rose-500/40",
+      iconColor: criticalThreats > 0 ? "text-rose-400" : "text-slate-500",
       bgClass: criticalThreats > 0 ? "bg-rose-950/20" : "bg-slate-900/40",
-      topColor: "#f43f5e", // rose
-      glowColor: criticalThreats > 0 ? "rgba(244,63,94,0.12)" : "rgba(0,0,0,0)",
+      // Red only when there are critical threats — highest urgency signal
+      topColor: criticalThreats > 0 ? "#f43f5e" : "rgba(40,50,70,0.5)",
     },
     {
       title: "Explains Left",
       value: `${explainsRemaining} / 10`,
       icon: MessageSquareCode,
-      iconColor: "text-indigo-400",
+      iconColor: "text-slate-400",
       bgClass: "bg-slate-900/40",
-      topColor: "#6366f1", // indigo
-      glowColor: "rgba(0,0,0,0)",
+      // Neutral — quota display, no alert semantics
+      topColor: "rgba(40,50,70,0.5)",
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+    <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-3">
       {cards.map((card, i) => {
         const IconComponent = card.icon;
         return (
