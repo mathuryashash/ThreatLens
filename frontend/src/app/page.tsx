@@ -567,7 +567,7 @@ export default function Dashboard() {
           <div className="lg:col-span-7 flex flex-col min-h-0 gap-3">
             {/* Feed header */}
             <div className="flex items-center justify-between flex-shrink-0">
-              <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+              <h2 className="text-xs font-medium text-slate-400">
                 Threat Triage Queue
               </h2>
               {threats.length > 0 && (
@@ -591,7 +591,7 @@ export default function Dashboard() {
             {/* Analyst Brief Drawer — fixed-height drawer at the bottom */}
             <div className="flex-shrink-0 border-t border-slate-800/60 pt-3">
               <div className="flex items-center gap-2 mb-3">
-                <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+                <h2 className="text-xs font-medium text-slate-400">
                   Analyst Brief
                 </h2>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/50">

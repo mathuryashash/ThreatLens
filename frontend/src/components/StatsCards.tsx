@@ -52,7 +52,7 @@ export const StatsCards: React.FC<StatsCardsProps> = ({
       title: "Critical Threats",
       value: criticalThreats,
       icon: ShieldAlert,
-      iconColor: "text-rose-400 animate-pulse",
+      iconColor: criticalThreats > 0 ? "text-rose-400" : "text-rose-500/40",
       bgClass: criticalThreats > 0 ? "bg-rose-950/20" : "bg-slate-900/40",
       topColor: "#f43f5e", // rose
       glowColor: criticalThreats > 0 ? "rgba(244,63,94,0.12)" : "rgba(0,0,0,0)",
@@ -75,18 +75,17 @@ export const StatsCards: React.FC<StatsCardsProps> = ({
         return (
           <div
             key={i}
-            className={`rounded-sm border border-slate-800 ${card.bgClass} flex items-center justify-between px-4 py-3 transition-colors duration-200`}
+            className={`rounded border border-slate-800 ${card.bgClass} flex items-center justify-between px-4 py-3 transition-colors duration-200`}
             style={{
               borderTopColor: card.topColor,
               borderTopWidth: "2px",
-              boxShadow: `0 0 15px ${card.glowColor}`,
             }}
           >
             <div>
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
+              <p className="text-[11px] text-slate-500">
                 {card.title}
               </p>
-              <h3 className="text-xl font-bold mt-1 tracking-tight text-slate-100 font-mono">
+              <h3 className="text-xl font-semibold mt-1 tracking-tight text-slate-100 font-mono tabular-nums">
                 {card.value}
               </h3>
             </div>

@@ -214,7 +214,7 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
           <div className="flex items-center gap-1.5">
-            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Severity</span>
+            <span className="text-[10px] text-slate-500">Severity</span>
             <select
               value={filterSeverity}
               onChange={(e) => setFilterSeverity(e.target.value)}
@@ -228,7 +228,7 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
             </select>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Sort</span>
+            <span className="text-[10px] text-slate-500">Sort</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -244,13 +244,13 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
       </div>
 
       {/* Table Header */}
-      <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 bg-slate-900/60 border-b border-slate-800 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+      <div className="hidden md:grid grid-cols-12 gap-2 px-4 py-2 bg-slate-900/60 border-b border-slate-800 text-[10px] text-slate-500">
         <div className="col-span-2">Severity</div>
-        <div className="col-span-2">Threat Type</div>
+        <div className="col-span-2">Threat type</div>
         <div className="col-span-2">Source IP</div>
         <div className="col-span-3">Evidence</div>
         <div className="col-span-2 text-center">Detector</div>
-        <div className="col-span-1 text-right">Actions</div>
+        <div className="col-span-1 text-right">Brief</div>
       </div>
 
       {/* Table Body / Rows */}
@@ -296,7 +296,7 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
                   </div>
 
                   {/* Threat Type */}
-                  <div className="col-span-1 md:col-span-2 font-mono text-xs font-semibold text-slate-200 uppercase tracking-wide truncate">
+                  <div className="col-span-1 md:col-span-2 font-mono text-xs text-slate-200 truncate">
                     {formatThreatType(threat.threat_type)}
                   </div>
 
@@ -348,7 +348,7 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
                       onClick={(e) => { e.stopPropagation(); onSelectThreat(threat.id); }}
                       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-bold transition-all duration-150 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap border ${
                         isSelected
-                          ? "bg-sky-500 border-sky-600 text-slate-950 font-black shadow-[0_0_10px_rgba(14,165,233,0.15)]"
+                          ? "bg-sky-500 border-sky-600 text-slate-950 font-semibold"
                           : "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300"
                       }`}
                     >
@@ -364,9 +364,9 @@ export const ThreatFeed: React.FC<ThreatFeedProps> = ({
                     className="px-4 py-3 bg-slate-950/40 border-t border-slate-900 flex flex-col gap-2 cursor-default"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
                       <Eye className="w-3.5 h-3.5 text-rose-500/70" />
-                      Raw Event Evidence (Redacted)
+                      Raw event evidence (redacted)
                     </div>
                     <div className="flex flex-col gap-1 max-h-[150px] overflow-y-auto rounded-sm border border-slate-900 bg-slate-950 p-2 text-[11px] font-mono text-slate-400 leading-normal scrollbar-thin">
                       {threat.evidence.map((line, idx) => (

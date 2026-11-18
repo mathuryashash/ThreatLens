@@ -41,7 +41,7 @@ export const ExplainPanel: React.FC<ExplainPanelProps> = ({
       <div className="glass-panel p-6 rounded-sm border border-slate-800 bg-slate-950/20 flex flex-col items-center justify-center text-center gap-3">
         <HelpCircle className="w-8 h-8 text-slate-600" />
         <div>
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">No Threat Selected</h3>
+          <h3 className="text-xs text-slate-400">No threat selected</h3>
           <p className="text-[11px] text-slate-500 mt-1 max-w-[280px]">
             Click the &quot;Brief&quot; button on any threat in the triage queue to generate a full security analyst brief.
           </p>
@@ -70,8 +70,8 @@ export const ExplainPanel: React.FC<ExplainPanelProps> = ({
       <div className="flex items-start justify-between border-b border-slate-800/80 pb-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-100 font-mono">
-              Analyst Brief: {threat.threat_type.replaceAll("_", " ")}
+            <h2 className="text-xs font-medium text-slate-100 font-mono">
+              Analyst brief: {threat.threat_type.replaceAll("_", " ")}
             </h2>
             <div className="flex items-center gap-1.5">
               <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/60 uppercase">

@@ -23,15 +23,12 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="relative p-2 bg-rose-500/10 rounded-xl border border-rose-500/20">
-            <ShieldAlert className="w-5 h-5 text-rose-400 pulse-glow-red" />
+          <div className="p-2 bg-rose-500/8 rounded-lg border border-rose-500/15">
+            <ShieldAlert className="w-5 h-5 text-rose-400" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold tracking-tight text-slate-100">ThreatLens</h1>
-              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-slate-800 text-slate-500 border border-slate-700/40">v1.0</span>
-            </div>
-            <p className="text-[10px] text-slate-500 tracking-wide">Rules-first threat triage with AI explanations</p>
+            <h1 className="text-base font-semibold tracking-tight text-slate-100">ThreatLens</h1>
+            <p className="text-[11px] text-slate-500">Rules-first threat triage with AI explanations</p>
           </div>
         </div>
 
@@ -51,9 +48,9 @@ export const Header: React.FC<HeaderProps> = ({
             {connState === "online" && (
               <>
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-50" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                </span>
+                      <span className="live-dot absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                    </span>
                 <Wifi className="w-3 h-3" />
                 <span className="hidden sm:inline">Live</span>
               </>
@@ -66,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
             )}
             {connState === "offline" && (
               <>
-                <WifiOff className="w-3 h-3 animate-pulse" />
+                <WifiOff className="w-3 h-3" />
                 <span>Offline</span>
               </>
             )}
