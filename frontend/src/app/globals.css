@@ -15,10 +15,10 @@
   --color-card-border: var(--card-border);
 
   /* Contrast fix: slate-500 (#64748b) = 4.06:1 fails AA on --background.
-     #6e7d92 = 4.61:1 (same hue, lighter). slate-600 (#475569) = 2.55:1 fails;
-     #707b8a = 4.50:1. Both are muted supporting text — tone stays identical. */
-  --color-slate-500: #6e7d92;
-  --color-slate-600: #707b8a;
+     #717f94 = 4.6:1 on cards (same hue, lighter). slate-600 (#475569) = 2.55:1 fails;
+     #747f8d = 4.6:1 on cards. Both are muted supporting text — tone stays identical. */
+  --color-slate-500: #717f94;
+  --color-slate-600: #747f8d;
 }
 
 body {
