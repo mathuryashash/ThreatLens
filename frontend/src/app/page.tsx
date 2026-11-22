@@ -518,7 +518,7 @@ export default function Dashboard() {
   const selectedThreat = threats.find((t) => t.id === selectedThreatId) ?? null;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col min-h-screen lg:h-screen lg:overflow-hidden">
       {/* Header Bar */}
       <Header
         connState={connState}
@@ -528,8 +528,8 @@ export default function Dashboard() {
         isResetting={isResetting}
       />
 
-      {/* Main Container — fills remaining viewport, no page scroll */}
-      <main className="flex-1 min-h-0 max-w-7xl w-full mx-auto px-4 lg:px-8 pt-4 lg:pt-6 pb-3 flex flex-col gap-4 overflow-hidden">
+      {/* Main Container — fills remaining viewport on desktop, scrolls on mobile */}
+      <main className="flex-1 min-h-0 max-w-7xl w-full mx-auto px-4 lg:px-8 pt-4 lg:pt-6 pb-3 flex flex-col gap-4 lg:overflow-hidden">
         {/* Stats Cards — fixed height, never scrolls */}
         <section id="stats-section" className="flex-shrink-0">
           <StatsCards
@@ -542,10 +542,10 @@ export default function Dashboard() {
           />
         </section>
 
-        {/* Workspace — takes all remaining height */}
+        {/* Workspace — takes all remaining height on desktop, stacks on mobile */}
         <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left: Upload panel — scrolls independently */}
-          <div className="lg:col-span-5 min-h-0 overflow-y-auto pr-1">
+          {/* Left: Upload panel — scrolls independently on desktop */}
+          <div className="lg:col-span-5 lg:min-h-0 lg:overflow-y-auto pr-1">
             <UploadPanel
               onAnalyze={handleAnalyzeLogs}
               isProcessing={isProcessing}
@@ -563,11 +563,11 @@ export default function Dashboard() {
             />
           </div>
 
-          {/* Right: Feed + Explain — internal layout, no page overflow */}
-          <div className="lg:col-span-7 flex flex-col min-h-0 gap-3">
+          {/* Right: Feed + Explain — internal layout, no page overflow on desktop */}
+          <div className="lg:col-span-7 flex flex-col lg:min-h-0 gap-3">
             {/* Feed header */}
             <div className="flex items-center justify-between flex-shrink-0">
-              <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+              <h2 className="text-xs font-medium text-slate-400">
                 Threat Triage Queue
               </h2>
               {threats.length > 0 && (
@@ -577,8 +577,8 @@ export default function Dashboard() {
               )}
             </div>
 
-            {/* Threat list — this is the scroll region */}
-            <div className="flex-1 min-h-0 overflow-y-auto">
+            {/* Threat list — scroll region on desktop */}
+            <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto" style={{ minHeight: '240px' }}>
               <ThreatFeed
                 threats={threats}
                 isLoading={isThreatsLoading}
@@ -591,7 +591,7 @@ export default function Dashboard() {
             {/* Analyst Brief Drawer — fixed-height drawer at the bottom */}
             <div className="flex-shrink-0 border-t border-slate-800/60 pt-3">
               <div className="flex items-center gap-2 mb-3">
-                <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+                <h2 className="text-xs font-medium text-slate-400">
                   Analyst Brief
                 </h2>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/50">

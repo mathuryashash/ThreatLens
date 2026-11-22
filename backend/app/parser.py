@@ -2,7 +2,7 @@ import re
 import html
 from urllib.parse import unquote
 from datetime import datetime
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional
 
 # Normalize text for matching (URL-decode, HTML-decode, lowercase)
 def normalize_for_matching(text: str) -> str:

@@ -4,7 +4,7 @@ import time
 import asyncio
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, BackgroundTasks, HTTPException, Request, Depends, status, Query
+from fastapi import FastAPI, BackgroundTasks, HTTPException, Request, status, Query
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -457,7 +457,7 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
         logs=logs
     )
     
-    remaining_quota = session["max_logs"] - new_used
+    remaining_quota = (session.get("max_logs") or 500) - new_used
     
     return {
         "status": "queued",

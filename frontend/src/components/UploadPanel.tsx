@@ -235,10 +235,10 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
     <div className="glass-panel rounded-sm border border-slate-800/80 bg-slate-950/40 shadow-xl flex flex-col overflow-hidden">
 
       {/* ── Panel header ── */}
-      <div className="px-5 py-3.5 border-b border-slate-800/80 flex items-center justify-between">
+        <div className="px-5 py-3.5 border-b border-slate-800/80 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <UploadCloud className="w-4 h-4 text-sky-400" />
-          <h2 className="text-xs font-bold tracking-widest text-slate-300 uppercase">Log Ingest Console</h2>
+          <h2 className="text-xs font-medium text-slate-300">Log Ingest Console</h2>
         </div>
         <span className={`text-[10px] font-mono px-2 py-0.5 rounded-sm border font-semibold ${
           logsRemaining < 50
@@ -253,7 +253,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
 
         {/* ── Format selector ── */}
         <div className="flex items-center gap-3">
-          <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest shrink-0">Format</span>
+          <span className="text-[11px] text-slate-500 shrink-0">Format</span>
           <div className="flex bg-slate-900/80 border border-slate-800 rounded-sm p-0.5 gap-0.5">
             {["nginx", "auth", "custom"].map((type) => (
               <button
@@ -266,7 +266,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
                     : "text-slate-500 hover:text-slate-300 border border-transparent"
                 }`}
               >
-                {type.toUpperCase()}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
               </button>
             ))}
           </div>
@@ -275,8 +275,8 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
         {/* ── Textarea / drop zone ── */}
         <div
           className={`relative rounded-sm border transition-all duration-200 ${
-            isDragging
-              ? "border-sky-500/60 bg-sky-500/5 shadow-[0_0_20px_rgba(14,165,233,0.1)]"
+              isDragging
+              ? "border-sky-500/60 bg-sky-500/5"
               : "border-slate-800"
           }`}
           onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -325,7 +325,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
 
         {/* ── Pipeline Visualization Strip ── */}
         <div className="flex flex-col gap-1.5 p-3 rounded-sm border border-slate-800/80 bg-slate-950/40">
-          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Triage Pipeline Status</span>
+          <span className="text-[11px] text-slate-500">Triage pipeline status</span>
           <div className="flex items-center justify-between gap-1">
             {PIPELINE_STEPS.map((step, idx) => {
               const state = getStepState(idx);
@@ -341,7 +341,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
               return (
                 <React.Fragment key={step.key}>
                   <div className={`flex flex-col items-center flex-1 py-1 rounded border text-center transition-all ${stateClass}`}>
-                    <span className="text-[10px] font-bold uppercase tracking-wider font-mono">{step.label}</span>
+                    <span className="text-[10px] font-medium uppercase tracking-wide font-mono">{step.label}</span>
                     <span className="text-[7px] text-slate-500 scale-90 hidden sm:inline truncate">{step.desc}</span>
                   </div>
                   {idx < PIPELINE_STEPS.length - 1 && (
@@ -386,7 +386,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
           <button
             onClick={handleAnalyzeClick}
             disabled={isProcessing || lineCount === 0 || !apiConnected}
-            className="flex-[1.6] flex items-center justify-center gap-2 py-2 px-3 bg-sky-500 hover:bg-sky-400 text-xs font-bold text-slate-950 rounded-sm cursor-pointer transition-all hover:shadow-[0_0_15px_rgba(14,165,233,0.3)] disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed"
+            className="flex-[1.6] flex items-center justify-center gap-2 py-2 px-3 bg-sky-500 hover:bg-sky-400 text-xs font-semibold text-slate-950 rounded-sm cursor-pointer transition-colors active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             {isProcessing ? "Processing…" : "Analyze Logs"}
@@ -407,7 +407,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
             </div>
             <div className="h-1.5 w-full rounded-full bg-slate-900 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-500 transition-all duration-500 ease-out"
+                className="h-full rounded-full bg-sky-500 transition-all duration-500 ease-out"
                 style={{ width: `${jobProgress.percent}%` }}
               />
             </div>
@@ -416,7 +416,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
 
         {/* ── GitHub sample download ── */}
         <div className="flex flex-col gap-2.5 border-t border-slate-900 pt-4">
-          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Test with the full sample file</span>
+          <span className="text-[11px] text-slate-500">Sample file</span>
           <div className="flex items-center gap-2">
             <button
               onClick={loadRemoteSample}
@@ -442,7 +442,7 @@ export const UploadPanel: React.FC<UploadPanelProps> = ({
 
         {/* ── Technical Scenario Cards ── */}
         <div className="flex flex-col gap-2.5 border-t border-slate-900 pt-4">
-          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Select Incident Scenario</span>
+          <span className="text-[11px] text-slate-500">Incident scenarios</span>
           <div className="grid grid-cols-1 gap-2.5">
             {SAMPLE_SCENARIOS.map(({ key, label, source, icon: Icon, color, bg, desc, detector }) => (
               <div
