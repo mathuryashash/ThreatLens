@@ -1,4 +1,5 @@
 import uuid
+import json
 import ipaddress
 import threading
 from datetime import datetime, timedelta
@@ -262,23 +263,6 @@ class MockDatabase:
 
     def update_threat_explanation(self, threat_id: str, explanation: str, mitre_tactic: str, recommended_actions: List[str]) -> None:
         if threat_id in self.threats:
-            # We store recommended actions as string or list, wait, let's keep it structured.
-            # In Supabase explanation column is TEXT, but we can store explanation text and mitre_tactic in details,
-            # or extend the schema fields. In DATABASE_SCHEMA.md:
-            # threats.explanation is TEXT. Let's save a structured JSON or raw text.
-            # Wait! In Supabase we have threats.explanation as TEXT.
-            # To store explanation, mitre_tactic, recommended_actions, we can either store explanation as a string,
-            # or store explanation + mitre_tactic + recommended_actions in explanation column serialized,
-            # or add a payload field, or just save the explanation text.
-            # Let's check API_SPEC.md:
-            # GET /api/threats returns threat object with "explanation": null.
-            # POST /api/explain returns {"explanation": "...", "mitre_tactic": "...", "recommended_actions": [...]}
-            # To cache it in the threats table, let's check:
-            # "explanation is cached — written once on first /api/explain call"
-            # Let's save a serialized JSON string in the explanation column, e.g.:
-            # {"explanation": "...", "mitre_tactic": "...", "recommended_actions": [...]}
-            # This is brilliant, as it allows us to store the entire cached explain response in the single "explanation" TEXT field!
-            import json
             serialized = json.dumps({
                 "explanation": explanation,
                 "mitre_tactic": mitre_tactic,
@@ -289,7 +273,6 @@ class MockDatabase:
     def _is_private_ip_helper(self, ip: Optional[str]) -> bool:
         if not ip:
             return False
-        import ipaddress
         try:
             ip_obj = ipaddress.ip_address(ip)
             return ip_obj.is_private
@@ -416,7 +399,6 @@ class SupabaseDatabase:
         return res.data[0] if res.data else None
 
     def create_parsed_event(self, raw_log_id: str, session_id: str, timestamp: Optional[datetime], source_ip: Optional[str], destination_ip: Optional[str], username: Optional[str], action: Optional[str], payload: Dict[str, Any], parser_confidence: float) -> Dict[str, Any]:
-        import json
         res = self.client.table("parsed_events").insert({
             "raw_log_id": raw_log_id,
             "session_id": session_id,
@@ -530,7 +512,6 @@ class SupabaseDatabase:
 
 
     def update_threat_explanation(self, threat_id: str, explanation: str, mitre_tactic: str, recommended_actions: List[str]) -> None:
-        import json
         serialized = json.dumps({
             "explanation": explanation,
             "mitre_tactic": mitre_tactic,
@@ -550,7 +531,7 @@ class SupabaseDatabase:
 
 # Export DB functions dynamically
 def get_db():
-    allow_mock = getattr(settings, "ALLOW_MOCK_DB", False)
+    allow_mock = settings.ALLOW_MOCK_DB
     if settings.is_db_configured:
         try:
             return SupabaseDatabase()
