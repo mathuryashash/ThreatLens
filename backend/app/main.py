@@ -426,7 +426,6 @@ def ingest_logs(request: Request, payload: IngestRequest, bg_tasks: BackgroundTa
             if now - ts > DEDUPE_TTL_SECONDS:
                 del _ingest_dedupe[rid]
         if client_req_id in _ingest_dedupe:
-            session = get_valid_session(payload.session_id)
             return {
                 "status": "queued",
                 "job_id": _ingest_dedupe[client_req_id][0],
