@@ -1,4 +1,6 @@
 import re
+import html as _html
+from urllib.parse import unquote
 
 REDACTION_PATTERNS = [
     (re.compile(r'AKIA[0-9A-Z]{16}'), '[AWS_KEY]'),
@@ -23,15 +25,9 @@ def redact_content(text: str) -> str:
     if not text:
         return ""
 
-    from urllib.parse import unquote
-    import html as _html
-
     def _apply_patterns(s: str) -> str:
         for pattern, replacement in REDACTION_PATTERNS:
-            if callable(replacement):
-                s = pattern.sub(replacement, s)
-            else:
-                s = pattern.sub(replacement, s)
+            s = pattern.sub(replacement, s)
         return s
 
     redacted = _apply_patterns(text)
