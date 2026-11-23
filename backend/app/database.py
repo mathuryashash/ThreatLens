@@ -531,7 +531,7 @@ class SupabaseDatabase:
 
 # Export DB functions dynamically
 def get_db():
-    allow_mock = getattr(settings, "ALLOW_MOCK_DB", False)
+    allow_mock = settings.ALLOW_MOCK_DB
     if settings.is_db_configured:
         try:
             return SupabaseDatabase()
